@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID" version="2.5">
+
+    <description>jndi datasource in tomcat</description>
+
+    <!-- http://tomcat.apache.org/tomcat-7.0-doc/jndi-resources-howto.html -->
+
+    <!-- Be sure to respect the element ordering -->
+
+    <resource-env-ref>
+        <description>
+            Tomcat built-in class: {org.apache.naming.factory.BeanFactory}
+            This resource factory can be used to create objects of any Java class
+            that conforms to standard JavaBeans naming conventions(i.e. it has a zero-arguments constructor, getter and
+            setter ...)
+            Preconditions:
+                1. configure tomcat's resource factory: ${TOMCAT_HOME}/conf/context.xml
+                2. declare a resource environment reference on web application web.xml
+                3. usage: @see com.wqt.jndi.tomcat.servlet.JndiGenericResourceServlet
+        </description>
+        <resource-env-ref-name>bean/genericBeanFactory</resource-env-ref-name>
+        <resource-env-ref-type>com.wqt.jndi.tomcat.bean.GenericBean</resource-env-ref-type>
+    </resource-env-ref>
+    
+    <resource-ref>
+        <description>
+            Tomcat built-in class: {org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory}
+            JDBC datasource resource in tomcat. Default datasource component is DBCP connection pool.
+            Preconditions:
+                1. install JDBC Driver: installing driver's JAR into ${TOMCAT_HOME}/lib
+                2. configure tomcat's resource factory: ${TOMCAT_HOME}/conf/context.xml
+                3. declare a resource reference on web application web.xml
+                4. usage: @see com.wqt.jndi.tomcat.servlet.JndiGenericResourceServlet
+        </description>
+        <res-ref-name>jdbc/patriot</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+
+    <resource-env-ref>
+        <description>
+            Custom resource factory in tomcat.
+            @see com.wqt.jndi.tomcat.custom.CustomResource
+            @see com.wqt.jndi.tomcat.custom.CustomResourceFactory
+            Preconditions:
+                # see above configuration.
+        </description>
+        <resource-env-ref-name>bean/customResourceFactory</resource-env-ref-name>
+        <resource-env-ref-type>com.wqt.jndi.tomcat.custom.CustomResource</resource-env-ref-type>
+    </resource-env-ref>
+
+    <servlet>
+        <servlet-name>resourceRef</servlet-name>
+        <servlet-class>com.wqt.jndi.tomcat.servlet.JndiGenericResourceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>resourceRef</servlet-name>
+        <url-pattern>/ref</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>datasourceRef</servlet-name>
+        <servlet-class>com.wqt.jndi.tomcat.servlet.JndiDatasourceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>datasourceRef</servlet-name>
+        <url-pattern>/dsRef</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>customRef</servlet-name>
+        <servlet-class>com.wqt.jndi.tomcat.servlet.JndiCustomResourceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>customRef</servlet-name>
+        <url-pattern>/custom</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+</web-app>
