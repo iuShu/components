@@ -23,7 +23,7 @@ public class JavaMailTutorial {
 
     public static void main(String[] args) throws Exception {
         String username = "HentonWu128@outlook.com";
-        String password = "58CSM@outlook";
+        String password = "******";
         Properties props = new Properties();
 //        props.put("mail.debug", "true");
 
