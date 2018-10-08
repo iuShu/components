@@ -17,18 +17,26 @@ import java.util.Properties;
  */
 public class JavaMailTutorial {
 
+    // collect mail
+    private static final String IMAP_URL = "imaps://imap-mail.outlook.com/";
+
     public static final int HOLD_MESSAGES_OR_FILES = Folder.HOLDS_MESSAGES + Folder.HOLDS_FOLDERS;
 
-    private static final String DEFAULT_FOLDER = "inbox";
+    private static final String INBOX = "inbox";
 
+    /**
+     * Authentication type:
+     *  1. ssl / tls
+     *  2. starttls
+     */
     public static void main(String[] args) throws Exception {
         String username = "HentonWu128@outlook.com";
-        String password = "******";
+        String password = "58CSM@outlook";
         Properties props = new Properties();
 //        props.put("mail.debug", "true");
 
         Authenticator auth = new TutorialAuthenticator(username, password);
-        URLName urlName = new URLName("imaps://smtp-mail.outlook.com/");    // imap: not login  imaps: login with ssl
+        URLName urlName = new URLName(IMAP_URL);    // imap: not login  imaps: login with ssl/tls
         Session session = Session.getDefaultInstance(props, auth);
         Store store = session.getStore(urlName);
 
@@ -41,7 +49,7 @@ public class JavaMailTutorial {
         Folder[] folders = folder.list();   // A3 LIST
         Folder inbox = null;
         for (Folder f : folders) {
-            if (DEFAULT_FOLDER.equalsIgnoreCase(f.getName())) {
+            if (INBOX.equalsIgnoreCase(f.getName())) {
                 inbox = f;
                 break;
             }
@@ -64,10 +72,13 @@ public class JavaMailTutorial {
             System.out.println(">>> subject: " + msg.getSubject());
             System.out.println(">>> date: " + msg.getSentDate());
             System.out.println(">>> recipient: " + msg.getAllRecipients()[0].toString());
-            System.out.println(">>> body: " + msg.getContent());
+            System.out.println(">>> content: " + msg.getContent());
+            System.out.println(">>> content type: " + msg.getContentType() );
+            System.out.println(">>> content lang: " + msg.getContentLanguage().length);
             System.out.println(">>> desc: " + msg.getDescription());
             System.out.println(">>> encoding: " + msg.getEncoding());
             System.out.println(">>> filename: " + msg.getFileName());
+            break; // print one mail details for example
         }
 
         if (inbox.isOpen())
