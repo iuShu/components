@@ -58,7 +58,6 @@ public class JavaSendMailTutorial {
         Message message = new SMTPMessage(session);
         message.setSubject("Javax Mail Send Tutorial 5");
         message.setSentDate(new Date());
-        message.setText(content);
         message.setContent(content, "text/html;charset=UTF-8");
         return message;
     }
