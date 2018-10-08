@@ -22,7 +22,7 @@ public class JavaSendMailTutorial {
 
     public static void main(String[] args) throws Exception {
         String username = "HentonWu128@outlook.com";
-        String password = "58CSM@outlook";
+        String password = "******";
         Address to = new InternetAddress("13622409484@163.com"); // netease email address
 
         Properties props = new Properties();
