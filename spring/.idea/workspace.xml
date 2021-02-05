@@ -1,0 +1,2065 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c77466eb-fceb-4a69-be9a-20310d746d1f" name="Default Changelist" comment="" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/spring$App.ic" NAME="App Coverage Results" MODIFIED="1609836478702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>org.iushu.*</FILTER>
+    </SUITE>
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="221" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="1457807686">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="5" />
+          <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.2" value="2" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.opened" value="6" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="aj" value="28" />
+          <entry key="class" value="3" />
+          <entry key="dummy" value="50" />
+          <entry key="ft" value="31" />
+          <entry key="java" value="79228" />
+          <entry key="properties" value="231" />
+          <entry key="txt" value="37326" />
+          <entry key="xml" value="3796" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="AspectJ" value="28" />
+          <entry key="CLASS" value="3" />
+          <entry key="JAVA" value="79228" />
+          <entry key="PLAIN_TEXT" value="37376" />
+          <entry key="Properties" value="231" />
+          <entry key="VTL" value="31" />
+          <entry key="XML" value="3796" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="0-SNAPSHOT" value="6" />
+          <entry key="AbstractApplicationContext" value="1" />
+          <entry key="AbstractAutowireCapableBeanFactory" value="1" />
+          <entry key="AbstractBeanFactory" value="2" />
+          <entry key="AnnotationAwareAspectJAutoProxyCreator" value="1" />
+          <entry key="ApplicationContext" value="1" />
+          <entry key="AutowiredAnnotationBeanPostProcessor" value="2" />
+          <entry key="BeanPropertyBindingResult" value="1" />
+          <entry key="BeanWrapperImpl" value="2" />
+          <entry key="ClassPathResource" value="3" />
+          <entry key="ClassPathXmlApplicationContext" value="2" />
+          <entry key="ContextAnnotationAutowireCandidateResolver" value="1" />
+          <entry key="DefaultListableBeanFactory" value="3" />
+          <entry key="DefaultPointcutAdvisor" value="5" />
+          <entry key="DirectFieldAccessor" value="1" />
+          <entry key="GenericApplicationContext" value="1" />
+          <entry key="GenericXmlApplicationContext" value="2" />
+          <entry key="InternalSpelExpressionParser" value="1" />
+          <entry key="IntroductionInterceptor" value="1" />
+          <entry key="JavaScript-modules-diagram//media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/spring" value="1" />
+          <entry key="JdkDynamicAopProxy" value="3" />
+          <entry key="LazySingletonAspectInstanceFactoryDecorator" value="1" />
+          <entry key="MODULES/mdl-spring" value="1" />
+          <entry key="MutablePropertyValues" value="1" />
+          <entry key="NameMatchMethodPointcut" value="1" />
+          <entry key="NumberFormatAnnotationFormatterFactory" value="1" />
+          <entry key="PrototypeAspectInstanceFactory" value="1" />
+          <entry key="ProxyFactory" value="2" />
+          <entry key="RootBeanDefinition" value="1" />
+          <entry key="SpelExpressionParser" value="1" />
+          <entry key="SpringLocalModels/module=spring" value="2" />
+          <entry key="StandardAnnotationMetadata" value="1" />
+          <entry key="StandardEvaluationContext" value="1" />
+          <entry key="StandardTypeConverter" value="1" />
+          <entry key="StringToPropertiesConverter" value="1" />
+          <entry key="ThrowsAdviceInterceptor" value="2" />
+          <entry key="TruePointcut" value="1" />
+          <entry key="TypeConverter" value="1" />
+          <entry key="XmlBeanFactory" value="6" />
+          <entry key="aj" value="1" />
+          <entry key="aop" value="1" />
+          <entry key="class" value="171" />
+          <entry key="dtd" value="2" />
+          <entry key="g" value="1" />
+          <entry key="handlers" value="3" />
+          <entry key="java" value="3510" />
+          <entry key="pom" value="8" />
+          <entry key="properties" value="6" />
+          <entry key="txt" value="78" />
+          <entry key="xml" value="122" />
+          <entry key="xml;appContextName=spring-ioc" value="1" />
+          <entry key="xsd" value="4" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="AspectJ" value="1" />
+          <entry key="CLASS" value="171" />
+          <entry key="DTD" value="2" />
+          <entry key="JAVA" value="3510" />
+          <entry key="PLAIN_TEXT" value="79" />
+          <entry key="Properties" value="9" />
+          <entry key="UML" value="69" />
+          <entry key="XML" value="134" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.spring.core.usages.trigger">
+        <counts>
+          <entry key="fixes.SpringFacetInspection.AddFacetFix" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="spring" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/context/Application.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="191" column="7" selection-start-line="191" selection-start-column="7" selection-end-line="191" selection-end-column="7" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#objectLifecycle#0;class#Application#0" />
+                <element signature="method#smartLifecycle#0;class#Application#0" />
+                <element signature="method#shutdownGracefully#0;class#Application#0" />
+                <element signature="method#applicationEvent#0;class#Application#0" />
+                <element signature="method#propertySourceConfigurer#0;class#Application#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/essential.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="299">
+              <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="spring-beans.schema" />
+        <option value="FxmlFile" />
+        <option value="Aspect" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Bean.class</find>
+      <find>addFormatterForFieldAnnotation</find>
+      <find>beanFactory</find>
+      <find>computeIfAbsent</find>
+      <find>DefaultFormattingConversionService</find>
+      <find>messageCodesResolver</find>
+      <find>javax</find>
+      <find>instantiationStrategy</find>
+      <find>init</find>
+      <find>initMethodName</find>
+      <find>destroyMethodName</find>
+      <find>getLifecycleProcessor</find>
+      <find>start</find>
+      <find>DefaultListableBeanFactory</find>
+      <find>ClassDerivedBeanDefinition</find>
+      <find>Seminar</find>
+      <find>timeoutPerShutdownPhase</find>
+      <find>lifecycleProcessor</find>
+      <find>logApi</find>
+      <find>within timeout of</find>
+      <find>-</find>
+      <find>shutdownHook</find>
+      <find>Runtime.getRuntime()</find>
+      <find>postProcessBeanFactory</find>
+      <find>XML</find>
+      <find>XML-</find>
+      <find>XML-base</find>
+      <find>based</find>
+      <find>base</find>
+      <find>doGet</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>Meeting</replace>
+      <replace>&gt;</replace>
+      <replace>XML-based</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/conversion/beans/WelfarePacket.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/conversion/beans/Item.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/conversion/components/ItemGenericConverter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/conversion/beans/Order.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/conversion/formatter/Application.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/conversion/spring-conversion.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/conversion/Application.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/formatter/beans/English.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/formatter/components/EnglishFormatter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/formatter/beans/Model.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/formatter/components/ChineseToEnglishFormatter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/formatter/components/EnglishToChineseFormatter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/resources/Application.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/formatter/components/PropertiesFormatter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/formatter/translation.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/formatter/beans/TranslatibleText.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/formatter/beans/ChineseText.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/formatter/beans/EnglishText.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/formatter/Application.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/validation/validators/CivilianValidator.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/validation/Application.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/ioc/beans/StaffFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/ioc/beans/Adminstrative.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/ioc/beans/Adminstration.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/ioc/beans/Corporation.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/ioc/beans/Manager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/ioc/beans/Warehouse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/ioc/components/FocusMethodReplacer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/ioc/beans/Staff.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/ioc/spring-ioc.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/beans/Senate.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/beans/Seminar.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/beans/Meeting.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/components/GracefulApplicationContext.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/components/FocusApplicationContextAware.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/beans/Senator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/components/FocusApplicationEventPublisherAware.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/components/FocusApplicationListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/beans/Conductor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/ioc/components/FocusBeanPostProcessor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/ioc/Application.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/jdbc.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/beans/ConnectionMetadata.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/ioc/components/FocusBeanFactoryPostProcessor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/expression/Application.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/aop/Application.java" />
+        <option value="$PROJECT_DIR$/words.txt" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/spring-context.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/context/Application.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/iushu/essential.txt" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="userSettingsFile" value="$USER_HOME$/.m2/settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="spring" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="spring" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="MavenRunner">
+    <option name="jreName" value="1.8" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="173" />
+    <option name="y" value="47" />
+    <option name="width" value="1400" />
+    <option name="height" value="983" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Android</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spring" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spring" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spring" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spring" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spring" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="iushu" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spring" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="iushu" type="462c0819:PsiDirectoryNode" />
+              <item name="context" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/spring/src/main/java/org/iushu/aop/Application.java" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1612512331380" />
+    <property name="last.edited.regexp" value="Sample Text" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/org/iushu/conversion" />
+      <recent name="$PROJECT_DIR$/src/main/java/org/iushu/validation/beans" />
+      <recent name="$PROJECT_DIR$/src/main/java/org/iushu/validation" />
+      <recent name="$PROJECT_DIR$/src/main/java/org/iushu/resources" />
+      <recent name="$PROJECT_DIR$/src/main/java/org/iushu/context" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.iushu.formatter.beans" />
+      <recent name="org.iushu.validation.validators" />
+      <recent name="org.iushu.aop.advice" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/org/iushu/aop/proxy" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/main/java/org/iushu" />
+      <recent name="$PROJECT_DIR$/src/main/java" />
+      <recent name="$PROJECT_DIR$/src/main/java/resources" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.iushu.context.Application" />
+      <module name="spring" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.iushu.context.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.iushu.conversion.Application" />
+      <module name="spring" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.iushu.conversion.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="org.iushu.formatter.Application" />
+      <module name="spring" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.iushu.formatter.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="org.iushu.aop.Application" />
+      <module name="spring" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.iushu.aop.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="org.iushu.expression.Application" />
+      <module name="spring" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.iushu.expression.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="org.iushu.aop.Application" />
+      <module name="spring" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.iushu.aop.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Application" />
+        <item itemvalue="Application.Application" />
+        <item itemvalue="Application.Application" />
+        <item itemvalue="Application.Application" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c77466eb-fceb-4a69-be9a-20310d746d1f" name="Default Changelist" comment="" />
+      <created>1609318754620</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1609318754620</updated>
+      <workItem from="1609318760930" duration="12761000" />
+      <workItem from="1609408061577" duration="101299000" />
+      <workItem from="1610328497642" duration="121337000" />
+      <workItem from="1611016688516" duration="61398000" />
+      <workItem from="1611309774641" duration="441000" />
+      <workItem from="1611539242135" duration="132647000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="org_iushu_in_spring - 2021.01.05 at 16h 47m 13s.xml">
+      <configuration name="org.iushu in spring" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="org_iushu_in_spring - 2021.01.05 at 16h 47m 52s.xml">
+      <configuration name="org.iushu in spring" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="429883000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="27" width="1680" height="972" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4987775" visible="true" weight="0.21001221" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="JRebel" order="2" side_tool="true" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" sideWeight="0.5012225" side_tool="true" weight="0.24969475" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Designer" order="7" />
+      <window_info anchor="bottom" id="Dependency Viewer" order="0" show_stripe_button="false" weight="0.32885087" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.498779" visible="true" weight="0.3202934" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4993895" weight="0.3997555" />
+      <window_info anchor="bottom" id="Find" order="4" weight="0.32885087" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Spring" order="8" weight="0.32885087" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.501221" side_tool="true" weight="0.3202934" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32885087" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32885087" />
+      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="13" show_stripe_button="false" />
+      <window_info anchor="bottom" id="JRebel Executor" order="14" />
+      <window_info anchor="bottom" id="JRebel Console" order="15" side_tool="true" />
+      <window_info anchor="right" x="0" y="0" width="370" height="772" id="Documentation" side_tool="true" weight="0.32967034" />
+      <window_info anchor="right" id="Bean Validation" />
+      <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.32967034" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Maven Projects" order="6" weight="0.32967034" />
+      <window_info anchor="right" id="Database" order="7" weight="0.32967034" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Theme Preview" order="9" />
+      <window_info anchor="right" id="Module Dependencies" order="10" weight="0.32967034" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4987775" visible="true" weight="0.23382173" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="JRebel" order="2" side_tool="true" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" sideWeight="0.5012225" side_tool="true" weight="0.24969475" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Designer" order="7" />
+      <window_info anchor="bottom" id="Dependency Viewer" order="0" show_stripe_button="false" weight="0.32885087" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4993895" weight="0.3202934" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997555" />
+      <window_info anchor="bottom" id="Find" order="4" weight="0.32885087" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Spring" order="8" weight="0.32885087" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50061053" side_tool="true" weight="0.3031785" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32885087" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32885087" />
+      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="13" show_stripe_button="false" />
+      <window_info anchor="bottom" id="JRebel Executor" order="14" />
+      <window_info anchor="bottom" id="JRebel Console" order="15" side_tool="true" />
+      <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.32967034" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Maven Projects" order="6" weight="0.32967034" />
+      <window_info anchor="right" id="Database" order="7" weight="0.32967034" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Theme Preview" order="9" />
+      <window_info anchor="right" id="Module Dependencies" order="10" weight="0.32967034" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="jar:///home/iushu/jobcn/coding/jdk1.8.0_181/src.zip!/java/util/function/Consumer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/ApplicationEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="29" column="22" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+          <folding>
+            <element signature="docComment;class#ApplicationEvent#0" />
+            <element signature="docComment;field#serialVersionUID#0;class#ApplicationEvent#0" />
+            <element signature="docComment;field#timestamp#0;class#ApplicationEvent#0" />
+            <element signature="docComment;method#ApplicationEvent#0;class#ApplicationEvent#0" />
+            <element signature="method#ApplicationEvent#0;class#ApplicationEvent#0" />
+            <element signature="docComment;method#getTimestamp#0;class#ApplicationEvent#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/ApplicationEventPublisher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="68" column="9" selection-start-line="68" selection-start-column="9" selection-end-line="68" selection-end-column="9" />
+          <folding>
+            <element signature="e#2020#2021#0" expanded="true" />
+            <element signature="e#2055#2056#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///home/iushu/jobcn/coding/jdk1.8.0_181/src.zip!/java/util/EventObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="65" column="31" lean-forward="true" selection-start-line="65" selection-start-column="31" selection-end-line="65" selection-end-column="31" />
+          <folding>
+            <element signature="e#1358#1359#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/event/SimpleApplicationEventMulticaster.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="154" column="58" lean-forward="true" selection-start-line="154" selection-start-column="58" selection-end-line="154" selection-end-column="58" />
+          <folding>
+            <element signature="docComment;class#SimpleApplicationEventMulticaster#0" />
+            <element signature="docComment;method#SimpleApplicationEventMulticaster#0;class#SimpleApplicationEventMulticaster#0" />
+            <element signature="method#SimpleApplicationEventMulticaster#0;class#SimpleApplicationEventMulticaster#0" />
+            <element signature="docComment;method#SimpleApplicationEventMulticaster#1;class#SimpleApplicationEventMulticaster#0" />
+            <element signature="docComment;method#setTaskExecutor#0;class#SimpleApplicationEventMulticaster#0" />
+            <element signature="docComment;method#getTaskExecutor#0;class#SimpleApplicationEventMulticaster#0" />
+            <element signature="docComment;method#setErrorHandler#0;class#SimpleApplicationEventMulticaster#0" />
+            <element signature="docComment;method#getErrorHandler#0;class#SimpleApplicationEventMulticaster#0" />
+            <element signature="docComment;method#setApplicationStartup#0;class#SimpleApplicationEventMulticaster#0" />
+            <element signature="method#setApplicationStartup#0;class#SimpleApplicationEventMulticaster#0" />
+            <element signature="docComment;method#getApplicationStartup#0;class#SimpleApplicationEventMulticaster#0" />
+            <element signature="e#5135#5136#0" expanded="true" />
+            <element signature="e#5195#5196#0" expanded="true" />
+            <element signature="docComment;method#invokeListener#0;class#SimpleApplicationEventMulticaster#0" />
+            <element signature="e#7057#7148#0" />
+            <element signature="method#matchesClassCastMessage#0;class#SimpleApplicationEventMulticaster#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/event/AbstractApplicationEventMulticaster.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="111" column="40" lean-forward="true" selection-start-line="111" selection-start-column="40" selection-end-line="111" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/event/ApplicationEventMulticaster.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="42" column="9" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/context/components/FocusApplicationListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="18" column="49" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/context/beans/Conductor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="18" column="38" lean-forward="true" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
+          <folding>
+            <element signature="docComment;class#Conductor#0" />
+            <element signature="method#Conductor#0;class#Conductor#0" />
+            <element signature="e#383#384#0" expanded="true" />
+            <element signature="e#410#411#0" expanded="true" />
+            <element signature="e#454#455#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/context/components/FocusApplicationEventPublisherAware.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#760#761#0" expanded="true" />
+            <element signature="e#810#811#0" expanded="true" />
+            <element signature="e#1012#1013#0" expanded="true" />
+            <element signature="e#1049#1050#0" expanded="true" />
+            <element signature="e#1032#1033#0" expanded="true" />
+            <element signature="e#1080#1081#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.3.0/spring-core-5.3.0-sources.jar!/org/springframework/core/io/DefaultResourceLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-13">
+          <caret line="143" column="47" selection-start-line="143" selection-start-column="39" selection-end-line="143" selection-end-column="47" />
+          <folding>
+            <element signature="docComment;class#DefaultResourceLoader#0" />
+            <element signature="docComment;method#DefaultResourceLoader#0;class#DefaultResourceLoader#0" />
+            <element signature="method#DefaultResourceLoader#0;class#DefaultResourceLoader#0" />
+            <element signature="docComment;method#DefaultResourceLoader#1;class#DefaultResourceLoader#0" />
+            <element signature="docComment;method#setClassLoader#0;class#DefaultResourceLoader#0" />
+            <element signature="docComment;method#getClassLoader#0;class#DefaultResourceLoader#0" />
+            <element signature="e#3305#3314#0" />
+            <element signature="docComment;method#addProtocolResolver#0;class#DefaultResourceLoader#0" />
+            <element signature="docComment;method#getProtocolResolvers#0;class#DefaultResourceLoader#0" />
+            <element signature="e#4159#4160#0" expanded="true" />
+            <element signature="e#4195#4196#0" expanded="true" />
+            <element signature="docComment;method#getResourceCache#0;class#DefaultResourceLoader#0" />
+            <element signature="method#getResourceCache#0;class#DefaultResourceLoader#0" />
+            <element signature="docComment;method#clearResourceCaches#0;class#DefaultResourceLoader#0" />
+            <element signature="docComment;method#getResourceByPath#0;class#DefaultResourceLoader#0" />
+            <element signature="e#6354#6355#0" expanded="true" />
+            <element signature="e#6420#6421#0" expanded="true" />
+            <element signature="docComment;class#ClassPathContextResource#0;class#DefaultResourceLoader#0" />
+            <element signature="class#ClassPathContextResource#0;class#DefaultResourceLoader#0" />
+            <element signature="method#createRelative#0;class#ClassPathContextResource#0;class#DefaultResourceLoader#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.3.0/spring-core-5.3.0-sources.jar!/org/springframework/core/io/ResourceLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+          <folding>
+            <element signature="docComment;class#ResourceLoader#0" />
+            <element signature="docComment;field#CLASSPATH_URL_PREFIX#0;class#ResourceLoader#0" />
+            <element signature="docComment;method#getResource#0;class#ResourceLoader#0" />
+            <element signature="docComment;method#getClassLoader#0;class#ResourceLoader#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/ioc/components/FocusBeanPostProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-208">
+          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.3.0/spring-beans-5.3.0-sources.jar!/org/springframework/beans/factory/annotation/CustomAutowireConfigurer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-202">
+          <caret line="97" column="43" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/ioc/spring-ioc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="42" lean-forward="true" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="94" column="33" selection-start-line="94" selection-start-column="33" selection-end-line="94" selection-end-column="33" />
+          <folding>
+            <element signature="n#pluginManagement#0;n#build#0;n#project#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/context/jdbc.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.3.0/spring-beans-5.3.0-sources.jar!/org/springframework/beans/factory/config/PropertyResourceConfigurer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="77" column="38" selection-start-line="77" selection-start-column="16" selection-end-line="77" selection-end-column="38" />
+          <folding>
+            <element signature="docComment;class#PropertyResourceConfigurer#0" />
+            <element signature="docComment;method#setOrder#0;class#PropertyResourceConfigurer#0" />
+            <element signature="docComment;method#postProcessBeanFactory#0;class#PropertyResourceConfigurer#0" />
+            <element signature="method#postProcessBeanFactory#0;class#PropertyResourceConfigurer#0" />
+            <element signature="docComment;method#convertProperties#0;class#PropertyResourceConfigurer#0" />
+            <element signature="method#convertProperties#0;class#PropertyResourceConfigurer#0" />
+            <element signature="docComment;method#convertProperty#0;class#PropertyResourceConfigurer#0" />
+            <element signature="method#convertProperty#0;class#PropertyResourceConfigurer#0" />
+            <element signature="docComment;method#convertPropertyValue#0;class#PropertyResourceConfigurer#0" />
+            <element signature="docComment;method#processProperties#0;class#PropertyResourceConfigurer#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/ConfigurableApplicationContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="52" column="7" lean-forward="true" selection-start-line="52" selection-start-column="7" selection-end-line="52" selection-end-column="7" />
+          <folding>
+            <element signature="docComment;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;field#CONFIG_LOCATION_DELIMITERS#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;field#CONVERSION_SERVICE_BEAN_NAME#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;field#LOAD_TIME_WEAVER_BEAN_NAME#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;field#ENVIRONMENT_BEAN_NAME#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;field#SYSTEM_PROPERTIES_BEAN_NAME#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;field#SYSTEM_ENVIRONMENT_BEAN_NAME#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;field#APPLICATION_STARTUP_BEAN_NAME#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;field#SHUTDOWN_HOOK_THREAD_NAME#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#setId#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#setParent#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#setEnvironment#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#getEnvironment#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#setApplicationStartup#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#getApplicationStartup#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#addBeanFactoryPostProcessor#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#addApplicationListener#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#setClassLoader#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#addProtocolResolver#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#refresh#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#registerShutdownHook#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#isActive#0;class#ConfigurableApplicationContext#0" />
+            <element signature="docComment;method#getBeanFactory#0;class#ConfigurableApplicationContext#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.3.0/spring-beans-5.3.0-sources.jar!/org/springframework/beans/factory/support/DefaultListableBeanFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="135" column="5" lean-forward="true" selection-start-line="135" selection-start-column="5" selection-end-line="135" selection-end-column="5" />
+          <folding>
+            <element signature="docComment;class#DefaultListableBeanFactory#0" />
+            <element signature="initializer##0;class#DefaultListableBeanFactory#0" />
+            <element signature="e#5809#5859#0" />
+            <element signature="e#5990#6054#0" />
+            <element signature="e#6101#6186#0" />
+            <element signature="e#6244#6313#0" />
+            <element signature="e#6364#6428#0" />
+            <element signature="e#6492#6574#0" />
+            <element signature="e#6682#6747#0" />
+            <element signature="e#6841#6899#0" />
+            <element signature="e#6995#7052#0" />
+            <element signature="e#7164#7243#0" />
+            <element signature="e#7335#7401#0" />
+            <element signature="e#7499#7559#0" />
+            <element signature="e#7637#7715#0" />
+            <element signature="e#7796#7873#0" />
+            <element signature="e#7941#8009#0" />
+            <element signature="e#8060#8113#0" />
+            <element signature="e#8169#8296#0" />
+            <element signature="e#8409#8570#0" />
+            <element signature="e#8409#8896#0" />
+            <element signature="e#8899#9090#0" />
+            <element signature="e#9176#9489#0" />
+            <element signature="e#9176#9649#0" />
+            <element signature="e#9652#9844#0" />
+            <element signature="e#9947#10457#0" />
+            <element signature="e#9947#10589#0" />
+            <element signature="e#10592#10750#0" />
+            <element signature="e#10839#11060#0" />
+            <element signature="e#10839#11205#0" />
+            <element signature="e#11208#11311#0" />
+            <element signature="e#11419#11600#0" />
+            <element signature="e#11419#12255#0" />
+            <element signature="e#11959#12064#0" />
+            <element signature="e#12258#12352#0" />
+            <element signature="e#12467#13360#0" />
+            <element signature="e#13364#13435#0" />
+            <element signature="e#13563#13693#0" />
+            <element signature="e#13696#13726#0" />
+            <element signature="e#13696#14100#0" />
+            <element signature="e#14103#14326#0" />
+            <element signature="e#14329#14464#0" />
+            <element signature="e#14468#14539#0" />
+            <element signature="e#14667#14850#0" />
+            <element signature="e#14947#15200#0" />
+            <element signature="e#15203#15460#0" />
+            <element signature="e#15463#18272#0" />
+            <element signature="class#15587:18268" />
+            <element signature="method#getObject#0;class#15587:18268" />
+            <element signature="method#getObject#1;class#15587:18268" />
+            <element signature="e#16106#16115#0" />
+            <element signature="method#getIfAvailable#0;class#15587:18268" />
+            <element signature="method#ifAvailable#0;class#15587:18268" />
+            <element signature="e#16741#16750#0" />
+            <element signature="method#getIfUnique#0;class#15587:18268" />
+            <element signature="method#ifUnique#0;class#15587:18268" />
+            <element signature="e#17366#17396#0" />
+            <element signature="method#stream#0;class#15587:18268" />
+            <element signature="e#17622#17652#0" />
+            <element signature="method#orderedStream#0;class#15587:18268" />
+            <element signature="e#18275#19061#0" />
+            <element signature="e#19064#19269#0" />
+            <element signature="e#19395#19781#0" />
+            <element signature="e#19911#20693#0" />
+            <element signature="e#20696#24180#0" />
+            <element signature="e#24183#24360#0" />
+            <element signature="e#24363#24645#0" />
+            <element signature="e#24363#24835#0" />
+            <element signature="e#24838#24984#0" />
+            <element signature="e#24987#24996#0" />
+            <element signature="e#24987#26297#0" />
+            <element signature="e#26075#26146#0" />
+            <element signature="e#26300#26920#0" />
+            <element signature="e#26923#27375#0" />
+            <element signature="e#27378#27387#0" />
+            <element signature="e#27378#27661#0" />
+            <element signature="e#27664#28919#0" />
+            <element signature="e#28923#28994#0" />
+            <element signature="e#29134#29685#0" />
+            <element signature="e#29688#29913#0" />
+            <element signature="e#29916#30385#0" />
+            <element signature="e#29916#31464#0" />
+            <element signature="e#31467#31987#0" />
+            <element signature="e#31467#32717#0" />
+            <element signature="e#32720#33090#0" />
+            <element signature="e#33093#33347#0" />
+            <element signature="e#33350#33521#0" />
+            <element signature="e#33524#33668#0" />
+            <element signature="e#33671#33843#0" />
+            <element signature="e#33938#34097#0" />
+            <element signature="e#33938#34271#0" />
+            <element signature="e#34274#36485#0" />
+            <element signature="e#34448#34541#0" />
+            <element signature="e#36258#36343#0" />
+            <element signature="e#36489#36560#0" />
+            <element signature="e#36691#39516#0" />
+            <element signature="e#39519#40453#0" />
+            <element signature="e#40456#41006#0" />
+            <element signature="e#40456#42109#0" />
+            <element signature="e#41183#41259#0" />
+            <element signature="e#42112#42195#0" />
+            <element signature="e#42300#42384#0" />
+            <element signature="e#42300#42746#0" />
+            <element signature="e#42749#43050#0" />
+            <element signature="e#43053#43216#0" />
+            <element signature="e#43219#43377#0" />
+            <element signature="e#43380#43530#0" />
+            <element signature="e#43533#43778#0" />
+            <element signature="e#43533#44451#0" />
+            <element signature="e#44454#44513#0" />
+            <element signature="e#44454#44627#0" />
+            <element signature="e#44631#44702#0" />
+            <element signature="e#44818#45391#0" />
+            <element signature="e#45394#45424#0" />
+            <element signature="e#45394#47425#0" />
+            <element signature="e#47428#47437#0" />
+            <element signature="e#47428#48520#0" />
+            <element signature="e#48523#52027#0" />
+            <element signature="e#50755#50831#0" />
+            <element signature="e#52030#55506#0" />
+            <element signature="e#55509#55637#0" />
+            <element signature="e#55640#55834#0" />
+            <element signature="e#55837#56203#0" />
+            <element signature="e#56206#56607#0" />
+            <element signature="e#56610#56955#0" />
+            <element signature="e#56958#57545#0" />
+            <element signature="e#56958#59722#0" />
+            <element signature="e#59235#59281#0" />
+            <element signature="e#59725#59907#0" />
+            <element signature="e#59725#60723#0" />
+            <element signature="e#60726#61162#0" />
+            <element signature="e#60726#62029#0" />
+            <element signature="e#62032#62430#0" />
+            <element signature="e#62032#63364#0" />
+            <element signature="e#63367#63980#0" />
+            <element signature="e#63367#65111#0" />
+            <element signature="e#65114#65391#0" />
+            <element signature="e#65114#65849#0" />
+            <element signature="e#65852#66555#0" />
+            <element signature="e#65852#66818#0" />
+            <element signature="e#66821#66949#0" />
+            <element signature="e#66821#67180#0" />
+            <element signature="e#67183#67392#0" />
+            <element signature="e#67183#67717#0" />
+            <element signature="e#67720#67840#0" />
+            <element signature="e#67720#68263#0" />
+            <element signature="e#68266#68446#0" />
+            <element signature="e#68266#69657#0" />
+            <element signature="e#69660#69737#0" />
+            <element signature="e#69660#70471#0" />
+            <element signature="class#69918:70297" />
+            <element signature="method#resolveCandidate#0;class#69918:70297" />
+            <element signature="e#70475#70957#0" />
+            <element signature="e#70961#71032#0" />
+            <element signature="e#71134#71377#0" />
+            <element signature="e#71380#71661#0" />
+            <element signature="e#71665#71778#0" />
+            <element signature="e#71665#72394#0" />
+            <element signature="e#71964#72391#0" />
+            <element signature="e#72398#72462#0" />
+            <element signature="e#72398#72666#0" />
+            <element signature="e#72546#72663#0" />
+            <element signature="e#72670#72760#0" />
+            <element signature="e#72670#72935#0" />
+            <element signature="e#72939#73022#0" />
+            <element signature="e#72939#73337#0" />
+            <element signature="e#73140#73274#0" />
+            <element signature="e#73429#73520#0" />
+            <element signature="e#73429#77925#0" />
+            <element signature="e#73735#74002#0" />
+            <element signature="e#74006#74403#0" />
+            <element signature="e#74407#75099#0" />
+            <element signature="class#74650:74870" />
+            <element signature="method#resolveCandidate#0;class#74650:74870" />
+            <element signature="e#75103#75112#0" />
+            <element signature="e#75103#75681#0" />
+            <element signature="class#75351:75478" />
+            <element signature="e#75685#76049#0" />
+            <element signature="e#76053#76062#0" />
+            <element signature="e#76053#76762#0" />
+            <element signature="class#76175:76438" />
+            <element signature="e#76293#76302#0" />
+            <element signature="e#76766#77124#0" />
+            <element signature="e#77128#77384#0" />
+            <element signature="e#77562#77922#0" />
+            <element signature="e#77929#78205#0" />
+            <element signature="e#77929#78750#0" />
+            <element signature="e#78264#78420#0" />
+            <element signature="e#78424#78747#0" />
+            <element signature="e#78646#78655#0" />
+            <element signature="e#78646#78743#0" />
+            <element signature="e#78754#79155#0" />
+            <element signature="e#78754#80117#0" />
+            <element signature="e#79314#79453#0" />
+            <element signature="e#79457#79466#0" />
+            <element signature="e#79457#80114#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/ioc/components/FocusBeanFactoryPostProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="3" lean-forward="true" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/ioc/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="131" column="55" selection-start-line="131" selection-start-column="51" selection-end-line="131" selection-end-column="55" />
+          <folding>
+            <element signature="docComment;class#Application#0" />
+            <element signature="method#populateBean#0;class#Application#0" />
+            <element signature="method#factoryBean#0;class#Application#0" />
+            <element signature="docComment;method#dependsOn#0;class#Application#0" />
+            <element signature="method#dependsOn#0;class#Application#0" />
+            <element signature="docComment;method#lazyInitBean#0;class#Application#0" />
+            <element signature="method#beanLifecycle#0;class#Application#0" />
+            <element signature="method#objectLifecycle#0;class#Application#0" />
+            <element signature="docComment;method#beanWrapper#0;class#Application#0" />
+            <element signature="method#beanWrapper#0;class#Application#0" />
+            <element signature="docComment;method#propertyEditorConfigurer#0;class#Application#0" />
+            <element signature="method#propertyEditorConfigurer#0;class#Application#0" />
+            <element signature="docComment;method#propertyEditorRegistrar#0;class#Application#0" />
+            <element signature="method#propertyEditorRegistrar#0;class#Application#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/validation/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="21" column="38" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/resources/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/formatter/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="36" column="3" lean-forward="true" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
+          <folding>
+            <element signature="method#parserFormatter#0;class#Application#0" />
+            <element signature="method#beanDefinition#0;class#Application#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/expression/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="314" column="25" lean-forward="true" selection-start-line="314" selection-start-column="25" selection-end-line="314" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/conversion/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="100" column="37" selection-start-line="100" selection-start-column="32" selection-end-line="100" selection-end-column="37" />
+          <folding>
+            <element signature="method#conversionService#0;class#Application#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.3.0/spring-beans-5.3.0-sources.jar!/org/springframework/beans/factory/support/AbstractBeanFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="1999" column="30" selection-start-line="1999" selection-start-column="30" selection-end-line="1999" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#79874#0" expanded="true" />
+            <element signature="docComment;class#AbstractBeanFactory#0" />
+            <element signature="e#6033#6090#0" />
+            <element signature="e#6144#6210#0" />
+            <element signature="e#6299#6377#0" />
+            <element signature="e#6429#6506#0" />
+            <element signature="e#6552#6621#0" />
+            <element signature="e#6691#6757#0" />
+            <element signature="e#6817#6894#0" />
+            <element signature="e#6992#7060#0" />
+            <element signature="e#7159#7245#0" />
+            <element signature="e#7297#7366#0" />
+            <element signature="e#7465#7500#0" />
+            <element signature="e#7602#7647#0" />
+            <element signature="e#7726#7789#0" />
+            <element signature="e#7859#7924#0" />
+            <element signature="e#7996#8051#0" />
+            <element signature="e#8155#8222#0" />
+            <element signature="e#8326#8379#0" />
+            <element signature="e#8517#8553#0" />
+            <element signature="e#8633#8679#0" />
+            <element signature="e#8633#8714#0" />
+            <element signature="e#8717#8877#0" />
+            <element signature="e#9001#9072#0" />
+            <element signature="e#9312#9459#0" />
+            <element signature="e#9462#9595#0" />
+            <element signature="e#9598#10077#0" />
+            <element signature="e#10258#10836#0" />
+            <element signature="e#11718#11771#0" />
+            <element signature="e#14130#14210#0" />
+            <element signature="e#15352#15547#0" />
+            <element signature="e#17195#18530#0" />
+            <element signature="e#18533#19982#0" />
+            <element signature="e#19226#19267#0" />
+            <element signature="e#19985#20152#0" />
+            <element signature="e#20155#20789#0" />
+            <element signature="e#20155#26329#0" />
+            <element signature="e#23683#23757#0" />
+            <element signature="e#23958#24028#0" />
+            <element signature="e#25201#25287#0" />
+            <element signature="e#25639#25719#0" />
+            <element signature="e#26332#26515#0" />
+            <element signature="e#26518#26527#0" />
+            <element signature="e#26518#26648#0" />
+            <element signature="e#26651#26660#0" />
+            <element signature="e#26651#28727#0" />
+            <element signature="e#27615#27684#0" />
+            <element signature="e#28730#29699#0" />
+            <element signature="e#29703#29774#0" />
+            <element signature="e#29906#29915#0" />
+            <element signature="e#30010#30277#0" />
+            <element signature="e#30281#30352#0" />
+            <element signature="e#30484#30936#0" />
+            <element signature="e#30939#31131#0" />
+            <element signature="e#31134#31143#0" />
+            <element signature="e#31364#31373#0" />
+            <element signature="e#31676#31814#0" />
+            <element signature="e#31817#31826#0" />
+            <element signature="e#31942#32083#0" />
+            <element signature="e#32086#32095#0" />
+            <element signature="e#32196#32406#0" />
+            <element signature="e#32409#32465#0" />
+            <element signature="e#32580#32911#0" />
+            <element signature="e#33036#33141#0" />
+            <element signature="e#33366#33498#0" />
+            <element signature="e#33596#34046#0" />
+            <element signature="e#34049#34259#0" />
+            <element signature="e#34371#34380#0" />
+            <element signature="e#34371#34710#0" />
+            <element signature="e#34713#35038#0" />
+            <element signature="e#35041#35230#0" />
+            <element signature="e#35041#35441#0" />
+            <element signature="e#35542#35654#0" />
+            <element signature="e#35752#35881#0" />
+            <element signature="e#35752#36787#0" />
+            <element signature="e#36790#37049#0" />
+            <element signature="e#36790#37183#0" />
+            <element signature="e#37186#37441#0" />
+            <element signature="e#37186#37571#0" />
+            <element signature="e#37574#38339#0" />
+            <element signature="e#38460#38469#0" />
+            <element signature="e#38460#38639#0" />
+            <element signature="e#38642#38852#0" />
+            <element signature="e#38642#38990#0" />
+            <element signature="e#38993#39208#0" />
+            <element signature="e#39313#39449#0" />
+            <element signature="e#39313#39666#0" />
+            <element signature="e#39669#40894#0" />
+            <element signature="e#40897#41460#0" />
+            <element signature="e#40897#41974#0" />
+            <element signature="e#41977#42649#0" />
+            <element signature="e#42652#42817#0" />
+            <element signature="e#42820#42975#0" />
+            <element signature="e#42820#43234#0" />
+            <element signature="e#43237#43475#0" />
+            <element signature="e#43237#44017#0" />
+            <element signature="e#44020#44258#0" />
+            <element signature="e#44020#44707#0" />
+            <element signature="e#44710#44866#0" />
+            <element signature="e#44869#45154#0" />
+            <element signature="e#44869#45379#0" />
+            <element signature="e#45382#46001#0" />
+            <element signature="e#46005#46076#0" />
+            <element signature="e#46179#46396#0" />
+            <element signature="e#46523#46698#0" />
+            <element signature="e#46523#46913#0" />
+            <element signature="e#46916#47259#0" />
+            <element signature="e#46916#47392#0" />
+            <element signature="e#47395#47774#0" />
+            <element signature="e#47395#49177#0" />
+            <element signature="e#49181#49646#0" />
+            <element signature="e#49181#50013#0" />
+            <element signature="e#50016#50450#0" />
+            <element signature="e#50016#50639#0" />
+            <element signature="e#50642#51192#0" />
+            <element signature="e#50642#54080#0" />
+            <element signature="e#53249#53322#0" />
+            <element signature="e#53709#53763#0" />
+            <element signature="e#54083#54940#0" />
+            <element signature="e#54943#55262#0" />
+            <element signature="e#55496#55669#0" />
+            <element signature="e#55496#55845#0" />
+            <element signature="e#55848#56246#0" />
+            <element signature="e#55848#56428#0" />
+            <element signature="e#56320#56423#0" />
+            <element signature="e#56431#57099#0" />
+            <element signature="e#56431#58141#0" />
+            <element signature="e#58144#60212#0" />
+            <element signature="e#58458#58532#0" />
+            <element signature="e#59590#59661#0" />
+            <element signature="e#60215#60510#0" />
+            <element signature="e#60215#60982#0" />
+            <element signature="e#60986#61900#0" />
+            <element signature="e#60986#62238#0" />
+            <element signature="e#62241#62409#0" />
+            <element signature="e#62241#62756#0" />
+            <element signature="e#62759#64279#0" />
+            <element signature="e#62759#65382#0" />
+            <element signature="e#65385#65692#0" />
+            <element signature="e#65385#66074#0" />
+            <element signature="e#66077#67078#0" />
+            <element signature="e#67080#67089#0" />
+            <element signature="e#66077#67253#0" />
+            <element signature="e#67256#67487#0" />
+            <element signature="e#67256#67945#0" />
+            <element signature="e#67693#67766#0" />
+            <element signature="e#67948#68076#0" />
+            <element signature="e#67948#68237#0" />
+            <element signature="e#68240#68482#0" />
+            <element signature="e#68608#68870#0" />
+            <element signature="e#68608#69081#0" />
+            <element signature="e#69084#69277#0" />
+            <element signature="e#69370#69760#0" />
+            <element signature="e#69370#71216#0" />
+            <element signature="e#70329#70407#0" />
+            <element signature="e#71219#71466#0" />
+            <element signature="e#71219#71609#0" />
+            <element signature="e#71612#72143#0" />
+            <element signature="e#71612#72482#0" />
+            <element signature="e#72485#72993#0" />
+            <element signature="e#74044#74115#0" />
+            <element signature="e#74244#75181#0" />
+            <element signature="e#75253#76383#0" />
+            <element signature="e#76479#77057#0" />
+            <element signature="e#77198#77313#0" />
+            <element signature="e#77198#79379#0" />
+            <element signature="e#77414#77607#0" />
+            <element signature="e#77611#77756#0" />
+            <element signature="e#77760#77895#0" />
+            <element signature="e#77899#78062#0" />
+            <element signature="e#78066#78230#0" />
+            <element signature="e#78234#78411#0" />
+            <element signature="e#78415#78592#0" />
+            <element signature="e#78596#78793#0" />
+            <element signature="e#78797#79012#0" />
+            <element signature="e#79016#79224#0" />
+            <element signature="e#79228#79376#0" />
+            <element signature="e#79383#79462#0" />
+            <element signature="e#79383#79870#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.3.0/spring-beans-5.3.0-sources.jar!/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="1384" column="27" lean-forward="true" selection-start-line="1384" selection-start-column="27" selection-end-line="1384" selection-end-column="27" />
+          <folding>
+            <element signature="e#9519#9520#0" expanded="true" />
+            <element signature="e#9559#9560#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/context/beans/ConnectionMetadata.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="e#251#252#0" expanded="true" />
+            <element signature="e#280#281#0" expanded="true" />
+            <element signature="e#324#325#0" expanded="true" />
+            <element signature="e#360#361#0" expanded="true" />
+            <element signature="e#390#391#0" expanded="true" />
+            <element signature="e#416#417#0" expanded="true" />
+            <element signature="e#454#455#0" expanded="true" />
+            <element signature="e#484#485#0" expanded="true" />
+            <element signature="e#519#520#0" expanded="true" />
+            <element signature="e#550#551#0" expanded="true" />
+            <element signature="e#598#599#0" expanded="true" />
+            <element signature="e#638#639#0" expanded="true" />
+            <element signature="e#673#674#0" expanded="true" />
+            <element signature="e#704#705#0" expanded="true" />
+            <element signature="e#752#753#0" expanded="true" />
+            <element signature="e#792#793#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/support/PostProcessorRegistrationDelegate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="298" selection-start-line="298" selection-end-line="298" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/aop/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="183" column="35" lean-forward="true" selection-start-line="183" selection-start-column="35" selection-end-line="183" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.3.0/spring-core-5.3.0-sources.jar!/org/springframework/core/io/support/PropertiesLoaderSupport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="164" selection-start-line="164" selection-end-line="164" />
+          <folding>
+            <element signature="docComment;class#PropertiesLoaderSupport#0" />
+            <element signature="docComment;field#logger#0;class#PropertiesLoaderSupport#0" />
+            <element signature="docComment;method#setProperties#0;class#PropertiesLoaderSupport#0" />
+            <element signature="docComment;method#setPropertiesArray#0;class#PropertiesLoaderSupport#0" />
+            <element signature="docComment;method#setLocation#0;class#PropertiesLoaderSupport#0" />
+            <element signature="e#2580#2581#0" expanded="true" />
+            <element signature="e#2629#2630#0" expanded="true" />
+            <element signature="docComment;method#setLocations#0;class#PropertiesLoaderSupport#0" />
+            <element signature="docComment;method#setLocalOverride#0;class#PropertiesLoaderSupport#0" />
+            <element signature="docComment;method#setIgnoreResourceNotFound#0;class#PropertiesLoaderSupport#0" />
+            <element signature="method#setIgnoreResourceNotFound#0;class#PropertiesLoaderSupport#0" />
+            <element signature="docComment;method#setFileEncoding#0;class#PropertiesLoaderSupport#0" />
+            <element signature="docComment;method#setPropertiesPersister#0;class#PropertiesLoaderSupport#0" />
+            <element signature="method#setPropertiesPersister#0;class#PropertiesLoaderSupport#0" />
+            <element signature="docComment;method#mergeProperties#0;class#PropertiesLoaderSupport#0" />
+            <element signature="docComment;method#loadProperties#0;class#PropertiesLoaderSupport#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.3.0/spring-core-5.3.0-sources.jar!/org/springframework/core/env/PropertySourcesPropertyResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/support/PropertySourcesPlaceholderConfigurer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="181" selection-start-line="181" selection-end-line="181" />
+          <folding>
+            <element signature="docComment;class#PropertySourcesPlaceholderConfigurer#0" />
+            <element signature="docComment;field#LOCAL_PROPERTIES_PROPERTY_SOURCE_NAME#0;class#PropertySourcesPlaceholderConfigurer#0" />
+            <element signature="docComment;field#ENVIRONMENT_PROPERTIES_PROPERTY_SOURCE_NAME#0;class#PropertySourcesPlaceholderConfigurer#0" />
+            <element signature="docComment;method#setPropertySources#0;class#PropertySourcesPlaceholderConfigurer#0" />
+            <element signature="method#setPropertySources#0;class#PropertySourcesPlaceholderConfigurer#0" />
+            <element signature="docComment;method#setEnvironment#0;class#PropertySourcesPlaceholderConfigurer#0" />
+            <element signature="docComment;method#postProcessBeanFactory#0;class#PropertySourcesPlaceholderConfigurer#0" />
+            <element signature="class#5888:6117" />
+            <element signature="e#5987#5996#0" />
+            <element signature="docComment;method#processProperties#0;class#PropertySourcesPlaceholderConfigurer#0" />
+            <element signature="docComment;method#processProperties#1;class#PropertySourcesPlaceholderConfigurer#0" />
+            <element signature="e#7972#7981#0" />
+            <element signature="method#processProperties#1;class#PropertySourcesPlaceholderConfigurer#0" />
+            <element signature="docComment;method#getAppliedPropertySources#0;class#PropertySourcesPlaceholderConfigurer#0" />
+            <element signature="method#getAppliedPropertySources#0;class#PropertySourcesPlaceholderConfigurer#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.3.0/spring-beans-5.3.0-sources.jar!/org/springframework/beans/factory/config/PlaceholderConfigurerSupport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="226" column="38" lean-forward="true" selection-start-line="226" selection-start-column="38" selection-end-line="226" selection-end-column="38" />
+          <folding>
+            <element signature="docComment;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;field#DEFAULT_PLACEHOLDER_PREFIX#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;field#DEFAULT_PLACEHOLDER_SUFFIX#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;field#DEFAULT_VALUE_SEPARATOR#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;field#placeholderPrefix#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;field#placeholderSuffix#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;field#valueSeparator#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;method#setPlaceholderPrefix#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;method#setPlaceholderSuffix#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;method#setValueSeparator#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;method#setTrimValues#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;method#setNullValue#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;method#setIgnoreUnresolvablePlaceholders#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="method#setIgnoreUnresolvablePlaceholders#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;method#setBeanName#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="docComment;method#setBeanFactory#0;class#PlaceholderConfigurerSupport#0" />
+            <element signature="e#7968#8024#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.3.0/spring-beans-5.3.0-sources.jar!/org/springframework/beans/factory/config/BeanDefinitionVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="45" column="36" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/words.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="107" column="37" lean-forward="true" selection-start-line="107" selection-start-column="37" selection-end-line="107" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/support/ClassPathXmlApplicationContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="51" column="68" selection-start-line="51" selection-start-column="68" selection-end-line="51" selection-end-column="68" />
+          <folding>
+            <element signature="docComment;class#ClassPathXmlApplicationContext#0" />
+            <element signature="docComment;method#ClassPathXmlApplicationContext#0;class#ClassPathXmlApplicationContext#0" />
+            <element signature="docComment;method#ClassPathXmlApplicationContext#1;class#ClassPathXmlApplicationContext#0" />
+            <element signature="docComment;method#ClassPathXmlApplicationContext#2;class#ClassPathXmlApplicationContext#0" />
+            <element signature="docComment;method#ClassPathXmlApplicationContext#3;class#ClassPathXmlApplicationContext#0" />
+            <element signature="method#ClassPathXmlApplicationContext#3;class#ClassPathXmlApplicationContext#0" />
+            <element signature="docComment;method#ClassPathXmlApplicationContext#4;class#ClassPathXmlApplicationContext#0" />
+            <element signature="method#ClassPathXmlApplicationContext#4;class#ClassPathXmlApplicationContext#0" />
+            <element signature="docComment;method#ClassPathXmlApplicationContext#5;class#ClassPathXmlApplicationContext#0" />
+            <element signature="method#ClassPathXmlApplicationContext#5;class#ClassPathXmlApplicationContext#0" />
+            <element signature="docComment;method#ClassPathXmlApplicationContext#6;class#ClassPathXmlApplicationContext#0" />
+            <element signature="method#ClassPathXmlApplicationContext#6;class#ClassPathXmlApplicationContext#0" />
+            <element signature="docComment;method#ClassPathXmlApplicationContext#7;class#ClassPathXmlApplicationContext#0" />
+            <element signature="method#ClassPathXmlApplicationContext#7;class#ClassPathXmlApplicationContext#0" />
+            <element signature="docComment;method#ClassPathXmlApplicationContext#8;class#ClassPathXmlApplicationContext#0" />
+            <element signature="method#ClassPathXmlApplicationContext#8;class#ClassPathXmlApplicationContext#0" />
+            <element signature="docComment;method#ClassPathXmlApplicationContext#9;class#ClassPathXmlApplicationContext#0" />
+            <element signature="method#ClassPathXmlApplicationContext#9;class#ClassPathXmlApplicationContext#0" />
+            <element signature="e#8300#8309#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/support/AbstractXmlApplicationContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="45" column="70" selection-start-line="45" selection-start-column="70" selection-end-line="45" selection-end-column="70" />
+          <folding>
+            <element signature="docComment;class#AbstractXmlApplicationContext#0" />
+            <element signature="docComment;method#AbstractXmlApplicationContext#0;class#AbstractXmlApplicationContext#0" />
+            <element signature="method#AbstractXmlApplicationContext#0;class#AbstractXmlApplicationContext#0" />
+            <element signature="docComment;method#AbstractXmlApplicationContext#1;class#AbstractXmlApplicationContext#0" />
+            <element signature="docComment;method#setValidating#0;class#AbstractXmlApplicationContext#0" />
+            <element signature="docComment;method#loadBeanDefinitions#0;class#AbstractXmlApplicationContext#0" />
+            <element signature="method#loadBeanDefinitions#0;class#AbstractXmlApplicationContext#0" />
+            <element signature="e#3044#3103#0" />
+            <element signature="e#3328#3395#0" />
+            <element signature="docComment;method#initBeanDefinitionReader#0;class#AbstractXmlApplicationContext#0" />
+            <element signature="docComment;method#loadBeanDefinitions#1;class#AbstractXmlApplicationContext#0" />
+            <element signature="method#loadBeanDefinitions#1;class#AbstractXmlApplicationContext#0" />
+            <element signature="docComment;method#getConfigResources#0;class#AbstractXmlApplicationContext#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/support/AbstractRefreshableConfigApplicationContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="38" column="85" lean-forward="true" selection-start-line="38" selection-start-column="85" selection-end-line="38" selection-end-column="85" />
+          <folding>
+            <element signature="docComment;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="docComment;method#AbstractRefreshableConfigApplicationContext#0;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="method#AbstractRefreshableConfigApplicationContext#0;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="docComment;method#AbstractRefreshableConfigApplicationContext#1;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="docComment;method#setConfigLocation#0;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="method#setConfigLocation#0;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="docComment;method#setConfigLocations#0;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="method#setConfigLocations#0;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="docComment;method#getConfigLocations#0;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="method#getConfigLocations#0;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="docComment;method#getDefaultConfigLocations#0;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="docComment;method#resolvePath#0;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="docComment;method#setBeanName#0;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="docComment;method#afterPropertiesSet#0;class#AbstractRefreshableConfigApplicationContext#0" />
+            <element signature="method#afterPropertiesSet#0;class#AbstractRefreshableConfigApplicationContext#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/support/AbstractRefreshableApplicationContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="64" column="79" selection-start-line="64" selection-start-column="79" selection-end-line="64" selection-end-column="79" />
+          <folding>
+            <element signature="docComment;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="docComment;field#beanFactory#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="docComment;method#AbstractRefreshableApplicationContext#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="method#AbstractRefreshableApplicationContext#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="docComment;method#AbstractRefreshableApplicationContext#1;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="docComment;method#setAllowBeanDefinitionOverriding#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="method#setAllowBeanDefinitionOverriding#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="docComment;method#setAllowCircularReferences#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="method#setAllowCircularReferences#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="docComment;method#refreshBeanFactory#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="method#cancelRefresh#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="docComment;method#hasBeanFactory#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="method#getBeanFactory#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="docComment;method#assertBeanFactoryActive#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="method#assertBeanFactoryActive#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="docComment;method#createBeanFactory#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="method#createBeanFactory#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="docComment;method#customizeBeanFactory#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="method#customizeBeanFactory#0;class#AbstractRefreshableApplicationContext#0" />
+            <element signature="docComment;method#loadBeanDefinitions#0;class#AbstractRefreshableApplicationContext#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/support/GenericApplicationContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="94" column="13" selection-start-line="94" selection-start-column="13" selection-end-line="94" selection-end-column="13" />
+          <folding>
+            <element signature="docComment;class#GenericApplicationContext#0" />
+            <element signature="e#4916#5019#0" />
+            <element signature="e#5056#5057#0" expanded="true" />
+            <element signature="e#5114#5115#0" expanded="true" />
+            <element signature="e#5118#5350#0" />
+            <element signature="e#5118#5526#0" />
+            <element signature="e#5529#5703#0" />
+            <element signature="e#5529#5810#0" />
+            <element signature="e#5813#6094#0" />
+            <element signature="e#5813#6242#0" />
+            <element signature="e#6246#6466#0" />
+            <element signature="e#6246#6642#0" />
+            <element signature="e#6645#6846#0" />
+            <element signature="e#6849#7207#0" />
+            <element signature="e#6849#7381#0" />
+            <element signature="e#7384#7751#0" />
+            <element signature="e#7384#7901#0" />
+            <element signature="e#7904#8869#0" />
+            <element signature="e#8980#9051#0" />
+            <element signature="e#9194#9363#0" />
+            <element signature="e#9194#9557#0" />
+            <element signature="e#9560#9781#0" />
+            <element signature="e#9560#10075#0" />
+            <element signature="e#10078#10225#0" />
+            <element signature="e#10228#10237#0" />
+            <element signature="e#10228#10439#0" />
+            <element signature="e#10443#10514#0" />
+            <element signature="e#10659#10847#0" />
+            <element signature="e#11182#11317#0" />
+            <element signature="e#11320#11420#0" />
+            <element signature="e#11473#11474#0" expanded="true" />
+            <element signature="e#11521#11522#0" expanded="true" />
+            <element signature="e#11525#11639#0" />
+            <element signature="e#11748#12132#0" />
+            <element signature="e#12240#12406#0" />
+            <element signature="e#12410#12481#0" />
+            <element signature="e#12602#12809#0" />
+            <element signature="e#12812#12965#0" />
+            <element signature="e#12968#13132#0" />
+            <element signature="e#13579#13650#0" />
+            <element signature="e#13782#14320#0" />
+            <element signature="e#14455#15056#0" />
+            <element signature="e#14455#15360#0" />
+            <element signature="e#15223#15355#0" />
+            <element signature="e#15363#15892#0" />
+            <element signature="e#16049#16641#0" />
+            <element signature="e#16049#16831#0" />
+            <element signature="e#16834#17470#0" />
+            <element signature="e#16834#17655#0" />
+            <element signature="e#17658#18519#0" />
+            <element signature="e#19083#19238#0" />
+            <element signature="e#19533#19542#0" />
+            <element signature="e#19533#19941#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/support/GenericXmlApplicationContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+          <folding>
+            <element signature="docComment;class#GenericXmlApplicationContext#0" />
+            <element signature="docComment;method#GenericXmlApplicationContext#0;class#GenericXmlApplicationContext#0" />
+            <element signature="docComment;method#GenericXmlApplicationContext#1;class#GenericXmlApplicationContext#0" />
+            <element signature="method#GenericXmlApplicationContext#1;class#GenericXmlApplicationContext#0" />
+            <element signature="docComment;method#GenericXmlApplicationContext#2;class#GenericXmlApplicationContext#0" />
+            <element signature="method#GenericXmlApplicationContext#2;class#GenericXmlApplicationContext#0" />
+            <element signature="docComment;method#GenericXmlApplicationContext#3;class#GenericXmlApplicationContext#0" />
+            <element signature="method#GenericXmlApplicationContext#3;class#GenericXmlApplicationContext#0" />
+            <element signature="docComment;method#getReader#0;class#GenericXmlApplicationContext#0" />
+            <element signature="docComment;method#setValidating#0;class#GenericXmlApplicationContext#0" />
+            <element signature="docComment;method#setEnvironment#0;class#GenericXmlApplicationContext#0" />
+            <element signature="method#setEnvironment#0;class#GenericXmlApplicationContext#0" />
+            <element signature="e#3846#3917#0" />
+            <element signature="docComment;method#load#0;class#GenericXmlApplicationContext#0" />
+            <element signature="docComment;method#load#1;class#GenericXmlApplicationContext#0" />
+            <element signature="docComment;method#load#2;class#GenericXmlApplicationContext#0" />
+            <element signature="method#load#2;class#GenericXmlApplicationContext#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/support/AbstractApplicationContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1323">
+          <caret line="165" lean-forward="true" selection-start-line="165" selection-end-line="165" />
+          <folding>
+            <element signature="docComment;class#AbstractApplicationContext#0" />
+            <element signature="e#6770#6924#0" />
+            <element signature="e#6999#7252#0" />
+            <element signature="e#7337#7636#0" />
+            <element signature="e#7740#7945#0" />
+            <element signature="e#8045#8433#0" />
+            <element signature="initializer##0;class#AbstractApplicationContext#0" />
+            <element signature="e#8563#8641#0" />
+            <element signature="e#8760#8818#0" />
+            <element signature="e#8882#8924#0" />
+            <element signature="e#8984#9004#0" />
+            <element signature="e#9073#9095#0" />
+            <element signature="e#9145#9185#0" />
+            <element signature="e#9245#9298#0" />
+            <element signature="e#9394#9455#0" />
+            <element signature="e#9485#9553#0" />
+            <element signature="e#9615#9687#0" />
+            <element signature="e#9749#9812#0" />
+            <element signature="e#9876#9933#0" />
+            <element signature="e#9977#10029#0" />
+            <element signature="e#10090#10172#0" />
+            <element signature="e#10234#10307#0" />
+            <element signature="e#10359#10404#0" />
+            <element signature="e#10484#10520#0" />
+            <element signature="e#10600#10638#0" />
+            <element signature="e#10730#10779#0" />
+            <element signature="e#10857#10921#0" />
+            <element signature="e#10991#11059#0" />
+            <element signature="e#11167#11287#0" />
+            <element signature="e#11167#11395#0" />
+            <element signature="e#11399#11470#0" />
+            <element signature="e#11597#11836#0" />
+            <element signature="e#11934#11935#0" expanded="true" />
+            <element signature="e#11955#11956#0" expanded="true" />
+            <element signature="e#12025#12210#0" />
+            <element signature="e#12025#12364#0" />
+            <element signature="e#12367#12485#0" />
+            <element signature="e#12563#12706#0" />
+            <element signature="e#12708#12717#0" />
+            <element signature="e#12797#13260#0" />
+            <element signature="e#13378#13618#0" />
+            <element signature="e#13378#13791#0" />
+            <element signature="e#13794#13982#0" />
+            <element signature="e#14081#14221#0" />
+            <element signature="e#14081#14360#0" />
+            <element signature="e#14363#14437#0" />
+            <element signature="e#14513#14857#0" />
+            <element signature="e#14919#14920#0" expanded="true" />
+            <element signature="e#14951#14952#0" expanded="true" />
+            <element signature="e#14955#15348#0" />
+            <element signature="e#15400#15401#0" expanded="true" />
+            <element signature="e#15432#15433#0" expanded="true" />
+            <element signature="e#15436#15711#0" />
+            <element signature="e#16797#17030#0" />
+            <element signature="e#17388#17603#0" />
+            <element signature="e#17708#17923#0" />
+            <element signature="e#18243#18966#0" />
+            <element signature="e#18243#19091#0" />
+            <element signature="e#19095#19166#0" />
+            <element signature="e#19305#19749#0" />
+            <element signature="e#19305#20078#0" />
+            <element signature="e#20310#20422#0" />
+            <element signature="e#20493#20494#0" expanded="true" />
+            <element signature="e#20537#20538#0" expanded="true" />
+            <element signature="e#20862#20936#0" />
+            <element signature="e#23173#23329#0" />
+            <element signature="e#23173#24494#0" />
+            <element signature="e#23778#23844#0" />
+            <element signature="e#24323#24378#0" />
+            <element signature="e#24497#24744#0" />
+            <element signature="e#24497#24831#0" />
+            <element signature="e#24834#25003#0" />
+            <element signature="e#25130#25311#0" />
+            <element signature="e#26392#26470#0" />
+            <element signature="e#28107#28489#0" />
+            <element signature="e#28581#28757#0" />
+            <element signature="e#28970#29046#0" />
+            <element signature="e#29450#29625#0" />
+            <element signature="e#29450#29801#0" />
+            <element signature="e#29804#29896#0" />
+            <element signature="e#29804#31198#0" />
+            <element signature="e#30440#30517#0" />
+            <element signature="e#31201#31409#0" />
+            <element signature="e#33577#33852#0" />
+            <element signature="e#33954#34101#0" />
+            <element signature="e#34339#34413#0" />
+            <element signature="e#35095#35213#0" />
+            <element signature="e#35638#35709#0" />
+            <element signature="e#36632#36825#0" />
+            <element signature="e#37393#37570#0" />
+            <element signature="e#37653#38055#0" />
+            <element signature="e#39066#39415#0" />
+            <element signature="e#39470#39762#0" />
+            <element signature="e#41964#42521#0" />
+            <element signature="e#42553#42554#0" expanded="true" />
+            <element signature="e#42596#42597#0" expanded="true" />
+            <element signature="e#42600#42995#0" />
+            <element signature="e#43145#43666#0" />
+            <element signature="e#43145#43964#0" />
+            <element signature="e#43968#44039#0" />
+            <element signature="e#44159#44301#0" />
+            <element signature="e#44304#44482#0" />
+            <element signature="e#44485#44649#0" />
+            <element signature="e#44814#44995#0" />
+            <element signature="e#44998#45167#0" />
+            <element signature="e#45170#45345#0" />
+            <element signature="e#45453#45619#0" />
+            <element signature="e#45622#45788#0" />
+            <element signature="e#45791#45998#0" />
+            <element signature="e#46001#46202#0" />
+            <element signature="e#46205#46214#0" />
+            <element signature="e#46205#46375#0" />
+            <element signature="e#46378#46387#0" />
+            <element signature="e#46378#46600#0" />
+            <element signature="e#46706#46777#0" />
+            <element signature="e#47255#47464#0" />
+            <element signature="e#47467#47682#0" />
+            <element signature="e#47685#47839#0" />
+            <element signature="e#47842#48088#0" />
+            <element signature="e#48091#48249#0" />
+            <element signature="e#48252#48502#0" />
+            <element signature="e#48505#48685#0" />
+            <element signature="e#48688#48964#0" />
+            <element signature="e#48967#49166#0" />
+            <element signature="e#49169#49399#0" />
+            <element signature="e#49402#49411#0" />
+            <element signature="e#49402#49667#0" />
+            <element signature="e#49671#49742#0" />
+            <element signature="e#49874#49883#0" />
+            <element signature="e#50082#50325#0" />
+            <element signature="e#50082#50545#0" />
+            <element signature="e#50549#50620#0" />
+            <element signature="e#50742#50944#0" />
+            <element signature="e#50947#51130#0" />
+            <element signature="e#51133#51314#0" />
+            <element signature="e#51317#51522#0" />
+            <element signature="e#51317#51814#0" />
+            <element signature="e#51817#51974#0" />
+            <element signature="e#51817#52187#0" />
+            <element signature="e#52191#52262#0" />
+            <element signature="e#52394#52552#0" />
+            <element signature="e#52556#52627#0" />
+            <element signature="e#53112#53183#0" />
+            <element signature="e#53319#53934#0" />
+            <element signature="e#54029#54272#0" />
+            <element signature="e#54320#55067#0" />
+            <element signature="e#55178#55229#0" />
+            <element signature="e#55178#55549#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/context/spring-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="18" column="31" lean-forward="true" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.3.0/spring-beans-5.3.0-sources.jar!/org/springframework/beans/factory/config/BeanFactoryPostProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="62" column="17" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/5.3.0/spring-beans-5.3.0-sources.jar!/org/springframework/beans/factory/support/BeanDefinitionRegistryPostProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="32" column="68" lean-forward="true" selection-start-line="32" selection-start-column="68" selection-end-line="32" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.3.0/spring-context-5.3.0-sources.jar!/org/springframework/context/annotation/ConfigurationClassPostProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="821">
+          <caret line="280" column="78" selection-start-line="280" selection-start-column="78" selection-end-line="280" selection-end-column="78" />
+          <folding>
+            <element signature="docComment;class#ConfigurationClassPostProcessor#0" />
+            <element signature="docComment;field#IMPORT_BEAN_NAME_GENERATOR#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="docComment;field#IN_NATIVE_IMAGE#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="docComment;method#setSourceExtractor#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="method#setSourceExtractor#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="docComment;method#setProblemReporter#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="method#setProblemReporter#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="docComment;method#setMetadataReaderFactory#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="method#setMetadataReaderFactory#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="docComment;method#setBeanNameGenerator#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="method#setBeanNameGenerator#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="method#setEnvironment#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="method#setResourceLoader#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="method#setBeanClassLoader#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="method#setApplicationStartup#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="docComment;method#postProcessBeanDefinitionRegistry#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="docComment;method#postProcessBeanFactory#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="e#11831#11902#0" />
+            <element signature="docComment;method#processConfigBeanDefinitions#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="method#processConfigBeanDefinitions#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="e#13250#13446#0" />
+            <element signature="e#16598#16674#0" />
+            <element signature="docComment;method#enhanceConfigurationClasses#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="method#enhanceConfigurationClasses#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="e#17924#18001#0" />
+            <element signature="class#ImportAwareBeanPostProcessor#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="method#postProcessProperties#0;class#ImportAwareBeanPostProcessor#0;class#ConfigurationClassPostProcessor#0" />
+            <element signature="e#20872#20943#0" />
+            <element signature="method#postProcessBeforeInitialization#0;class#ImportAwareBeanPostProcessor#0;class#ConfigurationClassPostProcessor#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/essential.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/iushu/context/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="191" column="7" selection-start-line="191" selection-start-column="7" selection-end-line="191" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#objectLifecycle#0;class#Application#0" />
+            <element signature="method#smartLifecycle#0;class#Application#0" />
+            <element signature="method#shutdownGracefully#0;class#Application#0" />
+            <element signature="method#applicationEvent#0;class#Application#0" />
+            <element signature="method#propertySourceConfigurer#0;class#Application#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>IntelliJ IDEA IU-182.4323.46</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: junit:junit:4.11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.23006135" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+  <component name="mavenExecuteGoalHistory">
+    <option value="$PROJECT_DIR$" />
+    <option value="compile" />
+  </component>
+</project>

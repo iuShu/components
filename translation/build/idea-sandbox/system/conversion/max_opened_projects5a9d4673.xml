@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conversion>
+  <applied-converters>
+    <converter id="android-module-to-java-module" />
+    <converter id="android-proguard-options" />
+    <converter id="android-sdk-library" />
+    <converter id="groovy-modules-to-facets" />
+    <converter id="groovy-script-run-configurations" />
+    <converter id="junit-to-android-junit-configurations" />
+  </applied-converters>
+  <project-files>
+    <file path="/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/intellij-sdk-docs-master/code_samples/max_opened_projects/.idea/max_opened_projects.iml" timestamp="1562903647000" />
+    <file path="/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/intellij-sdk-docs-master/code_samples/max_opened_projects/.idea/misc.xml" timestamp="1562903434000" />
+    <file path="/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/intellij-sdk-docs-master/code_samples/max_opened_projects/.idea/modules.xml" timestamp="1562903357000" />
+    <file path="/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/intellij-sdk-docs-master/code_samples/max_opened_projects/.idea/workspace.xml" timestamp="1563174466000" />
+  </project-files>
+</conversion>
+

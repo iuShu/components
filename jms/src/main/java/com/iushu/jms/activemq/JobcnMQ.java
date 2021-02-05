@@ -2,7 +2,10 @@ package com.iushu.jms.activemq;
 
 import com.iushu.jms.Utils;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQMessageConsumer;
 import org.apache.activemq.command.ActiveMQObjectMessage;
+import org.apache.activemq.management.CountStatisticImpl;
+import org.apache.activemq.management.JMSConsumerStatsImpl;
 
 import javax.jms.*;
 import java.util.Date;
@@ -33,9 +36,10 @@ public class JobcnMQ {
         Session session = conn.createSession(true, Session.AUTO_ACKNOWLEDGE);
 
         try {
-
+            System.out.println(500 * 100000);
+//            browser(session, QUEUE_SEARCH);
 //            glanceMessage(session, QUEUE_SEARCH, 20);
-            glanceMessage(session, QUEUE_LOGIN, 300);
+//            glanceMessage(session, QUEUE_LOGIN, 30);
 //            glanceMessage(session, QUEUE_REGISTER, 10);
 //            glanceMessage(session, QUEUE_RESUME, 10);
 //            glanceMessage(session, QUEUE_FILE, 10);
@@ -53,13 +57,40 @@ public class JobcnMQ {
         System.err.println(">>> end");
     }
 
+    private static void browser(Session session, String queueName) throws JMSException {
+        Destination destination = session.createQueue(queueName);
+        ActiveMQMessageConsumer consumer = (ActiveMQMessageConsumer) session.createConsumer(destination);
+        glance(consumer);
+        JMSConsumerStatsImpl stats = (JMSConsumerStatsImpl) consumer.getStats();
+        CountStatisticImpl countStatistic = stats.getPendingMessageCount();
+        System.out.println(countStatistic);
+    }
 
     private static void glanceMessage(Session session, String queueName, int scale) throws JMSException {
         Destination dest = session.createQueue(queueName);
         MessageConsumer consumer = session.createConsumer(dest);
 
         ActiveMQObjectMessage message;
+        int messageCount = 0;
+        int messageSize = 0;
         for (int i : Utils.getIntArray(scale)) {
+            message = (ActiveMQObjectMessage) consumer.receive(DEFAULT_RECEIVE_TIMEOUT);
+            if (message == null)
+                return;
+            properties(message);
+//            System.out.println(message.getMessageId());
+            System.out.println(message.getObject());
+            messageSize += message.getContent().length;
+            messageCount++;
+        }
+
+        System.out.println("messageCount: " + messageCount);
+        System.out.println("totalSize: " + messageSize + " (" + (messageSize/1024) + " Kb)");
+    }
+
+    private static void glance(MessageConsumer consumer) throws JMSException {
+        ActiveMQObjectMessage message;
+        for (int i : Utils.getIntArray(10)) {
             message = (ActiveMQObjectMessage) consumer.receive(DEFAULT_RECEIVE_TIMEOUT);
             if (message == null)
                 return;

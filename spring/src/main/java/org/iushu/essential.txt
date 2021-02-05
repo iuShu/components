@@ -1,0 +1,154 @@
+210105. Config a Manufacturer bean with @Autowired annotation in a xml configuration, to figure out how it populate bean's properties.
+210106. Practice some vital and frequently used interfaces, and the usage of FactoryBean.
+210107. Overview of spring-aop module and separate the components.
+210108. Practice Jdk proxy and prepare for Spring AOP.
+210111. Analyze ProxyFactory and AopProxy within spring-aop module, core components(Advisor Advice Pointcut).
+210112. How Spring AOP intercepts a method in a CglibAopProxy and apply Advice in it.
+210113. How does the AOP module running in BeanFactory.
+210114. How to apply the AOP auto-proxy in BeanFactory instead of an ApplicationContext.
+210115. How spring AOP proxied the class in case of XML-base or Annotation-base.
+210118. Take a glance on expression module which is depended by context module.
+210119. Following up the expression module introduction brochure and see how Spring to integrate expression module.
+210120. Practicing widely the various usages of the expression module.
+210121. Taking an analysis to expression's components and figure how it parsing the expression.
+210122. [WASTED]
+210125. Figured out the function of Resource, BeanWrapper and PropertyEditor, as well as their relationship in framework.
+210126. Type Conversion and its relationship of PropertyEditor in Spring.
+210127. Learning about the Parser interface of Type Conversion.
+210128. Cope with the Printer, figure out how it work with Parser.
+210129. Take a peek to Validation modules.
+210201. More features in IOC, learn method injection and method replacer today.
+210202. Plain lifecycle phrase like init-method and destroy-method, and their diff to InitializingBean and DisposableBean
+210203. Learning the Lifecycle and SmartLifecycle, and how Spring apply them in the ApplicationContext.
+210204. Separate the implementation of Lifecycle and SmartLifecycle, then see some components.
+210205. Commit project to Github for learning everywhere. (Happy Luna New Year)
+
+TODO
+
+> interfaces  (ordered)
+    - Aware  [beans]
+        - BeanNameAware  [beans]
+        - BeanFactoryAware  [beans]
+        - ApplicationContextAware  [webmvc]
+    - InitializingBean [beans]
+    - BeanPostProcessor  [beans]
+    - BeanFactoryPostProcessor  [beans]
+
+> [core]
+    - [asm] [cglib]
+    - AnnotationMetadata
+    - AnnotatedElement
+    - MergedAnnotation
+    - [io]
+        - (PowerBy)
+            - ResourceEditor
+        - Resource
+        - ResourceLoader
+            - DefaultResourceLoader
+        - ResourcePatternResolver
+    - [env]
+        - Environment
+            - StandardEnvironment
+    - [convert]
+        - ConversionService
+            - GenericConversionService
+        - Converter
+            - GenericConverter
+        - ConverterAdapter
+        - ConverterFactory
+        - AbstractAutowireCapableBeanFactory#populateBean()
+        - TypeConverterDelegate#converteIfNecessary()
+    - [task]
+        - TaskExecutor
+
+> [beans]
+    - BeanWrapper
+        - BeanWrapperImpl
+        - PropertyEditor
+            - PropertyEditorSupport
+        - PropertyEditorRegistrar
+        - PropertyEditorRegistry
+        - PropertyAccessor
+        - TypeConverter
+    - [factory]
+        - BeanDefinition
+        - SingletonBeanRegistry
+        - BeanFactory#doGetBean()
+            - AbstractBeanFactory#createBean()
+                - AbstractAutowireCapableBeanFactory#populateBean()
+                - AbstractAutowireCapableBeanFactory#initializeBean()
+                    - XmlBeanFactory
+                        - BeanDefinitionReader
+                        - BeanDefinitionParser
+        - InstantiationStrategy
+            - SimpleInstantiationStrategy
+                - CglibSubclassingInstantiationStrategy
+        - FactoryBean
+        - BeanPostProcessor ☆☆☆☆☆
+            - InstantiationAwareBeanPostProcessor
+                - AnnotationAwareAspectJAutoProxyCreator [aop]
+                - AutowiredAnnotationBeanPostProcessor [beans]
+
+> [aop]
+    - (PowerBy)
+        - AopNamespaceHandler
+        - AspectJAutoProxyBeanDefinitionParser
+        - AspectJAwareAdvisorAutoProxyCreator (XML-base)
+        - AnnotationAwareAspectJAutoProxyCreator (Ann-base)
+        - DefaultAopProxyFactory
+        - AbstractAspectJAdvice
+        - AspectJPointcutAdvisor (XML-base)
+        - InstantiationModelAwarePointcutAdvisor (Ann-base)
+            - AspectInstanceFactory
+    - [aopalliance]
+        - Advice
+            - Interceptor
+                - ConstructorInterceptor
+                - MethodInterceptor
+        - Jointpoint
+            - Invocation
+                - ConstructorInvocation
+                - MethodInvocation
+    - AopProxyFactory
+    - AopProxy
+    - Pointcut
+    - Advisor
+    - MethodInvocation
+        - ReflectiveMethodInvocation
+    - MethodInterceptor [cglib]
+    - MethodInterceptor [aop]
+
+- [expression]
+    - SpEL (Spring Expression Language)
+    - AST (Abstract Syntax Tree in SpEL module)
+    - (PowerBy)
+        - StandardBeanExpressionResolver [context]
+        - ContextAnnotationAutowireCandidateResolver
+    - EvaluationContext
+        - SimpleEvaluationContext (subset)
+        - StandardEvaluationContext (full set)
+        - BeanResolver
+        - PropertyAccessor
+        - TypeConverter
+            - ConversionService [core]
+    - ExpressionParser
+        - InternalSpelExpressionParser
+            - SpelExpressionParser
+    - Expression
+        - SpelExpression
+    - SpelNode
+        - SpelNodeImpl
+            - CompoundExpression
+            - Literal
+            - MethodReference
+            - BeanReference
+
+- [context]
+    - [validation]
+        -
+
+> utils
+    - Beans [java.beans]
+    - BeanUtils [commons.beanutils]
+    - ClassUtils [spring.core]
+    - ReflectionUtils [spring.core]

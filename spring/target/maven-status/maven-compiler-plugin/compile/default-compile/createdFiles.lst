@@ -1,0 +1,7 @@
+org/iushu/ioc/interfaces/FocusBeanPostProcessor.class
+org/iushu/ioc/Application.class
+org/iushu/ioc/beans/Manufacturer.class
+org/iushu/App.class
+org/iushu/ioc/interfaces/FocusBeanFactoryAware.class
+org/iushu/ioc/practice/ParameterMapper.class
+org/iushu/ioc/interfaces/FocusBeanNameAware.class

@@ -1,0 +1,42 @@
+<idea-plugin>
+    <id>org.iushu.plugins.translation</id>
+    <name>IuShuTranslator</name>
+    <vendor email="HentonWu128@outlook.com" url="https://github.com/iuShu">iuShu</vendor>
+    <version>1.0.0</version>
+    <idea-version since-build="182"/>
+
+    <description>
+        <![CDATA[
+            Enter short description for your plugin here.<br>
+            <em>most HTML tags may be used</em>
+        ]]>
+    </description>
+
+    <!--
+        please see 'http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html'
+        on how to target different products uncomment to enable plugin in all products
+    -->
+    <depends>com.intellij.modules.lang</depends>
+
+    <project-components>
+        <component>
+            <implementation-class>org.iushu.plugins.tutorial.TutorialProjectComponent</implementation-class>
+        </component>
+    </project-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceInterface="org.iushu.plugins.tutorial.TutorialProjectService"
+                        serviceImplementation="org.iushu.plugins.tutorial.TutorialProjectService"/>
+
+        <toolWindow id="TutorialCalendar" secondary="true" icon="/images/plus.png" anchor="right"
+                    factoryClass="org.iushu.plugins.calendar.CalendarWindowFactory"/>
+    </extensions>
+
+    <actions>
+        <group id="plugins.tutorial" text="Greeting" description="Tutorial Menu">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action class="org.iushu.plugins.tutorial.TutorialAction" id="plugins.tutorial.action" text="Hello" description="Say Hello"/>
+        </group>
+    </actions>
+
+</idea-plugin>

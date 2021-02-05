@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conversion>
+  <applied-converters>
+    <converter id="android-module-to-java-module" />
+    <converter id="android-proguard-options" />
+    <converter id="android-sdk-library" />
+    <converter id="groovy-modules-to-facets" />
+    <converter id="groovy-script-run-configurations" />
+    <converter id="junit-to-android-junit-configurations" />
+  </applied-converters>
+  <project-files>
+    <file path="/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/sample/.idea/compiler.xml" timestamp="1536913653000" />
+    <file path="/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/sample/.idea/encodings.xml" timestamp="1536913653000" />
+    <file path="/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/sample/.idea/misc.xml" timestamp="1536913654000" />
+    <file path="/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/sample/.idea/modules.xml" timestamp="1536913670000" />
+    <file path="/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/sample/.idea/uiDesigner.xml" timestamp="1539051518000" />
+    <file path="/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/sample/.idea/vcs.xml" timestamp="1536913653000" />
+    <file path="/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/sample/.idea/workspace.xml" timestamp="1562906287000" />
+    <file path="/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/sample/sample.iml" timestamp="1536913653000" />
+  </project-files>
+</conversion>
+

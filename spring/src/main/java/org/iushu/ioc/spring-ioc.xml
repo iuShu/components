@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="manufacturer" class="org.iushu.ioc.beans.Manufacturer" autowire="byType">
+        <property name="mid" value="98M2nn177Xs6pD-238"/>
+    </bean>
+
+    <bean id="manager" class="org.iushu.ioc.beans.Manager" autowire-candidate="true" depends-on="corporation">
+        <property name="dept" value="45122"/>
+        <property name="name" value="Rod Johnson"/>
+        <property name="sid" value="1037"/>
+    </bean>
+
+    <bean id="postProcessor" class="org.iushu.ioc.components.FocusBeanPostProcessor"/>
+
+    <alias name="manufacturer" alias="mft"/>
+
+    <bean id="boris" class="org.iushu.ioc.beans.Staff" init-method="init" destroy-method="destroy">
+        <property name="name" value="Boris Johnson"/>
+        <property name="level" value="3"/>
+        <property name="title" value="Chief Executive of Treasury"/>
+    </bean>
+
+    <!-- PropertyEditor -->
+    <bean id="corporation" class="org.iushu.ioc.beans.Corporation">
+        <property name="name" value="Apple Inc."/>
+        <!--<property name="manager" value="88151#Steve"/>-->
+    </bean>
+
+    <!-- method injection -->
+    <bean id="warehouse" class="org.iushu.ioc.beans.Warehouse">
+        <lookup-method name="createManager" bean="manager"/>
+        <replaced-method name="fire" replacer="methodReplacer">
+            <arg-type>org.iushu.ioc.beans.Manager</arg-type>
+        </replaced-method>
+    </bean>
+
+    <!-- method replacer -->
+    <bean id="methodReplacer" class="org.iushu.ioc.components.FocusMethodReplacer"/>
+
+</beans>
