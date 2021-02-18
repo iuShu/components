@@ -7,6 +7,7 @@ way above   : far above / much higher than
 shoot up    : sharply rise / rapidly increase
 put forward : propose
 fix up      : ready for
+go at       : quarrel
 
 maturity    : mature ripe
 saturation  : saturate sufficient/full
@@ -51,11 +52,13 @@ pinhead                     : 猪头
 presto                      : 神奇吧
 lead on                     : 引诱/欺骗感情/误导
 about to                    : 将要..
+heads up                    : 当心
 I'm fried                   : 我脑子很乱
 fire away                   : 尽管问
 no can do                   : 不能/做不到
 get a say                   : 有发言权
 night out                   : 夜生活
+caller ID                   : 来电显示 
 good point                  : 说得好
 sign me up                  : 算我一个
 warm up to                  : 对..开始有好感
@@ -64,6 +67,7 @@ I'll get it                 : 我来开门/接电话
 I could use                 : 我想..
 blow .. off                 : 放鸽子
 be raised in                : 长大
+get the door                : 开/关门
 watch closely               : 看仔细了
 the lesson is               : 教训就是
 it never ends               : 没完没了
@@ -89,6 +93,7 @@ save it for later           : 留到后面
 while we're at it           : 那就顺便..
 feel the same way           : 想的一样/一样的想法
 you look familiar           : 你看起来很眼熟
+I'll give you that          : 我承认这点
 get this over with          : 把这事做完
 knock yourself out          : 请自便/你自己去吧
 hold out your hand          : 手伸出来
@@ -97,7 +102,9 @@ can you help me out         : 能帮帮我吗
 know better than to         : 不至于/蠢到
 for crying out loud         : 搞什么名堂/天呐够了
 pull one over on sb         : 欺骗某人
+learned the hard way        : 吃了苦头才懂的
 I'm leaving for work        : 我去上班了
+get out of your hair        : 不打扰你了
 running on a schedule       : 正按计划进行
 that's what .. is for       : 就是..的作用
 it's all in your head       : 都是你想象出来的
