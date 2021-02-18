@@ -21,7 +21,7 @@
 210202. Plain lifecycle phrase like init-method and destroy-method, and their diff to InitializingBean and DisposableBean
 210203. Learning the Lifecycle and SmartLifecycle, and how Spring apply them in the ApplicationContext.
 210204. Separate the implementation of Lifecycle and SmartLifecycle, then see some components.
-210205. Commit project to Github for learning everywhere. (Happy Luna New Year)
+210205. Commit project to Github for learning everywhere. (Happy Lunar New Year)
 
 TODO
 
