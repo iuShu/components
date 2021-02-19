@@ -32,6 +32,7 @@ censor      : review/examine
 chill       : relax/rest
 vision      : beauty
 stink       : bad/terrible
+decompose   : resolve/rotting
 
 in due course   : timely
 blue chips      : blue stock
@@ -66,6 +67,7 @@ go over to                  : 去
 I'll get it                 : 我来开门/接电话
 I could use                 : 我想..
 blow .. off                 : 放鸽子
+in the zone                 : 正进入状态
 be raised in                : 长大
 get the door                : 开/关门
 watch closely               : 看仔细了
@@ -82,6 +84,7 @@ that's my ride              : 接我的车来了
 give it a shot              : 给个机会
 for the record              : 声明一下
 stand a chance              : 有机会
+take one's time             : 慢慢来/别着急
 put it this way             : 换句话说
 shoot some hoop             : 投篮
 not much of a n.            : 不怎么会../算不上
@@ -105,6 +108,7 @@ pull one over on sb         : 欺骗某人
 learned the hard way        : 吃了苦头才懂的
 I'm leaving for work        : 我去上班了
 get out of your hair        : 不打扰你了
+have a lot in common        : 有很多共同点
 running on a schedule       : 正按计划进行
 that's what .. is for       : 就是..的作用
 it's all in your head       : 都是你想象出来的
@@ -114,7 +118,9 @@ save the best for last      : 压轴
 it's all taken care of      : 都搞定了
 We've been through this     : 我们说过这事了
 under any circumstances     : 在任何情况下
+kick/take it up a notch     : 提升到更高水平/提档
 somewhere along the way     : 在这过程中(某刻)
+let one's freak flag fly    : 放飞自我
 running behind a schedule   : 进度落后
 get this all under control  : 尽在掌控之中
 what seems to be the problem        : 出了什么问题
