@@ -23,7 +23,7 @@
 210204. Separate the implementation of Lifecycle and SmartLifecycle, then see some components.
 210205. Commit project to Github for learning everywhere. (Happy Lunar New Year)
 
-TODO
+TODO Access more components that occurred in component-scan configuration.
 
 > Bean's Lifecycle
     - getBean
