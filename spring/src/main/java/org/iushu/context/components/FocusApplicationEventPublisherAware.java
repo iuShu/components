@@ -1,6 +1,7 @@
 package org.iushu.context.components;
 
 import org.iushu.context.beans.Conductor;
+import org.iushu.context.beans.ConductorEvent;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
@@ -23,21 +24,6 @@ public class FocusApplicationEventPublisherAware implements ApplicationEventPubl
 
     public void publishEvent(Conductor conductor) {
         this.eventPublisher.publishEvent(new ConductorEvent(conductor));
-    }
-
-    /**
-     * Custom ApplicationEvent
-     */
-    class ConductorEvent extends ApplicationEvent {
-
-        public ConductorEvent(Object source) {
-            super(source);
-        }
-
-        @Override
-        public Conductor getSource() {
-            return (Conductor) super.getSource();
-        }
     }
 
 }

@@ -10,8 +10,10 @@ import org.iushu.context.components.FocusApplicationListener;
 import org.iushu.context.components.GracefulApplicationContext;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.*;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.RootBeanDefinition;
+import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
@@ -19,6 +21,7 @@ import org.springframework.context.support.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ProtocolResolver;
 import org.springframework.core.io.Resource;
+import org.w3c.dom.Element;
 
 import java.util.Map;
 import java.util.Properties;
@@ -186,11 +189,14 @@ public class Application {
         System.out.println(metadata);
     }
 
-    private static void checkComponents(AbstractApplicationContext context) {
-        System.out.println(context.getEnvironment().getClass().getName());
+    public static void checkComponents(AbstractApplicationContext context) {
+        DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) context.getBeanFactory();
+        System.out.println("Environment: " + context.getEnvironment().getClass().getName());
 
         for (BeanFactoryPostProcessor processor : context.getBeanFactoryPostProcessors())
             System.out.println("BeanFactoryPostProcessor: " + processor.getClass().getName());
+        for (BeanPostProcessor processor : beanFactory.getBeanPostProcessors())
+            System.out.println("BeanPostProcessor: " + processor.getClass().getName());
         for (ApplicationListener listener : context.getApplicationListeners())
             System.out.println("ApplicationListener: " + listener.getClass().getName());
         for (ProtocolResolver resolver : context.getProtocolResolvers())
@@ -204,13 +210,39 @@ public class Application {
     /**
      * Internal components while configured <context:annotation-config/>
      *
-     * @see org.springframework.context.annotation.ConfigurationClassPostProcessor
-     * @see org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
+     * @see org.springframework.context.annotation.AnnotationConfigBeanDefinitionParser#parse(Element, ParserContext)
+     * @see org.springframework.context.annotation.AnnotationConfigUtils#registerAnnotationConfigProcessors(BeanDefinitionRegistry, Object)
+     *
+     * @see org.springframework.context.annotation.ConfigurationClassPostProcessor supports @Configuration annotation
      * @see org.springframework.context.annotation.CommonAnnotationBeanPostProcessor
-     * @see org.springframework.context.event.EventListenerMethodProcessor
-     * @see org.springframework.context.event.DefaultEventListenerFactory
+     * @see org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
+     * @see org.springframework.context.event.EventListenerMethodProcessor supports @EventListener annotation
+     * @see org.springframework.context.event.DefaultEventListenerFactory supports @EventListener annotation
+     *
+     * @see ApplicationComponents#main(String[])  more details in components of ApplicationContext
      */
     public static void contextAnnotationConfig() {
+        AbstractApplicationContext context = new ClassPathXmlApplicationContext("org/iushu/context/spring-context.xml");
+        context.refresh();
+        checkComponents(context);
+    }
+
+    /**
+     * BeanPostProcessor
+     * @see org.springframework.context.support.ApplicationContextAwareProcessor supports the *Aware interfaces
+     * @see org.springframework.context.annotation.ConfigurationClassPostProcessor.ImportAwareBeanPostProcessor
+     * @see org.springframework.context.support.ApplicationListenerDetector
+     * @see org.springframework.context.annotation.CommonAnnotationBeanPostProcessor
+     * @see org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
+     *
+     * BeanFactoryPostProcessor
+     * @see org.springframework.context.annotation.ConfigurationClassPostProcessor supports @Configuration annotation
+     * @see org.springframework.context.annotation.CommonAnnotationBeanPostProcessor
+     * @see org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
+     * @see org.springframework.context.event.EventListenerMethodProcessor supports @EventListener annotation
+     * @see org.springframework.context.event.DefaultEventListenerFactory supports @EventListener annotation
+     */
+    public static void contextComponentScan() {
         AbstractApplicationContext context = new ClassPathXmlApplicationContext("org/iushu/context/spring-context.xml");
         context.refresh();
         checkComponents(context);
@@ -222,7 +254,8 @@ public class Application {
 //        shutdownGracefully();
 //        applicationEvent();
 //        propertySourceConfigurer();
-        contextAnnotationConfig();
+//        contextAnnotationConfig();
+        contextComponentScan();
     }
 
 }

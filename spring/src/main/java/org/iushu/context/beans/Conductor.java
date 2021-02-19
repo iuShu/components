@@ -32,6 +32,13 @@ public class Conductor extends Senator {
         state = ConductorState.END;
     }
 
+    @Override
+    public String toString() {
+        return "Conductor{" +
+                "state=" + state +
+                "} " + super.toString();
+    }
+
     public enum ConductorState {
 
         START((conductor) -> {

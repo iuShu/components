@@ -25,13 +25,35 @@
 
 TODO
 
+> Bean's Lifecycle
+    - getBean
+    - doGetBean
+    - getSingleton
+    - createBean
+    - Instantiate
+        - beforeInstantiation
+        - afterInstantiation
+    - doCreateBean
+    - initializeBean
+    - Initialize
+        - beforeInitialization
+        - invokeInitMethod
+        - afterInitialization
+    - registerDisposableBeanIfNecessary
+
 > interfaces  (ordered)
     - Aware  [beans]
         - BeanNameAware  [beans]
         - BeanFactoryAware  [beans]
         - ApplicationContextAware  [webmvc]
     - InitializingBean [beans]
+    - SmartInitializingSingleton [beans]
     - BeanPostProcessor  [beans]
+        - postProcessBeforeInitialization()
+        - postProcessAfterInitialization()
+        - InstantiationAwareBeanPostProcessor (Instantiate then Initialize)
+            - postProcessBeforeInstantiation()
+            - postProcessAfterInstantiation()
     - BeanFactoryPostProcessor  [beans]
 
 > [core]

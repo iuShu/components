@@ -6,6 +6,7 @@ import org.iushu.ioc.components.FocusPropertyEditoryRegistrar;
 import org.springframework.beans.*;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.CustomEditorConfigurer;
@@ -84,13 +85,25 @@ public class Application {
     }
 
     /**
-     * The lazy-init feature will be activated in working with context module.
-     * @see org.springframework.context.ApplicationContext
+     * The lazy-init feature actually use at context module
+     *
+     * @see org.springframework.context.support.AbstractApplicationContext#finishBeanFactoryInitialization(ConfigurableListableBeanFactory)
+     * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory#preInstantiateSingletons()
      */
     public static void lazyInitBean() {
-        BeanFactory beanFactory = getBeanFactory();
-        System.err.println(System.currentTimeMillis());
-        beanFactory.getBean(Manager.class);
+        RootBeanDefinition corporationDefinition = new RootBeanDefinition(Deliver.class);
+        RootBeanDefinition deliverDefinition = new RootBeanDefinition(Deliver.class);
+        deliverDefinition.setLazyInit(true);
+
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        beanFactory.registerBeanDefinition("corporation", corporationDefinition);
+        beanFactory.registerBeanDefinition("deliver", deliverDefinition);
+
+        System.out.println(beanFactory.containsSingleton("corporation"));   // false
+        System.out.println(beanFactory.containsSingleton("deliver"));       // false
+        beanFactory.preInstantiateSingletons();
+        System.out.println(beanFactory.containsSingleton("corporation"));   // true
+        System.out.println(beanFactory.containsSingleton("deliver"));       // false
     }
 
     /**
