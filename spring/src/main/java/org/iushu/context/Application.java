@@ -17,6 +17,7 @@ import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.support.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ProtocolResolver;
@@ -228,6 +229,8 @@ public class Application {
     }
 
     /**
+     * Internal components while configured <context:component-scan/>
+     *
      * BeanPostProcessor
      * @see org.springframework.context.support.ApplicationContextAwareProcessor supports the *Aware interfaces
      * @see org.springframework.context.annotation.ConfigurationClassPostProcessor.ImportAwareBeanPostProcessor

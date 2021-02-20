@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @see org.springframework.context.annotation.ConfigurationClassPostProcessor
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.context.annotation.ConfigurationClassPostProcessor supports @Configuration @Bean @Import
  * @see org.springframework.context.annotation.ConfigurationClass wrap a @Configuration class in Spring
  *
  * @author iuShu

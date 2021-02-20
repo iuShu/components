@@ -4,12 +4,23 @@ import org.iushu.context.annotation.FocusConfiguration;
 import org.iushu.context.beans.Conductor;
 import org.iushu.context.beans.ConductorEvent;
 import org.iushu.context.beans.Microphone;
+import org.iushu.context.beans.ScreenRemote;
 import org.iushu.context.components.FocusApplicationListener;
+import org.springframework.beans.PropertyValues;
+import org.springframework.beans.TypeConverter;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.DependencyDescriptor;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 import org.springframework.context.event.DefaultEventListenerFactory;
 import org.springframework.context.event.EventListenerMethodProcessor;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
 import java.util.Set;
@@ -49,17 +60,52 @@ public class ApplicationComponents {
     /**
      * TODO How CommonAnnotationBeanPostProcessor integrating the JNDI module in Spring
      *
-     * @see org.springframework.context.annotation.CommonAnnotationBeanPostProcessor supports @PreDestroy and @PostConstruct
+     * @see javax.annotation.Resource
+     * @see javax.annotation.PostConstruct
+     * @see javax.annotation.PreDestroy
+     * @see org.springframework.context.annotation.CommonAnnotationBeanPostProcessor supports @Resource @PreDestroy @PostConstruct
      * @see org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor the superclass that actually supports the annotations
+     *
+     * @see org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor supports @Autowired @Value
+     *
+     * @see org.springframework.beans.factory.annotation.Autowired byType then byName
+     * @see AutowiredAnnotationBeanPostProcessor#postProcessProperties(PropertyValues, Object, String)
+     * @see org.springframework.beans.factory.annotation.InjectionMetadata#inject(Object, String, PropertyValues)
+     * @see org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.AutowiredFieldElement#inject(Object, String, PropertyValues)
+     * @see org.springframework.beans.factory.support.DefaultListableBeanFactory#resolveDependency(DependencyDescriptor, String)
+     * @see org.springframework.beans.factory.support.DefaultListableBeanFactory#doResolveDependency(DependencyDescriptor, String, Set, TypeConverter)
+     * @see org.springframework.beans.factory.support.AutowireCandidateResolver#getSuggestedValue(DependencyDescriptor)
+     * @see org.springframework.beans.factory.support.DefaultListableBeanFactory#resolveMultipleBeans(DependencyDescriptor, String, Set, TypeConverter)
+     * @see org.springframework.beans.factory.support.DefaultListableBeanFactory#findAutowireCandidates(String, Class, DependencyDescriptor)
+     *
+     * NOTE: Spring would changes to byType mode and invoke BeanFactory#resolveDependency(like @Autowired did) if failed in byName mode.
+     * @see javax.annotation.Resource byName then byType
+     * @see org.springframework.context.annotation.CommonAnnotationBeanPostProcessor#postProcessProperties(PropertyValues, Object, String)
+     * @see org.springframework.beans.factory.annotation.InjectionMetadata#inject(Object, String, PropertyValues)
+     * @see org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.ResourceElement#inject(Object, String, PropertyValues)
+     * @see org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.ResourceElement#getResourceToInject(Object, String)
+     * @see org.springframework.context.annotation.CommonAnnotationBeanPostProcessor#getResource(CommonAnnotationBeanPostProcessor.LookupElement, String)
+     * @see org.springframework.context.annotation.CommonAnnotationBeanPostProcessor#autowireResource(BeanFactory, CommonAnnotationBeanPostProcessor.LookupElement, String)
+     *
+     * Components for autowire candidate
+     * @see org.springframework.beans.factory.annotation.InjectionMetadata.InjectedElement
+     * @see org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.AutowiredFieldElement supports @Autowired
+     * @see org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.AutowiredMethodElement supports @Autowired
+     * @see org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.ResourceElement supports @Resource
+     *
      */
     private static void commonAnnotationBeanPostProcessor() {
-        GenericApplicationContext context = new GenericApplicationContext();
-        context.registerBean(CommonAnnotationBeanPostProcessor.class);
-        context.registerBean(Microphone.class);
-        context.refresh();
+        AbstractApplicationContext context = new ClassPathXmlApplicationContext("org/iushu/context/spring-context.xml");
+//        GenericApplicationContext context = new GenericApplicationContext();
+//        context.registerBean(CommonAnnotationBeanPostProcessor.class);
+//        context.registerBean(AutowiredAnnotationBeanPostProcessor.class);
+//        context.registerBean(Microphone.class);
+//        context.registerBean(ScreenRemote.class);
+//        context.refresh();
 
-        Microphone microphone = context.getBean(Microphone.class);
-        System.out.println(microphone);
+        // @Autowired vs @Resource
+        Conductor conductor = context.getBean(Conductor.class);
+        System.out.println(conductor);
 
         context.close();
     }

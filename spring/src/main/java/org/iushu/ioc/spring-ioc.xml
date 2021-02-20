@@ -40,4 +40,29 @@
     <!-- method replacer -->
     <bean id="methodReplacer" class="org.iushu.ioc.components.FocusMethodReplacer"/>
 
+    <!-- cascade populate -->
+    <bean class="org.iushu.ioc.beans.Packet">
+        <property name="pid" value="8201922577123810"/>
+        <property name="name" value="iPhone 12 256G"/>
+        <property name="sender" value="Peek Donald"/>
+        <property name="sendDate" value="1613786692410"/>
+        <property name="from" value="California"/>
+        <property name="carrier" ref="leo"/>
+        <property name="carrier.space" value="10"/>
+    </bean>
+
+    <bean id="leo" class="org.iushu.ioc.beans.Deliver">
+        <property name="sid" value="9836"/>
+        <property name="name" value="Leo Roan"/>
+        <property name="title" value="E-commercial Delivery"/>
+        <property name="space" value="16"/>
+    </bean>
+
+    <bean id="ivy" class="org.iushu.ioc.beans.Deliver">
+        <property name="sid" value="8570"/>
+        <property name="name" value="Ivy Roan"/>
+        <property name="title" value="E-commercial Delivery"/>
+        <property name="space" value="10"/>
+    </bean>
+
 </beans>

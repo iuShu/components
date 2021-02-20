@@ -22,6 +22,8 @@
 210203. Learning the Lifecycle and SmartLifecycle, and how Spring apply them in the ApplicationContext.
 210204. Separate the implementation of Lifecycle and SmartLifecycle, then see some components.
 210205. Commit project to Github for learning everywhere. (Happy Lunar New Year)
+210219. Learning the components, that implemented BeanPostProcessor, to figure out how they support those annotations.
+210220. Still in those components and compared two common annotation @Autowired and @Resource
 
 TODO Access more components that occurred in component-scan configuration.
 
@@ -34,6 +36,7 @@ TODO Access more components that occurred in component-scan configuration.
         - beforeInstantiation
         - afterInstantiation
     - doCreateBean
+    - populateBeanProperty
     - initializeBean
     - Initialize
         - beforeInitialization
@@ -110,6 +113,8 @@ TODO Access more components that occurred in component-scan configuration.
             - InstantiationAwareBeanPostProcessor
                 - AnnotationAwareAspectJAutoProxyCreator [aop]
                 - AutowiredAnnotationBeanPostProcessor [beans]
+                - CommonAnnotationBeanPostProcessor [context]
+                - ImportAwareBeanPostProcessor [context]
 
 > [aop]
     - (PowerBy)

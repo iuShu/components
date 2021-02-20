@@ -16,7 +16,14 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <!--<context:annotation-config/>-->
-    <context:component-scan base-package="org.iushu.context"/>
+    <context:annotation-config/>
+    <!--<context:component-scan base-package="org.iushu.context"/>-->
+
+    <!-- @Autowired vs @Resource -->
+    <bean id="mph" class="org.iushu.context.beans.Microphone"/>
+    <bean id="microphone" class="org.iushu.context.beans.Microphone"/>
+    <bean id="sr" class="org.iushu.context.beans.ScreenRemote"/>
+    <!--<bean id="screenRemote" class="org.iushu.context.beans.ScreenRemote"/>-->
+    <bean class="org.iushu.context.beans.Conductor"/>
 
 </beans>

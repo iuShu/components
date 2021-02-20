@@ -6,10 +6,10 @@ import org.iushu.ioc.components.FocusPropertyEditoryRegistrar;
 import org.springframework.beans.*;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.config.CustomEditorConfigurer;
+import org.springframework.beans.factory.annotation.QualifierAnnotationAutowireCandidateResolver;
+import org.springframework.beans.factory.config.*;
 import org.springframework.beans.factory.support.*;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -18,6 +18,7 @@ import org.springframework.core.io.Resource;
 import java.beans.PropertyEditor;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -31,10 +32,67 @@ public class Application {
         return new XmlBeanFactory(configResource);
     }
 
+    /**
+     * NOTE: Spring can automatically search beans to autowire while configured autowire attribute.
+     * @see org.springframework.beans.factory.config.AutowireCapableBeanFactory
+     */
     public static void populateBean() {
         BeanFactory beanFactory = getBeanFactory();
         Manufacturer manufacturer = beanFactory.getBean(Manufacturer.class);
         System.out.println(manufacturer);
+    }
+
+    /**
+     * see configuration also
+     */
+    public static void cascadePopulate() {
+        BeanFactory beanFactory = getBeanFactory();
+        Packet packet = beanFactory.getBean(Packet.class);
+        System.out.println(packet);
+    }
+
+    /**
+     * Autowired Candidate and Qualifier in IOC
+     *
+     * @see org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor supports @Autowired
+     * @see org.springframework.beans.factory.annotation.QualifierAnnotationAutowireCandidateResolver supports @Qualifier
+     * @see org.springframework.context.annotation.ContextAnnotationAutowireCandidateResolver supports @Qualifier and more in context module
+     *
+     * @see org.springframework.beans.factory.support.DefaultListableBeanFactory#doResolveDependency(DependencyDescriptor, String, Set, TypeConverter)
+     * @see org.springframework.beans.factory.support.DefaultListableBeanFactory#findAutowireCandidates(String, Class, DependencyDescriptor)
+     * @see org.springframework.beans.factory.support.AutowireCandidateResolver#isAutowireCandidate(BeanDefinitionHolder, DependencyDescriptor)
+     *
+     * register AutowireCandidateResolver in ApplicationContext supports @Qualifier
+     * @see org.springframework.context.annotation.AnnotationConfigUtils#registerAnnotationConfigProcessors(BeanDefinitionRegistry, Object)
+     */
+    public static void autowireProperty() {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // supports @Autowired
+        AutowiredAnnotationBeanPostProcessor beanPostProcessor = new AutowiredAnnotationBeanPostProcessor();
+        beanPostProcessor.setBeanFactory(beanFactory);
+        beanFactory.addBeanPostProcessor(beanPostProcessor);
+
+        // resolve autowired candidate problem and supports @Qualifier
+        QualifierAnnotationAutowireCandidateResolver candidateResolver = new QualifierAnnotationAutowireCandidateResolver();
+        candidateResolver.setBeanFactory(beanFactory);
+        beanFactory.setAutowireCandidateResolver(candidateResolver);
+
+//        RootBeanDefinition packetDef = new RootBeanDefinition(Packet.class);
+        beanFactory.registerBeanDefinition("packet", new RootBeanDefinition(Packet.class));
+
+        RootBeanDefinition leoDef = new RootBeanDefinition(Deliver.class);
+        MutablePropertyValues values = leoDef.getPropertyValues();
+        values.addPropertyValue("name", "Leo Roan");
+        beanFactory.registerBeanDefinition("leo", leoDef);
+
+        RootBeanDefinition ivyDef = new RootBeanDefinition(Deliver.class);
+        values = ivyDef.getPropertyValues();
+        values.addPropertyValue("name", "Ivy Rina");
+        beanFactory.registerBeanDefinition("ivy", ivyDef);
+
+        Packet packet = beanFactory.getBean(Packet.class);
+        System.out.println(packet);
     }
 
     public static void interfaces() {
@@ -86,6 +144,7 @@ public class Application {
 
     /**
      * The lazy-init feature actually use at context module
+     * Note: BeanFactory will create bean in getBean(), do not create in loading configuration
      *
      * @see org.springframework.context.support.AbstractApplicationContext#finishBeanFactoryInitialization(ConfigurableListableBeanFactory)
      * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory#preInstantiateSingletons()
@@ -257,10 +316,12 @@ public class Application {
 
     public static void main(String[] args) {
 //        populateBean();
+//        cascadePopulate();
+//        autowireProperty();
 //        interfaces();
 //        factoryBean();
 //        dependsOn();
-        lazyInitBean();
+//        lazyInitBean();
 //        abstractMethodInjection();
 //        arbitraryMethodReplacer();
 //        beanLifecycle();

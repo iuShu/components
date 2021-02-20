@@ -1,5 +1,8 @@
 package org.iushu.context.beans;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
 import java.util.function.Consumer;
 
 /**
@@ -8,16 +11,18 @@ import java.util.function.Consumer;
  */
 public class Conductor extends Senator {
 
+    @Autowired
+    private Microphone microphone;
+
+    @Resource
+    private ScreenRemote screenRemote;
+
     private ConductorState state;
 
     public Conductor() {
         setTitle("Senator Conductor");
         setLevel(9);
         state = ConductorState.END;
-    }
-
-    public ConductorState getState() {
-        return state;
     }
 
     public void start() {
@@ -32,11 +37,36 @@ public class Conductor extends Senator {
         state = ConductorState.END;
     }
 
+    public ConductorState getState() {
+        return state;
+    }
+
+    public Microphone getMicrophone() {
+        return microphone;
+    }
+
+    public void setMicrophone(Microphone microphone) {
+        this.microphone = microphone;
+    }
+
+    public ScreenRemote getScreenRemote() {
+        return screenRemote;
+    }
+
+    public void setScreenRemote(ScreenRemote screenRemote) {
+        this.screenRemote = screenRemote;
+    }
+
     @Override
     public String toString() {
         return "Conductor{" +
-                "state=" + state +
-                "} " + super.toString();
+                "title='" + getTitle() + '\'' +
+                ", name='" + getName() + '\'' +
+                ", level=" + getLevel() +
+                ", state=" + state +
+                ", microphone=" + microphone +
+                ", screenRemote=" + screenRemote +
+                "}";
     }
 
     public enum ConductorState {
