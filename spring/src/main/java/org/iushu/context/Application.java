@@ -230,6 +230,7 @@ public class Application {
 
     /**
      * Internal components while configured <context:component-scan/>
+     * NOTE: <context:component-scan/> implicitly enables the functionality of <context:annotation-config/>
      *
      * BeanPostProcessor
      * @see org.springframework.context.support.ApplicationContextAwareProcessor supports the *Aware interfaces

@@ -1,6 +1,7 @@
 package org.iushu.context;
 
 import org.iushu.context.annotation.FocusConfiguration;
+import org.iushu.context.annotation.beans.Pet;
 import org.iushu.context.beans.Conductor;
 import org.iushu.context.beans.ConductorEvent;
 import org.iushu.context.beans.Microphone;
@@ -11,6 +12,7 @@ import org.springframework.beans.TypeConverter;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.DependencyDescriptor;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -41,6 +43,7 @@ public class ApplicationComponents {
      * @see org.springframework.context.annotation.ConfigurationClassPostProcessor#postProcessBeanDefinitionRegistry(BeanDefinitionRegistry)
      * @see org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader#loadBeanDefinitions(Set)
      * @see org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader#loadBeanDefinitionsForBeanMethod(org.springframework.context.annotation.BeanMethod) supports @Bean in @Configuration
+     * @see org.iushu.context.ApplicationAnnotation#configuration() more details
      */
     private static void configurationClassPostProcessor() {
         // The Configuration class will be enhanced by Cglib, add this attribute to check the source code of the enhanced class.
@@ -53,8 +56,8 @@ public class ApplicationComponents {
         context.refresh();
         checkComponents(context);
 
-        Conductor conductor = context.getBean(Conductor.class);
-        System.out.println(conductor);
+        Pet pet = context.getBean(Pet.class);
+        System.out.println(pet);
     }
 
     /**
@@ -119,6 +122,23 @@ public class ApplicationComponents {
     }
 
     /**
+     * @see org.springframework.context.support.ApplicationListenerDetector
+     * @see org.springframework.context.support.AbstractApplicationContext#prepareBeanFactory(ConfigurableListableBeanFactory)
+     */
+    public static void applicationListenDetector() {
+        GenericApplicationContext context = new GenericApplicationContext();
+        context.registerBean(FocusApplicationListener.class);
+        context.registerBean(Conductor.class);
+        context.refresh();
+
+        Conductor conductor = context.getBean(Conductor.class);
+        conductor.setName("Mike");
+        conductor.start();
+        context.publishEvent(new ConductorEvent(conductor));
+        checkComponents(context);
+    }
+
+    /**
      * Components for support annotation @EventListener
      *
      * @see org.springframework.context.event.EventListener
@@ -141,8 +161,10 @@ public class ApplicationComponents {
     }
 
     public static void main(String[] args) {
-//        configurationClassPostProcessor();
-        commonAnnotationBeanPostProcessor();
+        configurationClassPostProcessor();
+//        commonAnnotationBeanPostProcessor();
+//        autowiredAnnotationBeanPostProcessor();
+//        applicationListenDetector();
 //        eventListenerMethodProcessor();
     }
 

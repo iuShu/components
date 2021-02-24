@@ -1,32 +1,34 @@
 package org.iushu.context.annotation;
 
-import org.iushu.context.beans.Conductor;
+import org.iushu.context.annotation.beans.Pet;
+import org.iushu.context.annotation.beans.Poultry;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * @see org.springframework.context.annotation.Bean
  * @see org.springframework.context.annotation.Import
- * @see org.springframework.context.annotation.ConfigurationClassPostProcessor supports @Configuration @Bean @Import
- * @see org.springframework.context.annotation.ConfigurationClass wrap a @Configuration class in Spring
  *
  * @author iuShu
  * @since 2/19/21
  */
 @Configuration
+@ComponentScan(basePackages = "org.iushu.context.annotation")
 public class FocusConfiguration {
 
-    /**
-     * @see org.springframework.context.annotation.BeanMethod the class that Spring supports @Bean annotation
-     */
     @Bean
-    public Conductor defaultConductor() {
-        Conductor conductor = new Conductor();
-        conductor.setName("default");
-        conductor.setTitle("staff");
-        conductor.setLevel(1);
-        conductor.start();
-        return conductor;
+    public Pet defaultPet() {
+        Pet pet = new Pet();
+        pet.setName("Giraffe");
+        return pet;
+    }
+
+    @Bean(initMethod = "birth")
+    public Poultry rooster() {
+        Poultry rooster = new Poultry();
+        rooster.setName("rooster");
+        return rooster;
     }
 
 }

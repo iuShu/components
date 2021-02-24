@@ -7,7 +7,6 @@ import org.springframework.beans.*;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
-import org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.annotation.QualifierAnnotationAutowireCandidateResolver;
 import org.springframework.beans.factory.config.*;
 import org.springframework.beans.factory.support.*;
@@ -73,7 +72,7 @@ public class Application {
         beanPostProcessor.setBeanFactory(beanFactory);
         beanFactory.addBeanPostProcessor(beanPostProcessor);
 
-        // resolve autowired candidate problem and supports @Qualifier
+        // supports @Qualifier
         QualifierAnnotationAutowireCandidateResolver candidateResolver = new QualifierAnnotationAutowireCandidateResolver();
         candidateResolver.setBeanFactory(beanFactory);
         beanFactory.setAutowireCandidateResolver(candidateResolver);
@@ -93,6 +92,84 @@ public class Application {
 
         Packet packet = beanFactory.getBean(Packet.class);
         System.out.println(packet);
+    }
+
+    /**
+     * FactoryBean: inject the bean created from FactoryBean.
+     * ObjectFactory: inject a ObjectFactory, getting target bean from BeanFactory while it getting invoke. (lazy inject)
+     * ObjectProvider: inject a ObjectProvider, getting target bean from BeanFactory while it getting invoke. (lazy inject)
+     *
+     * @see org.springframework.beans.factory.FactoryBean
+     * @see DefaultListableBeanFactory#doResolveDependency(DependencyDescriptor, String, Set, TypeConverter)
+     * @see DefaultListableBeanFactory#findAutowireCandidates(String, Class, DependencyDescriptor)
+     *
+     * @see org.springframework.beans.factory.ObjectFactory core conception
+     * @see org.springframework.beans.factory.ObjectProvider the variant of ObjectFactory, providing stream and more functionalities
+     * @see org.springframework.beans.factory.support.DefaultListableBeanFactory.DependencyObjectProvider supports ObjectFactory, core component
+     *
+     * @see javax.inject.Provider standard equivalents to ObjectFactory
+     * @see org.springframework.beans.factory.support.DefaultListableBeanFactory.Jsr330Factory.Jsr330Provider an implementation fo DependencyObjectProvider
+     * @see DefaultListableBeanFactory#resolveDependency(DependencyDescriptor, String, Set, TypeConverter)
+     */
+    public static void autowireFactoryBean() {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // supports @Autowired and @Inject
+        AutowiredAnnotationBeanPostProcessor beanPostProcessor = new AutowiredAnnotationBeanPostProcessor();
+        beanPostProcessor.setBeanFactory(beanFactory);
+        beanFactory.addBeanPostProcessor(beanPostProcessor);
+
+        beanFactory.registerBeanDefinition("factory", new RootBeanDefinition(StaffFactory.class));
+        beanFactory.registerBeanDefinition("iceCream", new RootBeanDefinition(Grocery.IceCream.class));
+        beanFactory.registerBeanDefinition("coffee", new RootBeanDefinition(Grocery.Coffee.class));
+        beanFactory.registerBeanDefinition("grocery", new RootBeanDefinition(Grocery.class));
+
+        Grocery grocery = beanFactory.getBean(Grocery.class);
+        System.out.println(grocery);
+
+        Grocery.IceCream iceCream = grocery.iceCream();
+        System.out.println(iceCream);
+
+        Grocery.Coffee coffee = grocery.coffee();
+        System.out.println(coffee);
+    }
+
+    /**
+     * NOTE: depended on javax.inject module
+     *
+     * @see javax.inject.Inject
+     * @see javax.inject.Named
+     * @see javax.inject.Qualifier
+     * @see QualifierAnnotationAutowireCandidateResolver supports javax.inject.Qualifier and javax.inject.Named
+     *
+     * @see AutowiredAnnotationBeanPostProcessor#AutowiredAnnotationBeanPostProcessor() supports javax.inject.Inject
+     * @see QualifierAnnotationAutowireCandidateResolver#QualifierAnnotationAutowireCandidateResolver() supports javax.inject.Qualifier annotation
+     *
+     * @see DefaultListableBeanFactory#doResolveDependency
+     * @see DefaultListableBeanFactory#findAutowireCandidates
+     *
+     * MORE: javax.inject.Named and javax.annotation.ManagedBean both are equivalents to @Component
+     * @see org.iushu.context.ApplicationAnnotation#jsr330()
+     */
+    public static void jsr330() {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // supports javax.inject.Inject
+        AutowiredAnnotationBeanPostProcessor beanPostProcessor = new AutowiredAnnotationBeanPostProcessor();
+        beanPostProcessor.setBeanFactory(beanFactory);
+        beanFactory.addBeanPostProcessor(beanPostProcessor);
+
+        // supports javax.inject.Name
+        QualifierAnnotationAutowireCandidateResolver candidateResolver = new QualifierAnnotationAutowireCandidateResolver();
+        candidateResolver.setBeanFactory(beanFactory);
+        beanFactory.setAutowireCandidateResolver(candidateResolver);
+
+        beanFactory.registerBeanDefinition("jack", new RootBeanDefinition(Staff.class));
+        beanFactory.registerBeanDefinition("staff", new RootBeanDefinition(Staff.class));
+        beanFactory.registerBeanDefinition("toy", new RootBeanDefinition(Toy.class));
+
+        Toy toy = beanFactory.getBean(Toy.class);
+        System.out.println(toy);
     }
 
     public static void interfaces() {
@@ -318,6 +395,8 @@ public class Application {
 //        populateBean();
 //        cascadePopulate();
 //        autowireProperty();
+        autowireFactoryBean();
+//        jsr330();
 //        interfaces();
 //        factoryBean();
 //        dependsOn();

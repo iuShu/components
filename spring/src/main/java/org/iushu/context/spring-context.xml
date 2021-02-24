@@ -16,8 +16,9 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <context:annotation-config/>
+    <!--<context:annotation-config/>-->
     <!--<context:component-scan base-package="org.iushu.context"/>-->
+    <context:component-scan base-package="org.iushu.context.annotation"/>
 
     <!-- @Autowired vs @Resource -->
     <bean id="mph" class="org.iushu.context.beans.Microphone"/>
