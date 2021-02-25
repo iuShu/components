@@ -1,10 +1,8 @@
 package org.iushu.context.annotation;
 
-import org.iushu.context.annotation.beans.Pet;
-import org.iushu.context.annotation.beans.Poultry;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.iushu.context.annotation.beans.*;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.*;
 
 /**
  * @see org.springframework.context.annotation.Bean
@@ -29,6 +27,41 @@ public class FocusConfiguration {
         Poultry rooster = new Poultry();
         rooster.setName("rooster");
         return rooster;
+    }
+
+    @Bean
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public Hen hen() {
+        Hen hen = new Hen();
+        hen.setName("hen");
+        return hen;
+    }
+
+    @Bean
+    public Egg egg() {
+        return new Egg() {
+            @Override
+            public Animal layEgg() {
+                return hen();
+            }
+        };
+    }
+
+    @Bean
+    public static Object postProcessor() {
+        return new Object();
+    }
+
+    /**
+     * @see Conditional
+     * @see Profile equals to @Conditional(ProfileCondition.class)
+     */
+    @Bean
+    @Profile("dev")
+    public Poultry duck() {
+        Poultry duck = new Poultry();
+        duck.setName("Donald Duck");
+        return duck;
     }
 
 }
