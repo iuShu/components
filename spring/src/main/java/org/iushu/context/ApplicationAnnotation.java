@@ -115,6 +115,8 @@ public class ApplicationAnnotation {
     }
 
     /**
+     * Alternative configured <beans profile="dev" .. /> in XML-based
+     *
      * @see org.springframework.context.annotation.Conditional
      * @see org.springframework.context.annotation.Profile equals to @Conditional(ProfileCondition.class)
      * @see FocusConfiguration#duck()

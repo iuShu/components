@@ -28,8 +28,9 @@
 210223. Comparing JSR330 annotation with Spring annotation, demonstrating configuration in annotation-based mode.
 210224. Reading and absorbing basic knowledge from 'toBeTopJavaer' book.
 210225. Still focus on 'toBeTopJavaer' book, possibly should back to Spring.
+210301. Reading 'toBeTopJavaer' book and practicing Environment and MessageSource components in context module.
 
-TODO Figure out what is Skip-List and its concrete algorithm.
+TODO Keep reading book and practicing Spring context module.
 
 > Bean's Lifecycle
     - getBean

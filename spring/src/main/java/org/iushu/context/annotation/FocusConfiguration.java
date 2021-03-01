@@ -13,6 +13,7 @@ import org.springframework.context.annotation.*;
  */
 @Configuration
 @ComponentScan(basePackages = "org.iushu.context.annotation")
+@PropertySource("classpath:/org/iushu/context/jdbc.properties")
 public class FocusConfiguration {
 
     @Bean

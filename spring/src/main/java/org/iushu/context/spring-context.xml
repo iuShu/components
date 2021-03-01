@@ -27,4 +27,8 @@
     <!--<bean id="screenRemote" class="org.iushu.context.beans.ScreenRemote"/>-->
     <bean class="org.iushu.context.beans.Conductor"/>
 
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="org.iushu.context.globalization"/>
+    </bean>
+
 </beans>

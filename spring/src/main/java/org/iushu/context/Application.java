@@ -19,14 +19,19 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.support.*;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MutablePropertySources;
+import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ProtocolResolver;
 import org.springframework.core.io.Resource;
 import org.w3c.dom.Element;
 
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -252,6 +257,60 @@ public class Application {
         checkComponents(context);
     }
 
+    /**
+     * Spring provides a hierarchical search to query a PropertySource in Environment,
+     * the hierarchical sources is configurable by using addFirst() or addLast().
+     * For a common StandardServletEnvironment, the full hierarchy is as follows:
+     *  1. ServletConfig parameters
+     *  2. ServletContext parameters (web.xml context-param entries)
+     *  3. JNDI environment variables (java:comp/env/..)
+     *  4. JVM System properties (-D command-line properties)
+     *  5. JVM System environment (from System.env())
+     *
+     * @see org.springframework.core.env.PropertySources
+     * @see org.springframework.core.env.PropertySource
+     * @see org.springframework.context.annotation.PropertySource
+     * @see org.iushu.context.annotation.FocusConfiguration
+     */
+    public static void environment() {
+        try {
+            Properties prop = new Properties();
+            prop.load(new FileInputStream("/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/components/spring/src/main/java/org/iushu/context/jdbc.properties"));
+            PropertiesPropertySource source = new PropertiesPropertySource("jdbc", prop);
+
+            GenericApplicationContext context = new GenericApplicationContext();
+            ConfigurableEnvironment environment = context.getEnvironment();
+            MutablePropertySources sources = environment.getPropertySources();
+            sources.addFirst(source);
+
+            System.out.println(environment.getProperty("jdbc.password"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @see AbstractApplicationContext#initMessageSource()
+     * @see org.springframework.context.MessageSource
+     * @see org.springframework.context.support.ResourceBundleMessageSource
+     * @see org.springframework.context.support.AbstractResourceBasedMessageSource#setBasenames(String...)
+     *
+     * @see java.util.Locale
+     * @see java.util.ResourceBundle
+     * @see java.util.ResourceBundle.Control
+     */
+    public static void messageSource() {
+        GenericApplicationContext context = new GenericApplicationContext();
+        RootBeanDefinition definition = new RootBeanDefinition(ResourceBundleMessageSource.class);
+        definition.getPropertyValues().add("basenames", "org.iushu.context.globalization");
+        context.registerBeanDefinition(AbstractApplicationContext.MESSAGE_SOURCE_BEAN_NAME, definition);
+        context.refresh();
+
+//        String message = context.getMessage("login.password.wrong", null, Locale.CHINA);
+        String message = context.getMessage("login.password.wrong", null, Locale.US);
+        System.out.println(message);
+    }
+
     public static void main(String[] args) {
 //        objectLifecycle();
 //        smartLifecycle();
@@ -259,7 +318,9 @@ public class Application {
 //        applicationEvent();
 //        propertySourceConfigurer();
 //        contextAnnotationConfig();
-        contextComponentScan();
+//        contextComponentScan();
+//        environment();
+        messageSource();
     }
 
 }
