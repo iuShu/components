@@ -2,10 +2,7 @@ package org.iushu.context;
 
 import org.iushu.context.annotation.FocusConfiguration;
 import org.iushu.context.annotation.beans.Pet;
-import org.iushu.context.beans.Conductor;
-import org.iushu.context.beans.ConductorEvent;
-import org.iushu.context.beans.Microphone;
-import org.iushu.context.beans.ScreenRemote;
+import org.iushu.context.beans.*;
 import org.iushu.context.components.FocusApplicationListener;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.TypeConverter;
@@ -17,6 +14,7 @@ import org.springframework.beans.factory.config.DependencyDescriptor;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 import org.springframework.context.event.DefaultEventListenerFactory;
@@ -24,6 +22,7 @@ import org.springframework.context.event.EventListenerMethodProcessor;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.core.ResolvableType;
 
 import java.util.Set;
 
@@ -139,13 +138,22 @@ public class ApplicationComponents {
     }
 
     /**
-     * Components for support annotation @EventListener
+     * Components for support annotation @EventListener.
+     * NOTE: By default, event listeners receive events synchronous.
      *
      * @see org.springframework.context.event.EventListener
      * @see org.springframework.context.event.EventListenerMethodProcessor supports @EventListener annotation
      * @see org.springframework.context.event.DefaultEventListenerFactory create EventListener from method for EventListenerMethodProcessor
      * @see org.springframework.context.event.ApplicationListenerMethodAdapter wrap a method to be an ApplicationListener
      * @see org.springframework.context.event.EventExpressionEvaluator
+     *
+     * @see org.springframework.context.annotation.AnnotationConfigUtils#registerAnnotationConfigProcessors(BeanDefinitionRegistry, Object)
+     * @see org.iushu.context.Application#applicationEvent()
+     *
+     * NOTE: Proceed to publish the event if an @EventListener method returns another event.
+     * @see org.iushu.context.components.FocusApplicationListener#publishEvent(ConductorEvent)
+     * @see org.springframework.context.event.ApplicationListenerMethodAdapter#processEvent(ApplicationEvent)
+     * @see org.springframework.context.event.ApplicationListenerMethodAdapter#handleResult(Object)
      */
     private static void eventListenerMethodProcessor() {
         GenericApplicationContext context = new GenericApplicationContext();
@@ -160,12 +168,39 @@ public class ApplicationComponents {
         context.publishEvent(new ConductorEvent(conductor));
     }
 
+    /**
+     * An generic event for all type events to use.
+     *
+     * Match the returning ResolvableType to the parameter type of genericEvent(GenericEvent).
+     * The matching logic between event and listener is based on ResolvableType.
+     *
+     * @see org.springframework.context.event.SimpleApplicationEventMulticaster#multicastEvent(ApplicationEvent, ResolvableType)
+     * @see org.springframework.context.event.SimpleApplicationEventMulticaster#resolveDefaultEventType(ApplicationEvent)
+     *
+     * @see org.springframework.core.ResolvableTypeProvider
+     * @see org.iushu.context.beans.GenericEvent
+     * @see org.iushu.context.components.FocusApplicationListener#genericEvent(GenericEvent)
+     */
+    public static void genericEvent() {
+        GenericApplicationContext context = new GenericApplicationContext();
+        context.registerBean(DefaultEventListenerFactory.class);
+        context.registerBean(EventListenerMethodProcessor.class);
+        context.registerBean(FocusApplicationListener.class);
+        context.refresh();  // will publish a built-in ContextRefreshedEvent as finishRefresh()
+
+        Conductor conductor = new Conductor();
+        conductor.setName("Reo Jackson");
+        conductor.start();
+        context.publishEvent(new GenericEvent<Conductor>(conductor));
+    }
+
     public static void main(String[] args) {
-        configurationClassPostProcessor();
+//        configurationClassPostProcessor();
 //        commonAnnotationBeanPostProcessor();
 //        autowiredAnnotationBeanPostProcessor();
 //        applicationListenDetector();
 //        eventListenerMethodProcessor();
+        genericEvent();
     }
 
 }

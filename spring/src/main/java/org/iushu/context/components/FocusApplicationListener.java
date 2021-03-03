@@ -2,6 +2,7 @@ package org.iushu.context.components;
 
 import org.iushu.context.beans.Conductor;
 import org.iushu.context.beans.ConductorEvent;
+import org.iushu.context.beans.GenericEvent;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
@@ -33,7 +34,34 @@ public class FocusApplicationListener implements ApplicationListener<ConductorEv
     @EventListener(classes = ConductorEvent.class)
     public void onAnnotationEvent(ApplicationEvent event) {
         System.out.print("@EventListener ");
-        onApplicationEvent((ConductorEvent) event);
+        ConductorEvent conductorEvent = (ConductorEvent) event;
+        conductorEvent.getSource().getState().onEvent(conductorEvent.getSource());
+    }
+
+    /**
+     * By returning an event object, publish the event as the result of processing another event.
+     */
+    @EventListener(classes = ConductorEvent.class)
+    public ConductorEvent publishEvent(ConductorEvent event) {
+        if (event.getSource().getState() == Conductor.ConductorState.END)
+            return null;
+
+        System.out.print("ReturnEvent ");
+        event.getSource().getState().onEvent(event.getSource());
+        event.getSource().end();
+        return event;
+    }
+
+    /**
+     * Match the returning ResolvableType to the parameter type of genericEvent(GenericEvent).
+     * @see org.iushu.context.beans.GenericEvent#getResolvableType()
+     * @see org.iushu.context.ApplicationComponents#genericEvent()
+     */
+    @EventListener
+    public void genericEvent(GenericEvent<Conductor> genericEvent) {
+        System.out.println(genericEvent.getResolvableType());
+        Conductor conductor = genericEvent.getSource();
+        System.out.println("[GenericEvent] " + conductor.getState());
     }
 
 }

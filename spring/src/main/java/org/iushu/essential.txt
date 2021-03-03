@@ -29,6 +29,8 @@
 210224. Reading and absorbing basic knowledge from 'toBeTopJavaer' book.
 210225. Still focus on 'toBeTopJavaer' book, possibly should back to Spring.
 210301. Reading 'toBeTopJavaer' book and practicing Environment and MessageSource components in context module.
+210302. Reading book and extend to practicing EventListener and Aop functionality
+210303.
 
 TODO Keep reading book and practicing Spring context module.
 

@@ -1,13 +1,8 @@
 package org.iushu.context;
 
-import org.iushu.context.beans.Conductor;
-import org.iushu.context.beans.ConnectionMetadata;
-import org.iushu.context.beans.Meeting;
-import org.iushu.context.beans.Seminar;
-import org.iushu.context.components.FocusApplicationContextAware;
-import org.iushu.context.components.FocusApplicationEventPublisherAware;
-import org.iushu.context.components.FocusApplicationListener;
-import org.iushu.context.components.GracefulApplicationContext;
+import org.aopalliance.intercept.MethodInvocation;
+import org.iushu.context.beans.*;
+import org.iushu.context.components.*;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.*;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -16,21 +11,32 @@ import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
+import org.springframework.context.event.DefaultEventListenerFactory;
+import org.springframework.context.event.EventListenerMethodProcessor;
 import org.springframework.context.support.*;
+import org.springframework.core.ResolvableType;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ProtocolResolver;
 import org.springframework.core.io.Resource;
+import org.springframework.core.metrics.ApplicationStartup;
+import org.springframework.core.metrics.jfr.FlightRecorderApplicationStartup;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.scheduling.annotation.AsyncAnnotationBeanPostProcessor;
 import org.w3c.dom.Element;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.Temporal;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -42,6 +48,19 @@ import static org.springframework.context.support.AbstractApplicationContext.LIF
  * @since 1/22/21
  */
 public class Application {
+
+    /**
+     * BeanFactory ApplicationContext Feature
+     * Yes         Yes                Bean instantiation/wiring
+     * No          Yes                Integrated Lifecycle management
+     * No          Yes                Automatic BeanPostProcessor registration
+     * No          Yes                Automatic BeanFactoryPostProcessor registration
+     * No          Yes                Convenient MessageSource access
+     * No          Yes                Built-in ApplicationEvent publication mechanism
+     */
+    public static void beanFactoryAndApplicationContext() {
+
+    }
 
     /**
      * NOTE:
@@ -136,11 +155,16 @@ public class Application {
     }
 
     /**
+     * NOTE: By default, event listeners receive events synchronous.
+     *
      * @see org.springframework.context.ApplicationEvent
      * @see org.springframework.context.ApplicationListener
      * @see org.springframework.context.event.ApplicationEventMulticaster
      * @see org.springframework.context.event.SimpleApplicationEventMulticaster
      * @see org.springframework.context.support.AbstractApplicationContext#initApplicationEventMulticaster()
+     *
+     * @see org.iushu.context.ApplicationComponents#applicationListenDetector()
+     * @see org.iushu.context.ApplicationComponents#eventListenerMethodProcessor()
      */
     public static void applicationEvent() {
         GenericApplicationContext context = new GenericApplicationContext();
@@ -290,7 +314,10 @@ public class Application {
     }
 
     /**
-     * @see AbstractApplicationContext#initMessageSource()
+     * NOTE: Be aware of the resource bundle names
+     *
+     * @see org.springframework.context.support.AbstractApplicationContext#messageSource
+     * @see org.springframework.context.support.AbstractApplicationContext#initMessageSource()
      * @see org.springframework.context.MessageSource
      * @see org.springframework.context.support.ResourceBundleMessageSource
      * @see org.springframework.context.support.AbstractResourceBasedMessageSource#setBasenames(String...)
@@ -311,6 +338,47 @@ public class Application {
         System.out.println(message);
     }
 
+    /**
+     * By default, event listeners receive events synchronous,
+     * use @Async to transform the listener become asynchronous.
+     * NOTE: Asynchronous methods cannot propagate an Exception to the caller.
+     * NOTE: Asynchronous event methods cannot publish a subsequent event by returning an event.
+     *
+     * @see org.springframework.scheduling.annotation.AnnotationAsyncExecutionInterceptor#invoke(MethodInvocation)
+     * @see org.springframework.scheduling.annotation.AsyncAnnotationBeanPostProcessor supports @Async method (AOP.MethodInterceptor)
+     * @see org.springframework.context.event.SimpleApplicationEventMulticaster#multicastEvent(ApplicationEvent, ResolvableType)
+     *
+     * @see FocusAsyncApplicationListener
+     * @see org.iushu.context.ApplicationComponents#eventListenerMethodProcessor()
+     */
+    public static void asyncHandleEvent() {
+//        String projectLocation = System.getProperty("user.dir");
+//        System.setProperty("cglib.debugLocation", projectLocation + "/src/main/java/org/iushu/aop/proxy/classes/");
+
+        GenericApplicationContext context = new GenericApplicationContext();
+        context.registerBean(DefaultEventListenerFactory.class);
+        context.registerBean(EventListenerMethodProcessor.class);
+        context.registerBean(AsyncAnnotationBeanPostProcessor.class);
+//        context.registerBean(SimpleAsyncTaskExecutor.class);
+        context.registerBean(FocusAsyncApplicationListener.class);
+        context.refresh();
+
+        Conductor conductor = new Conductor();
+        conductor.setName("Alexandre Joe");
+        conductor.start();
+        context.publishEvent(new ConductorEvent(conductor));
+    }
+
+    /**
+     * @see org.springframework.core.metrics.ApplicationStartup
+     * @see org.springframework.core.metrics.DefaultApplicationStartup
+     * @see org.springframework.context.ApplicationStartupAware
+     * @see AbstractApplicationContext#prepareBeanFactory(ConfigurableListableBeanFactory)
+     */
+    public static void applicationStartup() {
+
+    }
+
     public static void main(String[] args) {
 //        objectLifecycle();
 //        smartLifecycle();
@@ -320,7 +388,9 @@ public class Application {
 //        contextAnnotationConfig();
 //        contextComponentScan();
 //        environment();
-        messageSource();
+//        messageSource();
+//        asyncHandleEvent();
+        applicationStartup();
     }
 
 }

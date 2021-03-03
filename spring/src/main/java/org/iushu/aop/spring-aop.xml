@@ -23,4 +23,14 @@
     <!-- auto scan and proxy the class with @Aspect -->
     <aop:aspectj-autoproxy/>
 
+    <!-- TargetSource -->
+    <bean id="lorry" class="org.iushu.aop.beans.Lorry"/>
+    <bean id="train" class="org.iushu.aop.beans.Train"/>
+    <bean id="hotSwappableTargetSource" class="org.springframework.aop.target.HotSwappableTargetSource">
+        <constructor-arg ref="lorry"/>
+    </bean>
+    <bean class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource" ref="hotSwappableTargetSource"/>
+    </bean>
+
 </beans>

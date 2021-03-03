@@ -3,9 +3,7 @@ package org.iushu.aop;
 import org.aopalliance.aop.Advice;
 import org.iushu.aop.advice.FocusMethodBeforeAdvice;
 import org.iushu.aop.advice.FocusThrowsAdvice;
-import org.iushu.aop.beans.Aircraft;
-import org.iushu.aop.beans.Maintainable;
-import org.iushu.aop.beans.Spaceship;
+import org.iushu.aop.beans.*;
 import org.iushu.aop.proxy.JDKInvocationHandler;
 import org.iushu.aop.simulate.SimulatedAdvice;
 import org.iushu.aop.simulate.SimulatedAdvisor;
@@ -15,16 +13,24 @@ import org.springframework.aop.*;
 import org.springframework.aop.config.AopConfigUtils;
 import org.springframework.aop.framework.AopProxy;
 import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.aop.framework.adapter.ThrowsAdviceInterceptor;
 import org.springframework.aop.support.ComposablePointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.RootClassFilter;
 import org.springframework.aop.support.annotation.AnnotationMethodMatcher;
+import org.springframework.aop.target.HotSwappableTargetSource;
+import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.ResolvableType;
 import org.springframework.core.io.ClassPathResource;
 
 import javax.annotation.Resource;
@@ -204,12 +210,44 @@ public class Application {
         spaceship.setName("fire aspect");
     }
 
+    /**
+     * TargetSource implementations
+     *
+     * @see org.springframework.aop.TargetSource
+     * @see org.springframework.aop.target.HotSwappableTargetSource
+     *
+     * @see org.springframework.aop.framework.ProxyFactoryBean#targetSource
+     * @see org.springframework.aop.framework.ProxyFactoryBean#getObject()
+     * @see org.springframework.aop.framework.ProxyFactoryBean#freshTargetSource()
+     */
+    public static void targetSource() {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        Maintainable lorry = new Lorry();
+        HotSwappableTargetSource targetSource = new HotSwappableTargetSource(lorry);
+        RootBeanDefinition definition = new RootBeanDefinition(ProxyFactoryBean.class);
+        MutablePropertyValues values = definition.getPropertyValues();
+        values.add("beanFactory", beanFactory);
+        values.add("targetSource", targetSource);
+        beanFactory.registerBeanDefinition("proxy", definition);
+        beanFactory.preInstantiateSingletons();
+
+        ProxyFactoryBean factoryBean = beanFactory.getBean(ProxyFactoryBean.class);
+        Maintainable maintainable = (Maintainable) factoryBean.getObject();
+        maintainable.maintain();
+
+        targetSource.swap(new Train());
+        maintainable = (Maintainable) targetSource.getTarget();
+        maintainable.maintain();
+    }
+
     public static void main(String[] args) {
 //        JDKReflectiveProxy();
 //        JDKDynamicProxy();
 //        CGLIBDynamicProxy();
 //        simulatedCglibProxy();
-        aspectJAOPInSpring();
+//        aspectJAOPInSpring();
+        targetSource();
     }
 
 }
