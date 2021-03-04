@@ -186,3 +186,4 @@
     - BeanUtils [commons.beanutils]
     - ClassUtils [spring.core]
     - ReflectionUtils [spring.core]
+    - Constants [spring.core]
