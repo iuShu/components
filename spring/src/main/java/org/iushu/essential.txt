@@ -30,9 +30,8 @@
 210225. Still focus on 'toBeTopJavaer' book, possibly should back to Spring.
 210301. Reading 'toBeTopJavaer' book and practicing Environment and MessageSource components in context module.
 210302. Reading book and extend to practicing EventListener and Aop functionality
-210303.
-
-TODO Keep reading book and practicing Spring context module.
+210303. Finished the book and Spring core framework.
+210304. Start to learn Spring Data (see project ../springdata)
 
 > Bean's Lifecycle
     - getBean
@@ -181,7 +180,6 @@ TODO Keep reading book and practicing Spring context module.
 
 - [context]
     - [validation]
-        -
 
 > utils
     - Beans [java.beans]
