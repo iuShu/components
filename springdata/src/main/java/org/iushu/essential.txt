@@ -1,0 +1,32 @@
+210305: Install mysql and puzzled by the foreign key ..
+
+TODO figure out why the insertion failed after insert four rows record in a foreign-key table.
+
+- Transaction
+    - (PowerBy)
+        - TransactionProxyFactoryBean [aop]
+        - TransactionInterceptor [aop]
+        - TransactionProxy [aop]
+    - (Status)
+        - begin
+        - suspend
+        - resume
+        - commit
+        - rollback
+    - SavepointManager
+        - TransactionStatus
+            - AbstractTransactionStatus
+                - DefaultTransactionStatus
+    - TransactionDefinition
+        - PROPAGATION LEVEL (0 1 2 3 4 5 6)
+        - ISOLATION LEVEL (-1 1 2 4 8)
+    - TransactionManager
+        - PlatformTransactionManager
+            # commit(TransactionStatus)
+            # rollback(TransactionStatus)
+            - AbstractPlatformTransactionManager ☆☆☆☆☆
+                - JtaTransactionManager
+        - ReactiveTransactionManager
+
+- utils
+    - Constants [spring.core]
