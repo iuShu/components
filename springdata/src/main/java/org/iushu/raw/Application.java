@@ -16,8 +16,8 @@ public class Application {
     /**
      * @see java.sql.Driver
      * @see DriverManager#loadInitialDrivers()
+     * @see com.mysql.cj.jdbc.NonRegisteringDriver
      * @see java.util.ServiceLoader
-     * @see
      */
     public static Connection getConnection() {
         try {
@@ -36,7 +36,7 @@ public class Application {
             connection = getConnection();
             connection.setAutoCommit(false);
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, "Fiona Chris");
+            statement.setString(1, "Neo Martin");
             statement.setInt(2, 1);
             int effectedRow = statement.executeUpdate();
             System.out.println(effectedRow);
@@ -50,6 +50,14 @@ public class Application {
             }
             e.printStackTrace();
         }
+    }
+
+    /**
+     * @see javax.sql.DataSource
+     *
+     */
+    public static void dataSource() {
+
     }
 
     public static void main(String[] args) {

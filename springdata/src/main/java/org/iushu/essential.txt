@@ -1,6 +1,46 @@
 210305: Install mysql and puzzled by the foreign key ..
+210308: What exactly the Transaction is in JDBC and Mysql. [head dizzy]
 
-TODO figure out why the insertion failed after insert four rows record in a foreign-key table.
+TODO Diving deeper in MySQL
+
+- Stack
+    - Java-Base DesignPattern
+    - Spring SpringBoot MyBatis Hibernate
+    - SpringCloud-Netflix Distributed-System
+    - MySQL resin
+    - Netty
+
+- Isolation Level
+    - Read Uncommitted (Dirty Read)
+        - A transaction update a row but not commit yet, another transaction read this row at this time.
+        - Once the first transaction rollback the update, another transaction will retrieved an invalid row.
+    - Read committed (Non-Repeatable Read)
+        - Other transaction will be allowed to read the row after the transaction commit or rollback to this row.
+    - Repeatable Read [default in Mysql]
+        - Resolve dirty-read issue and ensured multiple read operations can return the same result.
+        - Still exist Phantom-Read. (InnoDB used MVCC to solve this issue)
+    - Serializable
+        - Serialized the operations and adding lock in every row it had selected.
+
+- MVCC (Multiversion Concurrency Control)
+    - A variant of the Row-Level lock, implementing by saving data snapshot.
+    - Different beginning time could leads to different snapshot in transaction.
+    - Two implementation: Optimistic and Pessimistic.
+    - InnoDB implementation of MVCC
+        - Available in Read-Committed and Repeatable-Read.
+        - Keywords: System-Version-Number, Transaction-Version-Number.
+        - Adding two hidden columns to each row, create time and expire time of the row.
+        - Saving the system version number in two columns, the number is auto-increment as starting a new tx.
+
+- InnoDB
+    - Supports transaction, XA, savepoints, recover safely and online hot-backup, etc,.
+
+- MyISAM
+    - Supports Table-Level lock, full-text index, compression and GIS, etc,.
+    - Can apply in Read-Only and small data tables, Log application is preferable.
+    - Does not support transaction and Row-Level lock.
+    - Waiting operation system flush the data regularly to disk. (crash/recover potential risk)
+    - Can not recover safely from a crash.
 
 - Transaction
     - (PowerBy)
