@@ -1,7 +1,11 @@
 210305: Install mysql and puzzled by the foreign key ..
 210308: What exactly the Transaction is in JDBC and Mysql. [head dizzy]
+210309: How to improve performance in Mysql.
+210310: How to choose a proper data type in Mysql and the index optimizing.
 
-TODO Diving deeper in MySQL
+TODO What exactly is the cache mechanism in Spring BeanFactory and how it fix up the Bean's circular-dependency issue.
+TODO How to interacting with the geometry type data in Mysql.
+TODO Make a summary as finished the book Performance Mysql.
 
 - Stack
     - Java-Base DesignPattern
