@@ -1,0 +1,95 @@
+        # High Performance MySQL #
+
+- Overview
+    - Engine introduction
+
+- DataType
+    -
+
+- Index Structure
+    - Basis
+        - B-Tree and B+Tree index in Mysql.
+            - supports full-value, left prefix, column prefix, range and index matching, also order sorting.
+
+        - Hash index in precise match. (Memory engine supports)
+            - unable order sorting, partial matching and range matching, also have the conflict key issue.
+            - can be useful in Star-schema.
+            -
+    - Clustered index
+
+    - Non-Clustered index
+
+    - Covering index
+
+- Index Optimizing
+    -
+
+- Maintenance
+    - Damaged table
+        - command: CHECK TABLE can check out mostly flaw of table and index.
+        - command: REPAIR TABLE or ALTER TABLE innodb_table ENGINE = InnoDB.
+    - Update index stat
+        - command: ANALYZE TABLE can re-generate statistics info.
+        - Memory never store the statistics info.
+        - MyISAM store it in disk, analyze operation would lock and scan the whole table.
+        - InnoDB store it in memory, use command: SHOW INDEX FROM to show the cardinality of index.
+            > InnoDB also store statistics in information_schema.statistics table.
+            - InnoDB calculates the statistics index as opening the table at first time as well as analyze command.
+    - Reduce index and data fragment
+        - Row, Intra-row and Free space fragmentation would fall off performance.
+        - command: OPTIMIZE TABLE or import/export to reorganize data.
+        - InnoDB can reduce fragmentation by recreating index.
+        - command: ALTER TABLE table ENGINE = InnoDB provides method to other engine not supports OPTIMIZE command.
+
+- Query Optimizing
+    - Mysql would return all matched result data set before calculating.
+    - Useless data
+        - The result set contains a lot of useless rows, use LIMIT to control.
+        - INNER JOIN table USING(PRI_KEY) would return all result rows.
+        > SELECT * always fetch all columns though some columns being not used.
+        - The rows being queried repeatedly should be cached.
+    - Extra records
+        > Query overhead: response time, scanned rows and returned rows.
+        - Better to create a proper index if not pick a Explain.type in selecting.
+        - Reduce the rows to be scanned.
+    - Refactor query
+        - Single complicated query or multiple simpled queries.
+        - Using LIMIT to delete a minor batch of data instead of the whole part.
+        - Splitting associated query to multiple simpled queries.
+            - The QueryCache can cached the result of each simpled query.
+            - Improve query performance, reduce the contention of row locks, reduce the redundant rows.
+    - Query procedure
+        - Request to Mysql server
+            - Half-duplex communication between server and client.
+            - Avoid rudely disconnect and recommend to use LIMIT.
+            - Mysql would release the resources of a query until all the queried result sending over.
+            > Query state
+                - Sleep: waiting for client request.
+                - Query: executing query or sending back result to client.
+                - Locked: waiting lock.
+                - Analyzing and statistics: collecting engine stat and generating executive plan.
+                - Copying to tmp table [on disk]: executing query and copying data to a tmp table. (GROUP/ORDER BY, UNION)
+                - Sorting result: sorting the result set.
+                - Sending data: transferring data between multiple states or generating data or sending data to client.
+        - Find in QueryCache
+            - A case-sensitive hash matching, authority validating then returning.
+        - Parser and pre-handle the sql
+            - Any error can interrupt the query.
+            - Grammar Parser: Parse sql to a parsed-tree then validating authority.
+        - Optimizer generates the executive plan
+            - Transforming a parsed-tree to an executive plan.
+            - Cost calculating: not including concurrent query, stored procedure or other custom function. (status: Last_query_cost)
+            - Stop query: using LIMIT and found a impossible condition would stop the query in advance.
+            - Value spread: like film.film_id > 5 and film_actor.film_id > 5.
+            > IN(..) better than OR.
+        - Engine
+            - Providing statistics data to Optimizer for generating executive plan.
+            - Execute query by API based on the executive plan
+            - Associated query
+                - parse to a balance tree or left-depth-first tree.
+                - Reverse associate order: INNER JOIN .. low cost, due to less nested loop and back tracking.
+                - Natural associate order: SELECT STRAIGHT JOIN .. normal cost.
+                - Greedy mode on if associated table number exceeded variable 'optimizer_search_depth'.
+            - Sorting optimizing (filesort/merge)
+                -
+        - Return result
