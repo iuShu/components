@@ -23,6 +23,7 @@
 
 - Index Optimizing
     -
+    - The tmp table created by sub-query has no index.
 
 - Maintenance
     - Damaged table
@@ -59,6 +60,7 @@
             - The QueryCache can cached the result of each simpled query.
             - Improve query performance, reduce the contention of row locks, reduce the redundant rows.
     - Query procedure
+        > Using EXPLAIN to analyze the query sql before writing.
         - Request to Mysql server
             - Half-duplex communication between server and client.
             - Avoid rudely disconnect and recommend to use LIMIT.
@@ -82,6 +84,13 @@
             - Stop query: using LIMIT and found a impossible condition would stop the query in advance.
             - Value spread: like film.film_id > 5 and film_actor.film_id > 5.
             > IN(..) better than OR.
+            - Hints
+                - Providing some optimizing hints to the Optimizer
+                - SQL
+                    - HIGH/LOW_PRIORITY, DELAYED, STRAIGHT_JOIN, SQL_SMALL/BIG/BUFFER_RESULT, FOR UPDATE, LOCK IN SHARE MODE
+                    - USING/IGNORE/FORCE INDEX, SQL_CALC_FOUND_ROWS
+                - Parameter
+                    - optimizer_search_depth, optimizer_prune_level, optimizer_switch
         - Engine
             - Providing statistics data to Optimizer for generating executive plan.
             - Execute query by API based on the executive plan
@@ -91,5 +100,69 @@
                 - Natural associate order: SELECT STRAIGHT JOIN .. normal cost.
                 - Greedy mode on if associated table number exceeded variable 'optimizer_search_depth'.
             - Sorting optimizing (filesort/merge)
-                -
+                - Default order and sorting query might lead to a filesort.
+                - Double data transfer: read rows from table and read rows from sorted rows. (old version)
+                - Single data transfer: read rows and sort, then return. (after 4.1 and data less than 'max_length_for_sort_data')
+                - Extra space could be assigned in sorting some table contains dynamic length columns. (VARCHAR/UTF-8)
+                > Using filesort: an associated query only needs to sort the columns of the first table.
+                > Using temporary and filesort: an associated query needs to sort crossed-table columns. (LIMIT end)
+                > WHERE clause would execute before filesort.
+            - Handler API in engine: generally create a handler instance for each table, the handler invoke the interfaces.
         - Return result
+            - Begin to sending result back to client once the server generated the first row result.
+        - Sub-query optimizing
+            - Using EXPLAIN to measures a sub-query is better or worst, comparing between the sub-query and associated query.
+        - UNION
+            - Original: (SELECT * FROM A) UNION ALL (SELECT * FROM B) LIMIT 20; (union two full tables)
+            - Optimized: (SELECT * FROM A LIMIT 20) UNION ALL (SELECT * FROM B LIMIT 20) LIMIT 20; (limit then union)
+            > Mysql always using tmp table to process UNION (ALL), applying DISTINCT to tmp table if is UNION ALL.
+        - Loose index probe
+            - SELECT actor_id, MAX(film_id) FROM film_actor GROUP BY actor_id;
+            - Extra = Using index for group-by.
+        - Update and query in same table
+            - Original: UPDATE table AS outer SET cnt = (SELECT count(*) FROM table AS inner WHERE inner.type=outer.type).
+            - Instead: UPDATE table INNER JOIN(SELECT type, count(*) AS cnt FROM table GROUP BY TYPE) AS der USING(type) SET table.cnt=der.cnt;
+    - Optimizing special type query
+        - COUNT(): * refers to counting all the rows including NULL columns, other excluding.
+            > COUNT(*) are more excellent than range-COUNT(*) in MyISAM.
+            - Classification count: SELECT SUM(IF(col=v1,1,0)), SUM(IF(col=v2,1,0)) .. FROM table.
+            - Approximation: execute an EXPLAIN sql to fetch the approximated count.
+            - More complicated cases are recommend to add a statistics table.
+        - GROUP BY and DISTINCT
+            - Index is the most efficient way to optimize this type query.
+            - The tmp table or filesort could be used to process GROUP BY if no index available.
+            - Hints: SQL_SMALL/BIG_RESULT
+            > Can optimize the query by ORDER BY NULL if you don't need the ordered result in a GROUP BY query sql.
+            - Using WITH ROLLUP to take a super clustering might improve query performance.
+        - LIMIT
+            - Also index is the most convenient way to optimize.
+            - LIMIT 1000,20 would ask the engine to scan 1000 rows before reaching the target rows and discard after return.
+            - Using INNER JOIN to optimize LIMIT and LIMIT with ORDER BY.
+            - Using BETWEEN to optimize LIMIT query in certain range.
+            - Marking a savepoint before LIMIT query.
+        - Using user-custom variable
+            - User-custom variable is a tmp storage for storing data and it exists in current connection with Mysql.
+            - Using custom variable would not allow to use QueryCache.
+            > Variable would across different business if a connection belongs to a DataSource or ConnectionPool.
+            > Make sure the assignment and fetch of the variable should occur in the same phase.
+            - SET @var := value, defines a variable. (use := to avoid ambiguity)
+            - Update and return column in natural network state.
+                - Original: UPDATE table SET lastUpdated = NOW() WHERE id = 1; SELECT lastUpdated FROM table WHERE id = 1;
+                - Optimized: UPDATE table SET lastUpdated = NOW() WHERE id = 1 AND @now := NOW(); SELECT @now;
+        - SELECT FOR UPDATE
+            - Using CONNECTION_ID() in UPDATE sql to implement the functionality like SELECT FOR UPDATE.
+
+- Advanced Features
+    - Partition
+        - command: PARTITION BY
+        - Partition table working well in large table, but it has no overall index.
+        - Requiring imports all the primary key and unique key if the key in partition contains the primary or unique key.
+        - Unable to use foreign key in partition table, max partition is 1024 in one table.
+        > Operation in partition table
+            - SELECT: open and lock all partitions, then filter.
+            - INSERT: open and lock all partitions, then selecting the target partition and do insert .
+            - DELETE: like INSERT operation, do delete at the end.
+            - UPDATE: like INSERT operation, do update at the end.
+        - Partition type
+            -
+    -
