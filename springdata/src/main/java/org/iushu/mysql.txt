@@ -86,11 +86,10 @@
             > IN(..) better than OR.
             - Hints
                 - Providing some optimizing hints to the Optimizer
-                - SQL
+                - Hints in sql clause
                     - HIGH/LOW_PRIORITY, DELAYED, STRAIGHT_JOIN, SQL_SMALL/BIG/BUFFER_RESULT, FOR UPDATE, LOCK IN SHARE MODE
                     - USING/IGNORE/FORCE INDEX, SQL_CALC_FOUND_ROWS
-                - Parameter
-                    - optimizer_search_depth, optimizer_prune_level, optimizer_switch
+                - Parameters in information_schema: optimizer_search_depth, optimizer_prune_level, optimizer_switch
         - Engine
             - Providing statistics data to Optimizer for generating executive plan.
             - Execute query by API based on the executive plan
@@ -158,11 +157,29 @@
         - Partition table working well in large table, but it has no overall index.
         - Requiring imports all the primary key and unique key if the key in partition contains the primary or unique key.
         - Unable to use foreign key in partition table, max partition is 1024 in one table.
+        > Using partition in condition that the engine can filtering most partitions to fetch the target one.
+        - All partitions are invisible to client, they requires a identical store engine.
         > Operation in partition table
             - SELECT: open and lock all partitions, then filter.
             - INSERT: open and lock all partitions, then selecting the target partition and do insert .
             - DELETE: like INSERT operation, do delete at the end.
             - UPDATE: like INSERT operation, do update at the end.
-        - Partition type
-            -
-    -
+        - Partition type: by range, key, hash and list.
+        - BigData table partition strategy: scanning full partition with no index or separating hot-data with index.
+        > Partition creation strategy
+            - Lots of data would storing in the first partition if the value of partition column is NULL.
+            - Create a 'useless' partition as the first partition to avoid NULL value invalid the partition.
+            - Better use a indexed column as partition key, otherwise the sql operations might be scanning all partitions.
+            - Be awareness of the targeting and locking cost of partitions.
+            - Refactor the partition can use the method as refactor the table: create new, insert data then delete old.
+        > Optimizing query in partition
+            > Analyze: EXPLAIN PARTITION SELECT ..
+            > The optimizer can filter the partition if the partition column being used.
+            > Using function on partition column would making the partition filtering unavailable, even a partition function.
+                - WHERE YEAR(day) = 2021 should be optimized to WHERE day BETWEEN '2021-01-01' AND '2021-12-31'.
+        - Merge table (deprecated)
+            - Create tables and using MRG(..) to merge then into a combined table.
+            - Drop the merged table would makes no impact to sub-tables, but delete sub-table could bring problems.
+    - View
+        > View is a tmp table with no data storing, has the same naming space of table.
+
