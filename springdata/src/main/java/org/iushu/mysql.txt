@@ -182,4 +182,75 @@
             - Drop the merged table would makes no impact to sub-tables, but delete sub-table could bring problems.
     - View
         > View is a tmp table with no data storing, has the same naming space of table.
+        > Mysql would using TEMPTABLE algorithm if any GROUP BY, DISTINCT, UNION, sub-query and aggregate function in sql.
+            - EXPLAIN select_type would show DEPRIVED in TEMPTABLE algorithm.
+        - CREATE VIEW .. WITH CHECK OPTION enable a view to updated the relational table while matching WHERE condition.
+            - Invalid: UPDATE Oceania SET Continent = 'Atlantis';
+            - TEMPTABLE view can not be updated.
+    - Storing code
+        - Storing code for Storage Procedure, Trigger, Event and Function.
+        - Storage Procedure
+            - Advantage: low network latency, code reuse, improve security and without external dependency.
+            - Disadvantage: no debug mode, functional limited, resource consuming and is hard to troubleshooting in slow-log.
+        - Trigger
+            - It have no return value but only read and change data.
+            - Only one Trigger for each event in each table. (AFTER INSERT ..)
+            > Only supports row trigger for one row, may fall down performance in large data.
+            - Hard to troubleshooting, potential lock waiting and dead lock problems.
+            > Trigger fails, sql fails.
+            > Using Trigger as foreign key restriction may fetching dirty data in concurrent condition. (correct: SELECT .. FOR UPDATE)
+        - Event can be used like schedule task and it was recorded in INFORMATION_SCHEMA.EVENTS.
+    - Foreign Key can be replaced by Trigger.
+    - Cursor is read-only, unidirectional and storing in tmp table.
+    - Prepared Statement
+        - Parse a sql to a repeatable executive plan and caching it, receive data from client for sql data binding.
+        - Connection isolation, careful the variable resource to avoid resource leak.
+    - Charset & Collation
+        - The collation impacts the char columns and the sorting order.
+        > Setting in creation
+            - Create schema with collation based on variable 'character_set_server'.
+            - Create table with collation would based on schema's charset and collation if no specified.
+            - Create column with collation would based on table's charset and collation if no specified.
+        > Setting in connection
+            - The client-end has different charset with server-end, server-end would take a necessary charset conversion.
+            > Converting received data from 'charset_set_client' to 'character_set_connection', finally return data of 'character_set_result'.
+            > Make sure both ends are set to identical charset.
+            > A great way to setting charset is USE database, SET NAMES charset then loading data.
+            - command: SHOW CHARACTERSET and SHOW COLLATION to show charset and collation mysql supports.
+            > Index would not work while using a charset different with the server setting.
+            > Choosing a proper charset based on what data you are going to storing.
+    - Full-text Index
+        - FULLTEXT KEY `..` (..) to create a full-text index in a column. (SHOW INDEX FROM table)
+        - Full-text index include all columns and it would not record which column the keyword comes from.
+        > Using function WHERE MATCH(columns) AGAINST(content) in full-text search.
+        > Requires the dataset and index were loaded into cache to perform fast.
+        - Generates more fragment and leads to more OPTIMIZE TABLE operations.
+        > Natural Language search
+            - Return auto-sorted result based on text relevance.
+            - Mysql would using filesort if found MATCH(columns) in ORDER BY or GROUP BY.
+        - Boolean full-text search
+            - Requires the length of keyword greater than 'ft_min_word_len' and less than 'ft_max_word_len'.
+            - Using special modifier(~-+*) to custom search and it returns unsorted result.
+            > Filtering dataset by index and return some records, then match the keyword again on returning records.
+                > It would perform slowly if the first filtering operation return the amount of records almost equals to total.
+            - MATCH(..) AGAINST('+factory +casualties' IN BOOLEAN MODE)
+            - MATCH(..) AGAINST('"spirited casualties"' IN BOOLEAN MODE) means precise Phrase Search. (slow)
+            - Combine WHERE condition in AGAINST(..)
+    - XA Transaction
+    - Query Cache
+        - Do not open query cache if you don't know how to make it works well.
+        - Sub-query and storage procedure can not accessing the query cache.
 
+- Configuration
+    - Principle
+        - From command args and configuration path: /etc/my.cnf or /etc/mysql/my.cnf
+        > The first action to optimizing is focus on SCHEMA not the server configuration.
+        > Can set a default value to a config entry by command SET key = DEFAULT;
+        - Some dynamic configs can be modified in server running. (like 'sort_buffer_size')
+        - Certain side effect could be made if modified configs in running, do what you really known.
+        > Recover the config back to DEFAULT after modified it if the situation really requires.
+        - Adjusts the parameter's value based on test cases.
+        - Don't trust those rates easily, like the relationship of cache hit rates and capacity.
+        - Do not use optimizing scripts applying on the server.
+    - Customize
+        -
