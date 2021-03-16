@@ -5,6 +5,9 @@
 210311: What exactly slowing the query sql down.
 210312: Special query like ORDER BY, LIMIT, GROUP BY .. in Mysql.
 210313: Advanced features in Mysql like Partition.
+210314: Advanced features in Mysql like Partition.
+210315: Time elapsing might not allow you to finished the book, hurry up.
+210316: Optimizing server configuration and Replica in Mysql.
 
 TODO What exactly is the cache mechanism in Spring BeanFactory and how it fix up the Bean's circular-dependency issue.
 TODO How to interacting with the geometry type data in Mysql.

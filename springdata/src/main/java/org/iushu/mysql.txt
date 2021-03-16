@@ -253,4 +253,51 @@
         - Don't trust those rates easily, like the relationship of cache hit rates and capacity.
         - Do not use optimizing scripts applying on the server.
     - Customize
-        -
+        > Most significant settings of InnoDB are: 'innodb_buffer_pool_size' and 'innodb_log_file_size'.
+        > Buffer Pool and Log File capacity
+            > Buffer Pool caching the index, data page, hash index, insert buffer, lock and so on.
+            > Dirty Page in Buffer Pool, modified and waiting to be flushed back to disk.
+            - Choosing the proper capacity for buffer pool like 87.5% of total memory capacity.
+        - Checking 'open_files_limit' setting in unix-like server. (for connection amount)
+        > The maximum capacity of Mysql is subjected to the system like 32-bit and 64-bit.
+        > Setting a proper size for concurrent connection based on peak and normal amount.
+            - Unix command: top(VIRT column) or ps(VSZ column).
+        - MyISAM Key Caches see variable 'key_buffer_size'
+            - SUM(INDEX_LENGTH) FROM INFORMATION_SCHEMA.TABLES to check total index length.
+    > InnoDB Tx Log and Log buffer
+        > Log buffer has no necessary to set a huge capacity value, 1 to 8MB should be enough.
+        > First write the update operation into buffer and waiting to meet the following condition to write into Log file.
+            - when log buffer full, transaction committing and every second.
+        > log buffer flush control setting: 'innodb_flush_log_at_trx_commit'.
+            - 0 flush log buffer into OS(fileSystem) buffer and disk on every second, ignore transaction commitment.
+            - 1 default, flush into OS buffer and disk on every transaction commitment.
+            - 2 flush into OS buffer every transaction commitment.
+        - Log buffer Mutex contention could be the performance bottleneck.
+        - Collecting transaction IO operations in log, turn random IO to sequential IO and flush into disk at certain checkpoint.
+        > Log file size setting: 'innodb_log_file_size' and 'innodb_log_files_in_group'.
+    > Doublewrite Buffer
+        > Avoid data corrupted by page write operation not finished.
+        - InnoDB page size: 'innodb_page_size' the batch size to write back to disk.
+        > First write page into doublewrite buffer, and then write into disk.
+            - Original page in disk would have no impacts if corrupting in doublewrite buffer writing.
+            - Fetching page data from doublewrite buffer if corrupting in disk writing.
+            - Checksum in every page tail is used to valid the completion of a page.
+    > Concurrency in Mysql
+        > Basic setting to control concurrency: 'innodb_thread_concurrency'. (0-unlimited)
+        > Two phase process to control concurrent connection
+            - Thread entering a sleep status in 'innodb_thread_sleep_delay' seconds if the connection exceed concurrent amount.
+        - The last protective control setting: 'max_connections'.
+    - Avoid endless log: 'expire_logs_days' to clean up expired logs.
+
+- Replica
+    - Mysql supports different types of synchronization.
+        - Based on replicating events from the source's binary log.
+            - Statement Based Replication(SBR) replicates entire sql statements.(some function, procedure .. unavailable)
+            - Row Based Replication(RBR) replicates only the changed rows, DEFAULT.
+            - Mixed-format logging replicates by SBR or RBR, depends on which is most appropriate.
+        - Based on global tx identifiers which means not require working with log files.
+    > Synchronize the binary log of master to relay log, then replaying based on relay log.
+    - Backup: close master to replicates data to replica, using mysqldump and copy snapshot or backup files to replica.
+    - An replica can be the master of the other replicas by updating its binary logs.('log_slave_updates')
+    - Replica Filter can filtering data at replicating during replicating from master and relay log.
+    - Use a server with blackhole engine tables as a distributing server.
