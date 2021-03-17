@@ -301,3 +301,37 @@
     - An replica can be the master of the other replicas by updating its binary logs.('log_slave_updates')
     - Replica Filter can filtering data at replicating during replicating from master and relay log.
     - Use a server with blackhole engine tables as a distributing server.
+
+- Scalability in large scale data
+    - Upgrade Extend upgrade machine hardware.
+    - Horizontal Extend
+        - Replica separate writing and reading on replica cluster.
+        - Split by function and database(vertical extension).
+            - Function: separating data by function and saving the functional/modular data to corresponding server node respectively.
+            - Database: extending single server to multiple servers, each of them contains the data of identical function/module.
+            - Avoid group-by and statistics query in table mentioned above.
+        > Sharding
+            - Sharding data distributing on multiple server nodes, while Partition table data is on one server.
+            - Splitting data by function/module and then sharding each functional/modular data to multiple server nodes.
+            - An unique global sharding name is necessary.
+            - Partition Key the most significant part on sharding is deciding the partition key.
+                - Hash primary key: can locating the data easily but might improve the difficulty of data selecting and further extension.
+                - Deciding the partition key based on the data model, moreover multiple partition key also require in certain circumstance.
+            - Avoid as most as possible to run group-by and statistics query in table that being sharded.
+                - Using statistical table.
+                - Caching statistics after executing group or statistical operations on every partition.
+            - Sharding function
+                - Fixed distribution: simple and low cost, but unable to load-balance partitions. (like hash function)
+                - Dynamical distribution: more controllable, flexible and complicated.(recommend)
+                - Mixed Fixed-Dynamical distribution.
+                - Explicit distribution.
+    - Global unique identity in sharding
+        - Using auto_increment_increment and auto_increment_offset setting, for example:
+            - Set server A on increment=2 and offset=1, means only producing odd id.
+            - Set server B on increment=2 and offset=2, means only producing even id.
+            > Could be difficult on extension, recovery data and so on.
+        > Batch id request: requesting for a batch id from a global control component, request again if runs out of batch.
+        > A compounded id: like combining the sharding id and auto-increment id.
+        - Using memcached or Redis increment function, requires initializing in restart, no persistent.
+        - By creating an global table to store the next auto-increment id.(potential mutex contention)
+        - Supports: Hibernate Shards
