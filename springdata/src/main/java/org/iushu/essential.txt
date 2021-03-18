@@ -1,18 +1,19 @@
-210305: Install mysql and puzzled by the foreign key ..
-210308: What exactly the Transaction is in JDBC and Mysql. [head dizzy]
-210309: How to improve performance in Mysql.
-210310: How to choose a proper data type in Mysql and the index optimizing.
+210305: Install MySQL and puzzled by the foreign key. (because of a wrong column name, your idiot)
+210308: What exactly the Transaction is in JDBC and MySQL. [head dizzy]
+210309: How to improve performance in MySQL.
+210310: How to choose a proper data type in MySQL and the index optimizing.
 210311: What exactly slowing the query sql down.
-210312: Special query like ORDER BY, LIMIT, GROUP BY .. in Mysql.
-210313: Advanced features in Mysql like Partition.
-210314: Advanced features in Mysql like Partition.
+210312: Special query like ORDER BY, LIMIT, GROUP BY .. in MySQL.
+210313: Advanced features in MySQL like Partition.
+210314: Advanced features in MySQL like Partition.
 210315: Time elapsing might not allow you to finished the book, hurry up.
-210316: Optimizing server configuration and Replica in Mysql.
-210317: Table partition, data separating and sharding in Mysql.
+210316: Optimizing server configuration and Replica in MySQL.
+210317: Table partition, data separating and sharding in MySQL.
+210318: High availability, backup and recovery in MySQL.
 
 TODO What exactly is the cache mechanism in Spring BeanFactory and how it fix up the Bean's circular-dependency issue.
-TODO How to interacting with the geometry type data in Mysql.
-TODO Make a summary as finished the book Performance Mysql.
+TODO How to interacting with the geometry type data in MySQL.
+TODO Make a summary as finished the book Performance MySQL.
 
 - Stack
     - Java-Base DesignPattern
@@ -27,7 +28,7 @@ TODO Make a summary as finished the book Performance Mysql.
         - Once the first transaction rollback the update, another transaction will retrieved an invalid row.
     - Read committed (Non-Repeatable Read)
         - Other transaction will be allowed to read the row after the transaction commit or rollback to this row.
-    - Repeatable Read [default in Mysql]
+    - Repeatable Read [default in MySQL]
         - Resolve dirty-read issue and ensured multiple read operations can return the same result.
         - Still exist Phantom-Read. (InnoDB used MVCC to solve this issue)
     - Serializable

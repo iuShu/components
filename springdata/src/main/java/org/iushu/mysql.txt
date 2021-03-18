@@ -8,7 +8,7 @@
 
 - Index Structure
     - Basis
-        - B-Tree and B+Tree index in Mysql.
+        - B-Tree and B+Tree index in MySQL.
             - supports full-value, left prefix, column prefix, range and index matching, also order sorting.
 
         - Hash index in precise match. (Memory engine supports)
@@ -43,7 +43,7 @@
         - command: ALTER TABLE table ENGINE = InnoDB provides method to other engine not supports OPTIMIZE command.
 
 - Query Optimizing
-    - Mysql would return all matched result data set before calculating.
+    - MySQL would return all matched result data set before calculating.
     - Useless data
         - The result set contains a lot of useless rows, use LIMIT to control.
         - INNER JOIN table USING(PRI_KEY) would return all result rows.
@@ -61,10 +61,10 @@
             - Improve query performance, reduce the contention of row locks, reduce the redundant rows.
     - Query procedure
         > Using EXPLAIN to analyze the query sql before writing.
-        - Request to Mysql server
+        - Request to MySQL server
             - Half-duplex communication between server and client.
             - Avoid rudely disconnect and recommend to use LIMIT.
-            - Mysql would release the resources of a query until all the queried result sending over.
+            - MySQL would release the resources of a query until all the queried result sending over.
             > Query state
                 - Sleep: waiting for client request.
                 - Query: executing query or sending back result to client.
@@ -114,7 +114,7 @@
         - UNION
             - Original: (SELECT * FROM A) UNION ALL (SELECT * FROM B) LIMIT 20; (union two full tables)
             - Optimized: (SELECT * FROM A LIMIT 20) UNION ALL (SELECT * FROM B LIMIT 20) LIMIT 20; (limit then union)
-            > Mysql always using tmp table to process UNION (ALL), applying DISTINCT to tmp table if is UNION ALL.
+            > MySQL always using tmp table to process UNION (ALL), applying DISTINCT to tmp table if is UNION ALL.
         - Loose index probe
             - SELECT actor_id, MAX(film_id) FROM film_actor GROUP BY actor_id;
             - Extra = Using index for group-by.
@@ -140,7 +140,7 @@
             - Using BETWEEN to optimize LIMIT query in certain range.
             - Marking a savepoint before LIMIT query.
         - Using user-custom variable
-            - User-custom variable is a tmp storage for storing data and it exists in current connection with Mysql.
+            - User-custom variable is a tmp storage for storing data and it exists in current connection with MySQL.
             - Using custom variable would not allow to use QueryCache.
             > Variable would across different business if a connection belongs to a DataSource or ConnectionPool.
             > Make sure the assignment and fetch of the variable should occur in the same phase.
@@ -182,7 +182,7 @@
             - Drop the merged table would makes no impact to sub-tables, but delete sub-table could bring problems.
     - View
         > View is a tmp table with no data storing, has the same naming space of table.
-        > Mysql would using TEMPTABLE algorithm if any GROUP BY, DISTINCT, UNION, sub-query and aggregate function in sql.
+        > MySQL would using TEMPTABLE algorithm if any GROUP BY, DISTINCT, UNION, sub-query and aggregate function in sql.
             - EXPLAIN select_type would show DEPRIVED in TEMPTABLE algorithm.
         - CREATE VIEW .. WITH CHECK OPTION enable a view to updated the relational table while matching WHERE condition.
             - Invalid: UPDATE Oceania SET Continent = 'Atlantis';
@@ -216,7 +216,7 @@
             > Converting received data from 'charset_set_client' to 'character_set_connection', finally return data of 'character_set_result'.
             > Make sure both ends are set to identical charset.
             > A great way to setting charset is USE database, SET NAMES charset then loading data.
-            - command: SHOW CHARACTERSET and SHOW COLLATION to show charset and collation mysql supports.
+            - command: SHOW CHARACTERSET and SHOW COLLATION to show charset and collation MySQL supports.
             > Index would not work while using a charset different with the server setting.
             > Choosing a proper charset based on what data you are going to storing.
     - Full-text Index
@@ -227,7 +227,7 @@
         - Generates more fragment and leads to more OPTIMIZE TABLE operations.
         > Natural Language search
             - Return auto-sorted result based on text relevance.
-            - Mysql would using filesort if found MATCH(columns) in ORDER BY or GROUP BY.
+            - MySQL would using filesort if found MATCH(columns) in ORDER BY or GROUP BY.
         - Boolean full-text search
             - Requires the length of keyword greater than 'ft_min_word_len' and less than 'ft_max_word_len'.
             - Using special modifier(~-+*) to custom search and it returns unsorted result.
@@ -243,7 +243,7 @@
 
 - Configuration
     - Principle
-        - From command args and configuration path: /etc/my.cnf or /etc/mysql/my.cnf
+        - From command args and configuration path: /etc/my.cnf or /etc/MySQL/my.cnf
         > The first action to optimizing is focus on SCHEMA not the server configuration.
         > Can set a default value to a config entry by command SET key = DEFAULT;
         - Some dynamic configs can be modified in server running. (like 'sort_buffer_size')
@@ -259,7 +259,7 @@
             > Dirty Page in Buffer Pool, modified and waiting to be flushed back to disk.
             - Choosing the proper capacity for buffer pool like 87.5% of total memory capacity.
         - Checking 'open_files_limit' setting in unix-like server. (for connection amount)
-        > The maximum capacity of Mysql is subjected to the system like 32-bit and 64-bit.
+        > The maximum capacity of MySQL is subjected to the system like 32-bit and 64-bit.
         > Setting a proper size for concurrent connection based on peak and normal amount.
             - Unix command: top(VIRT column) or ps(VSZ column).
         - MyISAM Key Caches see variable 'key_buffer_size'
@@ -282,7 +282,7 @@
             - Original page in disk would have no impacts if corrupting in doublewrite buffer writing.
             - Fetching page data from doublewrite buffer if corrupting in disk writing.
             - Checksum in every page tail is used to valid the completion of a page.
-    > Concurrency in Mysql
+    > Concurrency in MySQL
         > Basic setting to control concurrency: 'innodb_thread_concurrency'. (0-unlimited)
         > Two phase process to control concurrent connection
             - Thread entering a sleep status in 'innodb_thread_sleep_delay' seconds if the connection exceed concurrent amount.
@@ -290,14 +290,14 @@
     - Avoid endless log: 'expire_logs_days' to clean up expired logs.
 
 - Replica
-    - Mysql supports different types of synchronization.
+    - MySQL supports different types of synchronization.
         - Based on replicating events from the source's binary log.
             - Statement Based Replication(SBR) replicates entire sql statements.(some function, procedure .. unavailable)
             - Row Based Replication(RBR) replicates only the changed rows, DEFAULT.
             - Mixed-format logging replicates by SBR or RBR, depends on which is most appropriate.
         - Based on global tx identifiers which means not require working with log files.
     > Synchronize the binary log of master to relay log, then replaying based on relay log.
-    - Backup: close master to replicates data to replica, using mysqldump and copy snapshot or backup files to replica.
+    - Backup: close master to replicates data to replica, using MySQLdump and copy snapshot or backup files to replica.
     - An replica can be the master of the other replicas by updating its binary logs.('log_slave_updates')
     - Replica Filter can filtering data at replicating during replicating from master and relay log.
     - Use a server with blackhole engine tables as a distributing server.
@@ -335,3 +335,39 @@
         - Using memcached or Redis increment function, requires initializing in restart, no persistent.
         - By creating an global table to store the next auto-increment id.(potential mutex contention)
         - Supports: Hibernate Shards
+    - Dirty data in Backup Replica
+        - Using master server for Real-time writing & reading request, replica server for others.
+        - Setting a flag in session to mark if the user executed update.
+            - Using master in flag activated, expiring the flag after replica synchronized.
+        - Adding version id in data object, request master if version id fetched from replica less than cached version id.
+        - Using MASTER_POS_WAIT() function waiting the replica catch up with the master.
+    - Load-balance strategies: random, round, less-connection first, fast-responding first, hash and weight.
+
+- High Availability
+    - Downtime
+        - 35% Runtime Environment: os, disk and network, etc,: disk run out of capacity.
+        - 35% performance: common cause is bad sql execution, wrong design on schema and index.
+        - 20% replica: data difference between master and replica.
+        - 10% data lost/corruption: wrong execution on DROP TABLE.
+    - Availability = MTBF / (MTBF + MTTR)
+    - MTBF (Mean Time Between Failure)
+        - Comply with least privilege policy.
+        - Setting 'skip_name_resolve' should be turned off.
+        - Disable QueryCache unless remarkable effects being proved.
+        - Monitoring critical components like disk and RAID volume.
+        - Avoid using complicated features like filtering in replica and trigger.
+        - Recording status and performing indexes of a server.
+        - Checking completeness of replica regularly.
+        - Reviewing query sql regularly.
+        - Archiving and removing redundant and old data.
+        - Scheduling upgrade MySQL carefully, do not upgrade if no necessary.
+    - MTTR (Mean Time To Recovery)
+        - Avoid single point of failure: adding spare capacity and redundant components.
+        - Using sharing storage and disk replication between servers, strongly recommended log-type filesystem.
+            - DRBD in Linux: using network card to replicating block to other servers.
+        - A transaction on master is not considered complete until it is committed on at least one replica. (NDB Cluster)
+        - Tools: MMM (Multi-Master Replication Manager for MySQL), Galera Cluster (part of MariaDB Galera Cluster).
+    - Failover
+        - Using backup server to replace the crushed master server, change back until the master recovered.
+        - Adding proxy between web and MySQL server, proxy change point to backup server if master crushed. (network latency)
+        - Using automated failover carefully, it might destroy the data if not running in proper ways.
