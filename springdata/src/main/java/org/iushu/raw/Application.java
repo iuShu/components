@@ -98,7 +98,7 @@ public class Application {
     }
 
     /**
-     * To verify that a PooledConnection means one physical connection,
+     * To verify that a PooledConnection means one physical connection to the database,
      * the implementation of the connection pool is to holding multiple PooledConnection.
      */
     public static void singlePooledConnection() {
@@ -106,6 +106,8 @@ public class Application {
             PooledConnection pooledConnection = pooledConnection();
             Connection conn1 = pooledConnection.getConnection();
             Connection conn2 = pooledConnection.getConnection();    // close conn1
+
+            TimeUnit.SECONDS.sleep(10);
 
             String sql = "SELECT * FROM iushu.staff WHERE id < 10;";
             ResultSet resultSet1 = conn1.createStatement().executeQuery(sql);   // exception cause being closed
@@ -151,6 +153,22 @@ public class Application {
 
     }
 
+    public static void connectionPool() {
+        MysqlConnectionPoolDataSource poolDataSource = new MysqlConnectionPoolDataSource();
+        poolDataSource.setUrl(JDBC_URL);
+        poolDataSource.setUser(JDBC_USER);
+        poolDataSource.setPassword(JDBC_PASSWORD);
+        try {
+            PooledConnection pooledConn1 = poolDataSource.getPooledConnection();
+            PooledConnection pooledConn2 = poolDataSource.getPooledConnection();
+
+            pooledConn1.close();
+            pooledConn2.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * TODO Check following issues.
      *   1. 多次调用 CommonPoolDataSource.getPooledConnection() 返回多个池连接的差异
@@ -163,7 +181,8 @@ public class Application {
     public static void main(String[] args) {
 //        traditionalJDBC();
 //        logicalAndPhysicalConnection();
-        singlePooledConnection();
+//        singlePooledConnection();
+        connectionPool();
     }
 
 }
