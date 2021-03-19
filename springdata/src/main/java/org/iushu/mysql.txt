@@ -371,3 +371,18 @@
         - Using backup server to replace the crushed master server, change back until the master recovered.
         - Adding proxy between web and MySQL server, proxy change point to backup server if master crushed. (network latency)
         - Using automated failover carefully, it might destroy the data if not running in proper ways.
+
+- Backup & Recovery
+    - RPO (Recovery Point Objectives)
+    - RTO (Recovery Time Objectives)
+    - Do not change column name or type during backup and recovery.
+    - Physical Backup: copy the data file directly.
+    - Logical Backup
+        - Using mysqldump to dump out a file. (beware of huge data)
+        - SELECT INTO OUTFILE to create a symbol data file without sql, annotation and column name. (faster than dump action)
+        - Filesystem snapshot (LVM backup).
+    - Recover logical backup
+        - Load sql file like SOURCE data.sql command.
+        - Using LOAD DATA INFILE or mysqlimport to recover for symbol data file.
+    - Recovery based on savepoint
+        - Replay binary log from a certain savepoint.

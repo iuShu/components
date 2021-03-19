@@ -10,6 +10,7 @@
 210316: Optimizing server configuration and Replica in MySQL.
 210317: Table partition, data separating and sharding in MySQL.
 210318: High availability, backup and recovery in MySQL.
+210319: Backup and recovery in Mysql and the book is finished.
 
 TODO What exactly is the cache mechanism in Spring BeanFactory and how it fix up the Bean's circular-dependency issue.
 TODO How to interacting with the geometry type data in MySQL.

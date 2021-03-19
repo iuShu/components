@@ -1,6 +1,6 @@
 package org.iushu.raw;
 
-import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
+import com.mysql.cj.jdbc.*;
 
 import javax.sql.PooledConnection;
 import java.sql.*;
@@ -14,23 +14,6 @@ import static org.iushu.ConnectionMetaData.*;
  * @since 3/4/21
  */
 public class Application {
-
-    private static final PooledConnection[] pooledConnections = new PooledConnection[7];
-
-    static {
-        MysqlConnectionPoolDataSource poolDataSource = new MysqlConnectionPoolDataSource();
-        poolDataSource.setUrl(JDBC_URL);
-        poolDataSource.setUser(JDBC_USER);
-        poolDataSource.setPassword(JDBC_PASSWORD);
-        try {
-            for (int i=0; i<pooledConnections.length; i++) {
-                PooledConnection pooledConn = poolDataSource.getPooledConnection();    // caching
-                pooledConnections[i] = pooledConn;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * @see java.sql.Driver
@@ -59,20 +42,20 @@ public class Application {
      * @see com.mysql.cj.jdbc.MysqlDataSource#getConnection(java.util.Properties)
      * @see com.mysql.cj.jdbc.NonRegisteringDriver#connect(String, Properties)
      */
-    public static Connection fetchConnection() {
+    public static PooledConnection pooledConnection() {
+        MysqlConnectionPoolDataSource poolDataSource = new MysqlConnectionPoolDataSource();
+        poolDataSource.setUrl(JDBC_URL);
+        poolDataSource.setUser(JDBC_USER);
+        poolDataSource.setPassword(JDBC_PASSWORD);
         try {
-            for (PooledConnection pooledConn : pooledConnections) {
-                Connection connection = pooledConn.getConnection();
-                if (connection.isClosed())
-                    return connection;
-            }
+            return poolDataSource.getPooledConnection();
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
-    public static void jdbc() {
+    public static void traditionalJDBC() {
 //        String sql = "INSERT INTO iushu.department (name, createTime, updateTime) VALUES (?, current_time, current_time);";
         String sql = "INSERT INTO iushu.staff (name, deptId, createTime, updateTime) VALUES (?, ?, current_time, current_time);";
         Connection connection = null;
@@ -96,31 +79,91 @@ public class Application {
         }
     }
 
-    /**
-     * TODO Check following issues.
-     *   1. 多次调用 CommonPoolDataSource.getPooledConnection() 返回多个池连接的差异
-     *   2. 多次调用 PooledConnection.getConnection() 返回多个连接的差异
-     */
-
-    public static void pooling() {
-        String sql = "SELECT * FROM iushu.staff WHERE id < 10;";
-        Connection connection = fetchConnection();
+    public static void logicalAndPhysicalConnection() {
         try {
-            ResultSet resultSet = connection.createStatement().executeQuery(sql);
-            System.out.println("rows: " + resultSet.getRow());
-            connection.close(); // close the logical connection
+            PooledConnection pooledConnection = pooledConnection();
+            Connection connection = pooledConnection.getConnection();
+            JdbcConnection logicalConnection = (JdbcConnection) connection;
+            JdbcConnection physicalConnection = logicalConnection.getActiveMySQLConnection();
 
-            // physical connection still holding
-            // using 'show processlist' in MySQL to check status
-            TimeUnit.SECONDS.sleep(10);
+            System.out.println(logicalConnection.getClass().getName());     // ConnectionWrapper
+            System.out.println(physicalConnection.getClass().getName());    // ConnectionImpl
+
+            logicalConnection.close();
+            physicalConnection.close();
+            pooledConnection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * To verify that a PooledConnection means one physical connection,
+     * the implementation of the connection pool is to holding multiple PooledConnection.
+     */
+    public static void singlePooledConnection() {
+        try {
+            PooledConnection pooledConnection = pooledConnection();
+            Connection conn1 = pooledConnection.getConnection();
+            Connection conn2 = pooledConnection.getConnection();    // close conn1
+
+            String sql = "SELECT * FROM iushu.staff WHERE id < 10;";
+            ResultSet resultSet1 = conn1.createStatement().executeQuery(sql);   // exception cause being closed
+            ResultSet resultSet2 = conn2.createStatement().executeQuery(sql);
+            System.out.println(resultSet1.getFetchSize());
+            System.out.println(resultSet2.getFetchSize());
+
+            conn2.close();
+            conn1.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * How the c3p0 module implement the connection pool.
+     *  Tracing the statements from the physical connection of PooledConnection.
+     *  Managing the PooledConnection by a HashSet and a HashMap: inUseConnections and connectionsToZombieStatementSets.
+     *  PooledConnection in idle state if following condition are met:
+     *      1. The HashSet(inUserConnections) not contained the connection.
+     *      2. The HashMap(connectionsToZombieStatementsSets) not contained the statements opening from the connection.
+     *  PooledConnection in inUse state if following condition are met:
+     *      1. The HashSet(inUserConnections) contained the connection.
+     *      2. The HashMap(connectionsToZombieStatementsSets) contained the statements opening from the connection.
+     *
+     *  The methods in cautious manager to try mark or unmark the connection are SYNCHRONIZED.
+     * @see com.mchange.v2.c3p0.stmt.GooGooStatementCache.CautiousStatementDestructionManager#tryMarkConnectionInUse(Connection)
+     *
+     * @see javax.sql.DataSource
+     * @see com.mchange.v2.c3p0.PooledDataSource
+     * @see com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource#getConnection()
+     * @see com.mchange.v2.c3p0.impl.C3P0PooledConnectionPoolManager#getPool()
+     * @see com.mchange.v2.c3p0.impl.C3P0PooledConnectionPool#checkoutPooledConnection()
+     * @see com.mchange.v2.c3p0.impl.C3P0PooledConnectionPool#checkoutAndMarkConnectionInUse()
+     * @see com.mchange.v2.c3p0.impl.C3P0PooledConnectionPool#tryMarkPhysicalConnectionInUse(Connection)
+     * @see com.mchange.v2.c3p0.stmt.GooGooStatementCache#tryMarkConnectionInUse(Connection)
+     * @see com.mchange.v2.c3p0.stmt.GooGooStatementCache.CautiousStatementDestructionManager#tryMarkConnectionInUse(Connection)
+     * @see com.mchange.v2.c3p0.stmt.GooGooStatementCache.CautiousStatementDestructionManager#inUseConnections
+     * @see com.mchange.v2.c3p0.stmt.GooGooStatementCache.CautiousStatementDestructionManager#connectionsToZombieStatementSets
+     * @see com.mchange.v2.c3p0.impl.C3P0PooledConnectionPool
+     */
+    public static void c3p0ConnectionPool() {
+
+    }
+
+    /**
+     * TODO Check following issues.
+     *   1. 多次调用 CommonPoolDataSource.getPooledConnection() 返回多个池连接的差异
+     *   2. 多次调用 PooledConnection.getConnection() 返回多个连接的差异
+     */
+    public static void pooling() {
+        String sql = "SELECT * FROM iushu.staff WHERE id < 10;";
+    }
+
     public static void main(String[] args) {
-//        jdbc();
-        pooling();
+//        traditionalJDBC();
+//        logicalAndPhysicalConnection();
+        singlePooledConnection();
     }
 
 }
