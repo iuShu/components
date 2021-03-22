@@ -83,3 +83,4 @@ TODO Make a summary as finished the book Performance MySQL.
 
 - utils
     - Constants [spring.core]
+    - DataSourceUtils [spring.jdbc]

@@ -18,9 +18,11 @@
     <springframework.version>5.3.0</springframework.version>
     <mysql.connector.version>8.0.23</mysql.connector.version>
     <c3p0.version>0.9.5.2</c3p0.version>
+    <dbcp.version>2.7.0</dbcp.version>
   </properties>
 
   <dependencies>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -42,6 +44,13 @@
       <version>${springframework.version}</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>${springframework.version}</version>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
     <dependency>
       <groupId>mysql</groupId>
@@ -54,6 +63,13 @@
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
       <version>${c3p0.version}</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-dbcp2</artifactId>
+      <version>${dbcp.version}</version>
     </dependency>
 
   </dependencies>

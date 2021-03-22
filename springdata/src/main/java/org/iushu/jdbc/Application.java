@@ -1,7 +1,8 @@
-package org.iushu.raw;
+package org.iushu.jdbc;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.mysql.cj.jdbc.*;
+import com.mysql.cj.jdbc.JdbcConnection;
+import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 
 import javax.sql.PooledConnection;
 import java.sql.*;
@@ -179,28 +180,11 @@ public class Application {
         }
     }
 
-    public static void connectionPool() {
-        MysqlConnectionPoolDataSource poolDataSource = new MysqlConnectionPoolDataSource();
-        poolDataSource.setUrl(JDBC_URL);
-        poolDataSource.setUser(JDBC_USER);
-        poolDataSource.setPassword(JDBC_PASSWORD);
-        try {
-            PooledConnection pooledConn1 = poolDataSource.getPooledConnection();
-            PooledConnection pooledConn2 = poolDataSource.getPooledConnection();
-
-            pooledConn1.close();
-            pooledConn2.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void main(String[] args) {
 //        traditionalJDBC();
 //        logicalAndPhysicalConnection();
 //        singlePooledConnection();
         c3p0ConnectionPool();
-//        connectionPool();
     }
 
 }
