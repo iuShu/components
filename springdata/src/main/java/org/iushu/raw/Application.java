@@ -1,5 +1,6 @@
 package org.iushu.raw;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mysql.cj.jdbc.*;
 
 import javax.sql.PooledConnection;
@@ -150,7 +151,32 @@ public class Application {
      * @see com.mchange.v2.c3p0.impl.C3P0PooledConnectionPool
      */
     public static void c3p0ConnectionPool() {
+        try {
+            ComboPooledDataSource dataSource = new ComboPooledDataSource();
+            dataSource.setDriverClass(JDBC_DRIVER);
+            dataSource.setJdbcUrl(JDBC_URL);
+            dataSource.setUser(JDBC_USER);
+            dataSource.setPassword(JDBC_PASSWORD);
 
+            System.out.println("initial pool size: " + dataSource.getInitialPoolSize());
+            System.out.println("thread pool size: " + dataSource.getThreadPoolSize());
+            System.out.println("acquire increment: " + dataSource.getAcquireIncrement());
+
+            String sql = "SELECT * FROM iushu.staff WHERE id < 10;";
+            Connection connection = dataSource.getConnection();
+            ResultSet resultSet = connection.createStatement().executeQuery(sql);
+            System.out.println(resultSet.getConcurrency());
+
+            while (resultSet.next()) {
+                System.out.print(resultSet.getInt(1) + "\t");
+                System.out.println(resultSet.getString(2));
+            }
+
+            connection.close();
+            dataSource.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void connectionPool() {
@@ -169,20 +195,12 @@ public class Application {
         }
     }
 
-    /**
-     * TODO Check following issues.
-     *   1. 多次调用 CommonPoolDataSource.getPooledConnection() 返回多个池连接的差异
-     *   2. 多次调用 PooledConnection.getConnection() 返回多个连接的差异
-     */
-    public static void pooling() {
-        String sql = "SELECT * FROM iushu.staff WHERE id < 10;";
-    }
-
     public static void main(String[] args) {
 //        traditionalJDBC();
 //        logicalAndPhysicalConnection();
 //        singlePooledConnection();
-        connectionPool();
+        c3p0ConnectionPool();
+//        connectionPool();
     }
 
 }

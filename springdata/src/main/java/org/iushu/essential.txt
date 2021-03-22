@@ -11,9 +11,9 @@
 210317: Table partition, data separating and sharding in MySQL.
 210318: High availability, backup and recovery in MySQL.
 210319: Backup and recovery in Mysql and the book is finished.
+210322: Learning what the geometry type is in MySQL and turn back to Spring Transaction.
 
 TODO What exactly is the cache mechanism in Spring BeanFactory and how it fix up the Bean's circular-dependency issue.
-TODO How to interacting with the geometry type data in MySQL.
 TODO Make a summary as finished the book Performance MySQL.
 
 - Stack
