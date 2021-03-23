@@ -1,4 +1,4 @@
-package org.iushu.components;
+package org.iushu.concepts;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;

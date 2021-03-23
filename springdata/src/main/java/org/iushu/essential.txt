@@ -12,6 +12,7 @@
 210318: High availability, backup and recovery in MySQL.
 210319: Backup and recovery in Mysql and the book is finished.
 210322: Learning what the geometry type is in MySQL and turn back to Spring Transaction.
+210323: Practicing declarative transaction implementation in Spring Transaction.
 
 TODO What exactly is the cache mechanism in Spring BeanFactory and how it fix up the Bean's circular-dependency issue.
 TODO Make a summary as finished the book Performance MySQL.
@@ -57,28 +58,23 @@ TODO Make a summary as finished the book Performance MySQL.
 
 - Transaction
     - (PowerBy)
-        - TransactionProxyFactoryBean [aop]
-        - TransactionInterceptor [aop]
-        - TransactionProxy [aop]
-    - (Status)
-        - begin
-        - suspend
-        - resume
-        - commit
-        - rollback
+        - TransactionalProxy
+        - TransactionInterceptor
+        - TransactionAspectSupport
+        - TransactionProxyFactoryBean
     - SavepointManager
-        - TransactionStatus
+        - Savepoint
+        - TransactionStatus: begin suspend resume commit rollback
             - AbstractTransactionStatus
                 - DefaultTransactionStatus
     - TransactionDefinition
         - PROPAGATION LEVEL (0 1 2 3 4 5 6)
         - ISOLATION LEVEL (-1 1 2 4 8)
     - TransactionManager
-        - PlatformTransactionManager
+        - PlatformTransactionManager (core)
             # commit(TransactionStatus)
             # rollback(TransactionStatus)
             - AbstractPlatformTransactionManager ☆☆☆☆☆
-                - JtaTransactionManager
         - ReactiveTransactionManager
 
 - utils
