@@ -3,21 +3,20 @@ package org.iushu.declarative.bean;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author iuShu
- * @since 3/23/21
+ * @since 3/24/21
  */
-public class Staff {
+public class Department {
 
     private int id;
     private String name;
-    private int deptId;
-    private int level;
     private Date createTime;
     private Date updateTime;
 
-    private Department department;
+    private List<Staff> staffs;
 
     public int getId() {
         return id;
@@ -33,22 +32,6 @@ public class Staff {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(int deptId) {
-        this.deptId = deptId;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     public Date getCreateTime() {
@@ -67,37 +50,33 @@ public class Staff {
         this.updateTime = updateTime;
     }
 
-    public Department getDepartment() {
-        return department;
+    public List<Staff> getStaffs() {
+        return staffs;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setStaffs(List<Staff> staffs) {
+        this.staffs = staffs;
     }
 
     @Override
     public String toString() {
-        return "Staff{" +
+        return "Department{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", deptId=" + deptId +
-                ", level=" + level +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
-                ", department=" + department +
+                ", staffs=" + staffs +
                 '}';
     }
 
-    public static RowMapper<Staff> rowMapper() {
+    public static RowMapper<Department> rowMapper() {
         return (rs, rowNum) -> {
-            Staff staff = new Staff();
-            staff.setId(rs.getInt(1));
-            staff.setName(rs.getString(2));
-            staff.setDeptId(rs.getInt(3));
-            staff.setLevel(rs.getInt(4));
-            staff.setCreateTime(rs.getTimestamp(5));
-            staff.setUpdateTime(rs.getTimestamp(6));
-            return staff;
+            Department dept = new Department();
+            dept.setId(rs.getInt(1));
+            dept.setName(rs.getString(2));
+            dept.setCreateTime(rs.getTimestamp(3));
+            dept.setUpdateTime(rs.getTimestamp(4));
+            return dept;
         };
     }
 

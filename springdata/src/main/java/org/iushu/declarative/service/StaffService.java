@@ -12,6 +12,8 @@ public interface StaffService {
 
     Staff getStaff(int id);
 
+    Staff getStaff(int id, boolean withDepartment);
+
     List<Staff> getDeptStaffs(int deptId);
 
     List<Staff> getLevelStaffs(int level);

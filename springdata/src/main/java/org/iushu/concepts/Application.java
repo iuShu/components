@@ -1,19 +1,27 @@
 package org.iushu.concepts;
 
 import org.iushu.concepts.simulate.*;
+import org.iushu.declarative.DeclarativeConfiguration;
+import org.iushu.declarative.bean.Department;
+import org.iushu.declarative.bean.Staff;
+import org.iushu.declarative.service.DefaultDepartmentService;
+import org.iushu.declarative.service.DepartmentService;
+import org.iushu.declarative.service.StaffService;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.core.io.ProtocolResolver;
+import org.springframework.transaction.SavepointManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
-import org.springframework.transaction.support.SimpleTransactionStatus;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.transaction.support.*;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.iushu.concepts.simulate.GameWorld.DEFAULT_PLAYER_BLOOD;
@@ -35,8 +43,43 @@ public class Application {
     }
 
     /**
+     * @see org.springframework.transaction.TransactionManager
+     * @see org.springframework.transaction.PlatformTransactionManager core interface
+     * @see AbstractPlatformTransactionManager core abstract implementation
+     */
+    static void transactionManager() {
+
+    }
+
+    /**
+     * All of the propagation behavior depends on configuration of the inner transaction.
      * @see org.springframework.transaction.TransactionDefinition
+     * @see org.springframework.transaction.annotation.Propagation
+     *
      * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_REQUIRED
+     * @see #propagationRequired()
+     * All transaction at the scope are mapped to the same physical transaction, so a rollback-only
+     * marker set in the inner transaction does affect the outer transaction. However, in the case
+     * where an inner transaction scope sets the rollback-only marker, the outer transaction has
+     * not decided on the rollback itself, so the rollback is unexpected. The outer transaction still
+     * calls commit although the inner transaction silently marks a transaction as rollback-only,
+     * and the outer transaction needs to receive an UnexpectedRollbackException to indicate clearly
+     * that a rollback was performed instead.
+     *
+     * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_REQUIRES_NEW
+     * @see #propagationRequiresNew()
+     * Always create a new transaction for each affected transaction scope, never participating in
+     * an existing transaction for an outer scope. The inner transaction can perform commit/rollback
+     * independently. The outer transaction is suspended when the inner transaction executes in a new
+     * transaction and with an inner transaction's LOCKS released immediately after its completion.
+     *
+     * @see org.springframework.transaction.TransactionDefinition#PROPAGATION_NESTED
+     * @see #propagationNest()
+     * This setting is typically mapped onto JDBC java.sql.Savepoint. Use a single physical transaction with
+     * multiple savepoints that it can rollback to. Such partial rollback let an inner transaction
+     * scope trigger a rollback for its scope, with the outer transaction being able to continue the
+     * physical transaction despite some opertaions having been rolled back at some inner transaction.
+     *
      * @see org.springframework.transaction.TransactionDefinition#ISOLATION_DEFAULT
      */
     static void transactionDefinition() {
@@ -44,11 +87,89 @@ public class Application {
     }
 
     /**
-     * @see org.springframework.transaction.TransactionManager
-     * @see org.springframework.transaction.PlatformTransactionManager core interface
-     * @see org.springframework.transaction.support.AbstractPlatformTransactionManager core abstract implementation
+     * The inner and outer transaction are holding one connection.
+     * The inner transaction is not a new transaction so it would not doRollback even if require,
+     * and it only mark set itself into rollback-only.
+     * The outer transaction will doRollback if itself or the inner transaction requires rollback.
+     *
+     * @see TransactionDefinition#PROPAGATION_REQUIRED
+     *
+     * @see org.springframework.transaction.PlatformTransactionManager#rollback(TransactionStatus)
+     * @see AbstractPlatformTransactionManager#processRollback(DefaultTransactionStatus, boolean)
+     * @see AbstractPlatformTransactionManager#doSetRollbackOnly(DefaultTransactionStatus) for inner transaction
+     * @see AbstractPlatformTransactionManager#doRollback(DefaultTransactionStatus) for outer transaction
      */
-    static void transactionManager() {
+    static void propagationRequired() {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(DeclarativeConfiguration.class, DefaultDepartmentService.class);
+        context.refresh();
+
+        Staff staff = new Staff();
+        staff.setName("Tiger Golf");
+        staff.setLevel(2);
+        List<Staff> staffs = new ArrayList<>();
+        staffs.add(staff);
+
+        Department department = new Department();
+        department.setName("Machine Maintenance");
+        department.setStaffs(staffs);
+
+        DepartmentService departmentService = context.getBean(DepartmentService.class);
+        departmentService.insertDepartment(department);
+        System.out.println(department);
+
+        context.close();
+    }
+
+    /**
+     * TWO transaction would be create and also getting TWO connection from DataSource
+     *   Outer: staffService.getStaff(int, boolean)
+     *   Inner: departmentService.getDepartment(int)
+     *
+     * @see TransactionDefinition#PROPAGATION_REQUIRES_NEW
+     *
+     * @see AbstractPlatformTransactionManager#getTransaction(TransactionDefinition)
+     * @see AbstractPlatformTransactionManager#isExistingTransaction(Object)
+     * @see AbstractPlatformTransactionManager#handleExistingTransaction core method to handle propagation behavior
+     * @see AbstractPlatformTransactionManager#doSuspend(Object) suspend resource of outer transaction
+     * @see TransactionSynchronizationManager#unbindResource(Object) unbind at current thread
+     * @see AbstractPlatformTransactionManager.SuspendedResourcesHolder the class holding suspended resource
+     * @see AbstractPlatformTransactionManager#startTransaction saving the suspended resource in TransactionStatus
+     * @see AbstractPlatformTransactionManager#doBegin(Object, TransactionDefinition) get a new Connection for inner transaction
+     * @see AbstractPlatformTransactionManager#cleanupAfterCompletion(DefaultTransactionStatus) resume status after commit/rollback
+     * @see AbstractPlatformTransactionManager#resume rebind transaction resource to outer transaction
+     *
+     * Two essential bean to storage the transaction current status.
+     * @see TransactionStatus
+     * @see TransactionAspectSupport.TransactionInfo
+     */
+    static void propagationRequiresNew() {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(DeclarativeConfiguration.class, DefaultDepartmentService.class);
+        context.refresh();
+
+        // perform a nested invocation on method annotated as PROPAGATION_REQUIRES_NEW
+        StaffService staffService = context.getBean(StaffService.class);
+        Staff staff = staffService.getStaff(2, true);
+        System.out.println(staff);
+
+        context.close();
+    }
+    
+    /**
+     * @see TransactionDefinition#PROPAGATION_NESTED
+     *
+     * @see java.sql.Savepoint
+     * @see org.springframework.transaction.SavepointManager
+     *
+     * @see DefaultTransactionStatus#createAndHoldSavepoint()
+     * @see SavepointManager#createSavepoint()
+     * @see DefaultTransactionStatus#releaseHeldSavepoint() on commit
+     * @see TransactionStatus#rollbackToSavepoint(Object) on rollback
+     */
+    static void propagationNest() {
+
+        // TODO completing concrete implemented code
 
     }
 
@@ -127,7 +248,10 @@ public class Application {
 
     public static void main(String[] args) {
 //        transactionStatus();
-        simulate();
+        propagationRequired();
+//        propagationRequiresNew();
+//        propagationNest();
+//        simulate();
     }
 
 }

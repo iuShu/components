@@ -13,8 +13,10 @@
 210319: Backup and recovery in Mysql and the book is finished.
 210322: Learning what the geometry type is in MySQL and turn back to Spring Transaction.
 210323: Practicing declarative transaction implementation in Spring Transaction.
+210324: Dive in transactional propagation and how they work.
 
-TODO What exactly is the cache mechanism in Spring BeanFactory and how it fix up the Bean's circular-dependency issue.
+TODO What cache mechanism exactly is in Spring BeanFactory.
+TODO How Spring fixed up the Bean's circular-dependency issue.
 TODO Make a summary as finished the book Performance MySQL.
 
 - Stack
