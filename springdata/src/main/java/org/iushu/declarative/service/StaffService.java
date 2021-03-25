@@ -24,4 +24,6 @@ public interface StaffService {
 
     boolean batchInsert(List<Staff> staffs);
 
+    boolean batchUpdate(List<Staff> staffs);
+
 }

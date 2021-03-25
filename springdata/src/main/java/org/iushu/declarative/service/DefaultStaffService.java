@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -64,7 +65,13 @@ public class DefaultStaffService implements StaffService, ApplicationContextAwar
 
     @Override
     public boolean batchInsert(List<Staff> staffs) {
-        throw new UnsupportedOperationException("not support in default implementation");
+        throw new UnsupportedOperationException("not support batch insert in default implementation");
+    }
+
+    @Transactional(propagation = Propagation.NESTED)
+    @Override
+    public boolean batchUpdate(List<Staff> staffs) {
+        throw new UnsupportedOperationException("not support batch update staff in default implementation");
     }
 
     @Override

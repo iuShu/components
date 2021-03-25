@@ -122,7 +122,7 @@ public class Application {
     }
 
     /**
-     * TWO transaction would be create and also getting TWO connection from DataSource
+     * TWO transaction would getting TWO connections from DataSource.
      *   Outer: staffService.getStaff(int, boolean)
      *   Inner: departmentService.getDepartment(int)
      *
@@ -148,7 +148,6 @@ public class Application {
         context.register(DeclarativeConfiguration.class, DefaultDepartmentService.class);
         context.refresh();
 
-        // perform a nested invocation on method annotated as PROPAGATION_REQUIRES_NEW
         StaffService staffService = context.getBean(StaffService.class);
         Staff staff = staffService.getStaff(2, true);
         System.out.println(staff);
@@ -157,6 +156,10 @@ public class Application {
     }
     
     /**
+     * The inner and outer transaction are holding one connection.
+     * The inner transaction has savepoint so it would doRollback or doCommit to its savepoint if require.
+     * The outer transaction can commit current progress even if a rollback occurred in its inner transaction.
+     *
      * @see TransactionDefinition#PROPAGATION_NESTED
      *
      * @see java.sql.Savepoint
@@ -168,9 +171,16 @@ public class Application {
      * @see TransactionStatus#rollbackToSavepoint(Object) on rollback
      */
     static void propagationNest() {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.register(DeclarativeConfiguration.class, DefaultDepartmentService.class);
+        context.refresh();
 
-        // TODO completing concrete implemented code
+        DepartmentService departmentService = context.getBean(DepartmentService.class);
+        Department department = departmentService.getDepartment(2, true);
+        System.out.println(department);
 
+        departmentService.updateDepartment(department);
+        context.close();
     }
 
     /**
@@ -248,9 +258,9 @@ public class Application {
 
     public static void main(String[] args) {
 //        transactionStatus();
-        propagationRequired();
+//        propagationRequired();
 //        propagationRequiresNew();
-//        propagationNest();
+        propagationNest();
 //        simulate();
     }
 

@@ -1,7 +1,6 @@
 package org.iushu.declarative.service;
 
 import org.iushu.declarative.bean.Department;
-import org.iushu.declarative.bean.Staff;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -50,10 +49,15 @@ public class DefaultDepartmentService implements DepartmentService, ApplicationC
         return success;
     }
 
+    // check propagation_nested transaction
+    @Transactional(noRollbackFor = UnsupportedOperationException.class)
     @Override
     public boolean updateDepartment(Department department) {
         String sql = "UPDATE department SET name = ?, updateTime = current_time WHERE id = ?";
-        return jdbcTemplate.update(sql, department.getName()) > 0;
+        boolean success = jdbcTemplate.update(sql, department.getName(), department.getId()) > 0;
+        if (success && department.getStaffs() != null)
+            return staffService.batchUpdate(department.getStaffs());
+        return success;
     }
 
     @Override
