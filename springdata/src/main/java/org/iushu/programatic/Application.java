@@ -35,6 +35,7 @@ public class Application {
         actor.setLast_name("JAVIS");
         boolean success = transactionTemplate.execute(status -> {
             try {
+                status.setRollbackOnly();   // cancel update
                 return actorService.updateActor(actor);
             } catch (Exception e) {
                 status.setRollbackOnly();   // rollback if exception occurred
@@ -47,6 +48,8 @@ public class Application {
     }
 
     /**
+     * For reactive programing
+     *
      * @see org.springframework.transaction.reactive.TransactionalOperator
      */
     static void transactionOperator() {
@@ -72,8 +75,8 @@ public class Application {
     }
 
     public static void main(String[] args) {
-//        transactionTemplate();
-        transactionOperator();
+        transactionTemplate();
+//        transactionOperator();
 //        transactionTemplateImplementation();
     }
 

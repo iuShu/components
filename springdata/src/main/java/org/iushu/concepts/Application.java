@@ -1,25 +1,41 @@
 package org.iushu.concepts;
 
+import org.aspectj.lang.JoinPoint;
+import org.iushu.concepts.event.EventConfiguration;
+import org.iushu.concepts.event.FocusTransactionalEventListenerMethod;
 import org.iushu.concepts.simulate.*;
 import org.iushu.declarative.DeclarativeConfiguration;
 import org.iushu.declarative.bean.Department;
 import org.iushu.declarative.bean.Staff;
 import org.iushu.declarative.service.DefaultDepartmentService;
 import org.iushu.declarative.service.DepartmentService;
+import org.iushu.declarative.service.EventStaffService;
 import org.iushu.declarative.service.StaffService;
+import org.iushu.programatic.service.DefaultActorService;
+import org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator;
+import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.event.EventListenerMethodProcessor;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.core.io.ProtocolResolver;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.SavepointManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.event.TransactionalApplicationListenerAdapter;
+import org.springframework.transaction.event.TransactionalApplicationListenerMethodAdapter;
+import org.springframework.transaction.event.TransactionalEventListenerFactory;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.transaction.support.*;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -236,6 +252,38 @@ public class Application {
         }
     }
 
+    /**
+     * NOTE: TransactionEventListener only valid in transaction context.
+     *
+     * @see org.springframework.transaction.event.TransactionPhase
+     * @see org.springframework.transaction.event.TransactionalEventListener method listener
+     * @see org.springframework.transaction.event.TransactionalApplicationListener class listener
+     * @see org.springframework.transaction.event.TransactionalApplicationListenerAdapter for listener class
+     * @see org.springframework.transaction.event.TransactionalApplicationListenerMethodAdapter for listener method
+     * @see org.springframework.transaction.event.TransactionalEventListenerFactory create transaction event listener
+     *
+     * NOTE: Wrap the event listener as TransactionSynchronization and register it to transaction context.
+     * NOTE: Use Aop proxy to uncouple your code with the event publishing code and reduce invasive code.
+     * @see FocusTransactionalEventListenerMethod#publishEventForRegisterTransactionListener(JoinPoint) fired register action
+     * @see TransactionalApplicationListenerMethodAdapter#onApplicationEvent(ApplicationEvent)
+     * @see TransactionSynchronizationManager#registerSynchronization(TransactionSynchronization)
+     */
+    static void transactionEvent() {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.registerBean(EventConfiguration.class);
+        context.registerBean(EventStaffService.class);
+        context.registerBean(FocusTransactionalEventListenerMethod.class);
+        context.registerBean(JdbcTemplate.class, new DeclarativeConfiguration().dataSource());
+        context.refresh();
+
+        StaffService staffService = context.getBean(StaffService.class);
+        Staff staff = staffService.getStaff(3);
+        System.out.println(staff);
+
+//        checkComponents(context);
+        context.close();
+    }
+
     public static void checkComponents(AbstractApplicationContext context) {
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) context.getBeanFactory();
@@ -260,8 +308,9 @@ public class Application {
 //        transactionStatus();
 //        propagationRequired();
 //        propagationRequiresNew();
-        propagationNest();
+//        propagationNest();
 //        simulate();
+        transactionEvent();
     }
 
 }

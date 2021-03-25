@@ -2,6 +2,7 @@ package org.iushu.declarative;
 
 import org.aopalliance.intercept.MethodInvocation;
 import org.iushu.declarative.bean.Staff;
+import org.iushu.declarative.service.DefaultDepartmentService;
 import org.iushu.declarative.service.StaffService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -80,6 +81,7 @@ public class Application {
     static void annotationBased() {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.register(DeclarativeConfiguration.class);
+        context.registerBean(DefaultDepartmentService.class);
         context.refresh();
 
         StaffService staffService = context.getBean(StaffService.class);
