@@ -35,7 +35,8 @@ public class EventStaffService implements StaffService {
 
     @Override
     public List<Staff> getLevelStaffs(int level) {
-        return null;
+        String sql = "SELECT id, name, deptId, level, createTime, updateTime FROM staff WHERE level = ?";
+        return jdbcTemplate.query(sql, Staff.rowMapper(), level);
     }
 
     @Override

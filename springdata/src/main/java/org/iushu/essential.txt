@@ -16,7 +16,7 @@
 210324: Dive in transactional propagation and how they work.
 
 TODO What cache mechanism exactly is in Spring BeanFactory.
-TODO How Spring fixed up the Bean's circular-dependency issue.
+TODO How Spring fixed up the Bean's circular-dependency issue and what if they both wrapped or proxied.
 TODO Make a summary as finished the book Performance MySQL.
 
 - Stack

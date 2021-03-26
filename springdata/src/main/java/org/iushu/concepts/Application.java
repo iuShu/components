@@ -1,5 +1,6 @@
 package org.iushu.concepts;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.aspectj.lang.JoinPoint;
 import org.iushu.concepts.event.EventConfiguration;
 import org.iushu.concepts.event.FocusTransactionalEventListenerMethod;
@@ -11,33 +12,34 @@ import org.iushu.declarative.service.DefaultDepartmentService;
 import org.iushu.declarative.service.DepartmentService;
 import org.iushu.declarative.service.EventStaffService;
 import org.iushu.declarative.service.StaffService;
-import org.iushu.programatic.service.DefaultActorService;
-import org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator;
-import org.springframework.beans.factory.SmartInitializingSingleton;
+import org.iushu.programatic.bean.Actor;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.event.EventListenerMethodProcessor;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.core.io.ProtocolResolver;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
+import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.transaction.SavepointManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.event.TransactionalApplicationListenerAdapter;
 import org.springframework.transaction.event.TransactionalApplicationListenerMethodAdapter;
-import org.springframework.transaction.event.TransactionalEventListenerFactory;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.transaction.support.*;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+import javax.sql.DataSource;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static org.iushu.concepts.simulate.GameWorld.DEFAULT_PLAYER_BLOOD;
@@ -168,6 +170,7 @@ public class Application {
         Staff staff = staffService.getStaff(2, true);
         System.out.println(staff);
 
+        checkComponents(context);
         context.close();
     }
     
@@ -268,7 +271,7 @@ public class Application {
      * @see TransactionalApplicationListenerMethodAdapter#onApplicationEvent(ApplicationEvent)
      * @see TransactionSynchronizationManager#registerSynchronization(TransactionSynchronization)
      */
-    static void transactionEvent() {
+    static void transactionMethodEvent() {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.registerBean(EventConfiguration.class);
         context.registerBean(EventStaffService.class);
@@ -282,6 +285,74 @@ public class Application {
 
 //        checkComponents(context);
         context.close();
+    }
+
+    /**
+     * @see org.springframework.jdbc.core.namedparam.SqlParameterSource
+     * @see org.springframework.jdbc.core.namedparam.MapSqlParameterSource
+     * @see org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource
+     *
+     * Return generated primary key after inserted row
+     * @see org.iushu.programatic.service.DefaultActorService#insertActor(Actor)
+     * @see org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils#createBatch for batch usage
+     */
+    static void namedParameterJdbcTemplate() {
+        DataSource dataSource = new DeclarativeConfiguration().dataSource();
+        NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+
+        // use parameter's name instead of ? placeholder for more readability
+        String namedSql = "SELECT id, name, deptId, level, createTime, updateTime FROM staff WHERE level = :level";
+
+        // use SqlParameterSource
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("level", 1);
+        List<Staff> staffs = namedJdbcTemplate.query(namedSql, sqlParameterSource, Staff.rowMapper());
+        staffs.forEach(System.out::println);
+
+        // using Map also available
+//        Map<String, Object> mapParameterSource = Collections.singletonMap("level", 1);
+//        List<Staff> staffs = jdbcTemplate.query(namedSql, mapParameterSource, Staff.rowMapper());
+
+        Staff staff = staffs.get(0);
+
+        // use BeanPropertySqlParameterSource
+        String updateSql = "UPDATE staff SET name = :name, deptId = :deptId, level = :level, updateTime = CURRENT_TIME WHERE id = :id";
+        SqlParameterSource beanParameterSource = new BeanPropertySqlParameterSource(staff);
+        int affectedRow = namedJdbcTemplate.update(updateSql, beanParameterSource);
+        System.out.println(affectedRow > 0);
+    }
+
+    /**
+     * @see DataAccessException root Spring's own sql exception
+     * @see SQLExceptionTranslator strategy interface to translate between SQLException and DataAccessException
+     * @see SQLErrorCodeSQLExceptionTranslator default exception translator
+     * @see org.springframework.jdbc.support.SQLErrorCodes bases on a configuration 'sql-error-codes.xml'
+     *
+     * @see JdbcTemplate#setExceptionTranslator(SQLExceptionTranslator) apply sql exception translator
+     */
+    static void sqlException() {
+
+    }
+
+    /**
+     * NOTE: SimpleJdbcInsert/SimpleJdbcCall would checkCompile to fetch the table's MetaData before execute,
+     *       this fetching needs to get a connection from DataSource.
+     *       If using DataSource, the connection for checkCompile and execute sql would be the same one.
+     *
+     * @see SimpleJdbcInsert
+     * @see SimpleJdbcCall
+     */
+    static void simpleJdbcInsert() {
+        BasicDataSource dataSource = (BasicDataSource) new DeclarativeConfiguration().dataSource();
+        dataSource.setUrl("jdbc:mysql://localhost:3306/sakila");
+        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("actor");
+
+        Actor actor = new Actor();
+        actor.setFirst_name("Mark");
+        actor.setLast_name("Richards");
+        actor.setLast_update(new Date());
+        SqlParameterSource beanParameterSource = new BeanPropertySqlParameterSource(actor);
+        int affectedRows = jdbcInsert.execute(beanParameterSource);
+        System.out.println(affectedRows > 0);
     }
 
     public static void checkComponents(AbstractApplicationContext context) {
@@ -310,7 +381,9 @@ public class Application {
 //        propagationRequiresNew();
 //        propagationNest();
 //        simulate();
-        transactionEvent();
+//        transactionMethodEvent();
+//        namedParameterJdbcTemplate();
+        simpleJdbcInsert();
     }
 
 }

@@ -12,6 +12,6 @@ public interface ActorService {
 
     boolean updateActor(Actor actor);
 
-    boolean insertActor(Actor actor);
+    short insertActor(Actor actor);
 
 }
