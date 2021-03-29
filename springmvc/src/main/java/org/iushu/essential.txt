@@ -1,0 +1,4 @@
+210329: A new start from SpringMVC. Hurry up, another month almost elapsed.
+210330:
+
+TODO excluding to filter static resource at DispatcherServlet.
