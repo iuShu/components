@@ -14,16 +14,18 @@
 210322: Learning what the geometry type is in MySQL and turn back to Spring Transaction.
 210323: Practicing declarative transaction implementation in Spring Transaction.
 210324: Dive in transactional propagation and how they work.
+210325: Transaction-bound event and corresponding listener.
+210326: Practice finished on Spring JDBC and Transaction packages.
 
 TODO What cache mechanism exactly is in Spring BeanFactory.
 TODO How Spring fixed up the Bean's circular-dependency issue and what if they both wrapped or proxied.
 TODO Make a summary as finished the book Performance MySQL.
 
 - Stack
-    - Java-Base DesignPattern
-    - Spring SpringBoot MyBatis Hibernate
-    - Distributed-System SpringCloud-Netflix SpringCloud-Alibaba
-    - MySQL tomcat/resin
+    - Java-Base DesignPattern JVM Concurrency
+    - Spring SpringData SpringBoot MyBatis Hibernate
+    - Distributed-System-Conceptions SpringCloud-Alibaba/Netflix Dubbo
+    - MySQL Tomcat
     - Netty
 
 - Isolation Level

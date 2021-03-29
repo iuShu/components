@@ -29,6 +29,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.transaction.SavepointManager;
@@ -39,6 +43,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.transaction.support.*;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -353,6 +358,54 @@ public class Application {
         SqlParameterSource beanParameterSource = new BeanPropertySqlParameterSource(actor);
         int affectedRows = jdbcInsert.execute(beanParameterSource);
         System.out.println(affectedRows > 0);
+    }
+
+    /**
+     * @see org.springframework.jdbc.object.RdbmsOperation
+     * @see org.springframework.jdbc.object.SqlOperation
+     * @see org.springframework.jdbc.object.SqlQuery
+     * @see org.springframework.jdbc.object.MappingSqlQueryWithParameters
+     * @see org.springframework.jdbc.object.MappingSqlQuery
+     * @see org.springframework.jdbc.object.SqlFunction
+     */
+    static void sqlQuery() {
+
+    }
+
+    /**
+     * NOTE: EmbeddedDatabase implements DataSource
+     *
+     * @see org.springframework.jdbc.datasource.embedded.EmbeddedDatabase
+     * @see org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory
+     * @see org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactoryBean
+     */
+    static void embeddedDatabase() {
+        EmbeddedDatabase embeddedDatabase = new EmbeddedDatabaseBuilder()
+                .generateUniqueName(true)
+                .setType(EmbeddedDatabaseType.H2)
+                .setScriptEncoding("UTF-8")
+                .ignoreFailedDrops(true)
+                .addScript("script.sql")
+                .addScripts("iushu-data.sql", "sakila-data.sql")
+                .build();
+
+        // do something
+//        embeddedDatabase.getConnection();
+//        DataSourceUtils.getConnection(embeddedDatabase);
+
+        embeddedDatabase.shutdown();
+    }
+
+    /**
+     * R2DBC (Reactive Relational Database Connectivity) is a community-driven specification
+     * effort to standardize access to SQL databases using reactive patterns.
+     *
+     * Spring Framework's R2DBC abstraction framework consists of two different packages:
+     *      core: Spring R2DBC (org.springframework.r2dbc.core)
+     *      connection: Spring R2DBC (org.springframework.r2dbc.connection)
+     */
+    static void r2dbcSupport() {
+
     }
 
     public static void checkComponents(AbstractApplicationContext context) {
