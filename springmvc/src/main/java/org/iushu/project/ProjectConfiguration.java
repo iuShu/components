@@ -2,22 +2,29 @@ package org.iushu.project;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.iushu.project.components.ConnectionMetadata;
+import org.iushu.project.components.TraceHandlerInterceptor;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.PropertyResourceConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.format.support.FormattingConversionService;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.servlet.config.annotation.DelegatingWebMvcConfiguration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.ResourceUrlProvider;
 
 import javax.sql.DataSource;
 
 /**
  * Supports @EnableWebMvc annotation and
- * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport
+ * @see WebMvcConfigurationSupport
  *
  * @author iuShu
  * @since 3/29/21
@@ -25,16 +32,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan(basePackages = "org.iushu.project.*")
 @EnableWebMvc
-public class ProjectConfiguration {
-
-    @Bean
-    public PropertyResourceConfigurer propertyResourceConfigurer(BeanFactory beanFactory) {
-        String filePath = "/media/iushu/120bd41f-5ddb-45f2-9233-055fdc3aca07/workplace-idea/components/springmvc/web/WEB-INF/mysql.properties";
-        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-        configurer.setBeanFactory(beanFactory);
-        configurer.setLocation(new FileSystemResource(filePath));
-        return configurer;
-    }
+public class ProjectConfiguration implements WebMvcConfigurer {
 
     @Bean
     public DataSource dataSource(ConnectionMetadata metadata) {
@@ -51,4 +49,16 @@ public class ProjectConfiguration {
         return new JdbcTemplate(dataSource);
     }
 
+    /**
+     * The HandlerInterceptors needs to adding before ApplicationContext refreshed.
+     * @see WebMvcConfigurationSupport#requestMappingHandlerMapping
+     * @see WebMvcConfigurationSupport#getInterceptors
+     * @see WebMvcConfigurationSupport#addInterceptors(InterceptorRegistry)
+     * @see DelegatingWebMvcConfiguration#addInterceptors(InterceptorRegistry)
+     * @see WebMvcConfigurer#addInterceptors(InterceptorRegistry)
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new TraceHandlerInterceptor());
+    }
 }

@@ -1,4 +1,5 @@
 210329: A new start from SpringMVC. Hurry up, another month almost elapsed.
-210330:
+210330: Begin to analyze the handling flow of a request in SpringMVC.
 
 TODO excluding to filter static resource at DispatcherServlet.
+TODO what does HandlerAdapter do in SpringMVC.

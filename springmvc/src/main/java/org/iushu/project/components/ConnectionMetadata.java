@@ -1,6 +1,7 @@
 package org.iushu.project.components;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
  * @since 3/29/21
  */
 @Component
+@PropertySource(value = "classpath:mysql.properties")
 public class ConnectionMetadata {
 
     @Value("${jdbc.driver}")
