@@ -3,27 +3,18 @@ package org.iushu.project;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.iushu.project.components.ConnectionMetadata;
 import org.iushu.project.components.TraceHandlerInterceptor;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.config.PropertyResourceConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.format.support.FormattingConversionService;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.accept.ContentNegotiationManager;
-import org.springframework.web.servlet.config.annotation.DelegatingWebMvcConfiguration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.resource.ResourceUrlProvider;
+import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
+import org.springframework.web.util.UrlPathHelper;
 
 import javax.sql.DataSource;
 
 /**
- * Supports @EnableWebMvc annotation and
+ * Supports @EnableWebMvc annotation and WebMvcConfigurer.
  * @see WebMvcConfigurationSupport
  *
  * @author iuShu
@@ -60,5 +51,36 @@ public class ProjectConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new TraceHandlerInterceptor());
+    }
+
+    /**
+     * TODO upgrade to path regex matching pattern approach.
+     * TODO apply lastModified attribute of the resource.
+     *
+     * @see WebMvcConfigurationSupport#resourceHandlerMapping
+     * @see WebMvcConfigurer#addResourceHandlers(ResourceHandlerRegistry)
+     * @see ResourceHandlerRegistry#getHandlerMapping()
+     * @see org.springframework.web.servlet.handler.SimpleUrlHandlerMapping
+     *
+     * handle resource request if url matched
+     * @see org.springframework.web.servlet.resource.ResourceHttpRequestHandler
+     * @see ResourceHttpRequestHandler#afterPropertiesSet() initialize the handler and prepare resources
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/index.html", "/js/index.js")
+                .addResourceLocations("index.html", "/js/index.js")
+                .setUseLastModified(true);
+    }
+
+    /**
+     * Support @MatrixVariable
+     * @see org.iushu.project.controller.TraceController#matrixVariable(int, String, int)
+     */
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer) {
+        UrlPathHelper urlPathHelper = new UrlPathHelper();
+        urlPathHelper.setRemoveSemicolonContent(false);
+        configurer.setUrlPathHelper(urlPathHelper);
     }
 }

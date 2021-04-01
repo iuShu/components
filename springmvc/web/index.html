@@ -7,18 +7,52 @@
 </head>
 <body>
 
+<div>
     <div>
-        <div>
-            <h3>Index Page</h3>
-        </div>
-
-        <div>
-            <label for="schema">Schema: </label>
-            <select id="schema" onclick="find()">
-                <option value="actor">Actor</option>
-            </select>
-        </div>
+        <h3>Index Page</h3>
     </div>
+
+    <div>
+        <label for="schema">Schema: </label>
+        <select id="schema" onclick="find()">
+            <option value="default">Please select</option>
+            <option value="actor">Actor</option>
+        </select>
+
+        <label for="preview">Preview: </label>
+        <input type="checkbox" id="preview">
+
+        <input id="create_button" type="button" value="Create" onclick="create_object(this)">
+        <input id="upload_button" type="button" value="Upload" onclick="upload_file(this)">
+    </div>
+
+    <hr>
+
+    <div>
+        <table id="showroom" border="1" style="border-collapse: collapse;"></table>
+    </div>
+    <div style="margin-top: 10px;">
+        <form id="create_form" hidden>
+            <input id="first_name" type="text" placeholder="first_name" autofocus><br>
+            <input id="last_name" type="text" placeholder="last_name"><br><br>
+            <input type="button" value="Submit" onclick="create()">
+            <input type="reset" value="Reset">
+            <input type="button" value="Cancel" onclick="cancel_create()">
+        </form>
+    </div>
+    <div>
+        <form id="upload_form" method="post" enctype="multipart/form-data" action="/pro/trace/upload" hidden>
+            <input id="name" type="text" placeholder="file name" autofocus><br><br>
+            <input id="file" type="file" placeholder="select file"><br><br>
+            <input type="submit" value="Submit">
+            <input type="button" value="Cancel" onclick="cancel_upload()">
+        </form>
+    </div>
+
+    <div>
+        <h4 id="tips"></h4>
+    </div>
+</div>
 
 </body>
 </html>

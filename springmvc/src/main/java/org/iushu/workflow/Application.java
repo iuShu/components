@@ -8,22 +8,40 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.i18n.LocaleContext;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.core.MethodParameter;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ProtocolResolver;
+import org.springframework.http.HttpOutputMessage;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.context.request.*;
+import org.springframework.web.context.support.ServletContextAwareProcessor;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.method.annotation.ModelFactory;
+import org.springframework.web.method.support.*;
 import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.servlet.function.support.HandlerFunctionAdapter;
 import org.springframework.web.servlet.handler.AbstractHandlerMapping;
 import org.springframework.web.servlet.handler.AbstractHandlerMethodMapping;
+import org.springframework.web.servlet.handler.SimpleServletHandlerAdapter;
+import org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter;
+import org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
+import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -105,7 +123,7 @@ public class Application {
 
     /**
      * Default components are configured at org/springframework/web/server/DispatcherServlet.properties
-     * @see HandlerMapping
+     * @see org.springframework.web.servlet.HandlerMapping
      * @see org.springframework.web.servlet.HandlerAdapter
      * @see org.springframework.web.servlet.HandlerExceptionResolver
      * @see org.springframework.web.servlet.ViewResolver
@@ -178,9 +196,78 @@ public class Application {
     }
 
     /**
+     * @see #dispatchServletComponents() default HandlerAdapter configuration
      * @see org.springframework.web.servlet.HandlerAdapter supports various HandlerMapping
+     * @see org.springframework.web.servlet.HandlerAdapter#handle method to handle a request
+     *
+     * Generally for RequestMapping method, supports by:
+     * @see RequestMappingHandlerAdapter supports HandlerMethod (core)
+     * @see SimpleControllerHandlerAdapter supports Controller
+     * @see HttpRequestHandlerAdapter supports HttpRequestHandler
+     * @see HandlerFunctionAdapter
+     * @see SimpleServletHandlerAdapter supports Servlet
+     *
+     * Components at RequestMappingHandlerAdapter
+     * @see RequestMappingHandlerAdapter#afterPropertiesSet() apply initialize
+     * @see RequestMappingHandlerAdapter#initControllerAdviceCache() init advices of controller
+     * @see org.springframework.web.bind.annotation.ControllerAdvice
+     * @see org.springframework.web.method.ControllerAdviceBean metadata of the ControllerAdvice
+     * @see HandlerMethodArgumentResolver 26 built-in resolvers added during startup
+     * @see HandlerMethodArgumentResolverComposite combine argument resolvers
+     * @see HandlerMethodReturnValueHandler 15 built-in handlers added during startup
+     * @see HandlerMethodReturnValueHandlerComposite combine return value handlers
+     *
+     * @see RequestMappingHandlerAdapter#handleInternal
+     * @see RequestMappingHandlerAdapter#invokeHandlerMethod combine many components before invocation
+     * @see ServletInvocableHandlerMethod#invokeAndHandle an HandlerMethod
+     * @see InvocableHandlerMethod#invokeForRequest
+     * @see InvocableHandlerMethod#getMethodArgumentValues
+     * @see InvocableHandlerMethod#doInvoke invoke real action method
+     * @see HandlerMethodReturnValueHandlerComposite#handleReturnValue
+     * @see RequestResponseBodyMethodProcessor supports @ResponseBody (in this case)
+     * @see GsonHttpMessageConverter#write(Object, MediaType, HttpOutputMessage)
+     * @see GsonHttpMessageConverter#writeInternal(Object, Type, java.io.Writer)
+     *
+     * After return data is written back
+     * @see RequestMappingHandlerAdapter#getModelAndView
      */
     static void requestHandlerAdapter() {
+
+    }
+
+    /**
+     * Parameter binding at handler method
+     * @see org.iushu.project.controller.TraceController
+     */
+    static void parameterBinding() {
+
+    }
+
+    /**
+     * @see org.springframework.web.context.request.RequestAttributes
+     * @see org.springframework.web.context.request.WebRequest
+     * @see org.springframework.web.context.request.NativeWebRequest
+     * @see org.springframework.web.context.request.ServletWebRequest
+     * @see org.springframework.web.servlet.handler.DispatcherServletWebRequest
+     */
+    static void springWebRequest() {
+
+    }
+
+    /**
+     * @see ServletContext#getResource(String) root directory starts from app/.. (include /WEB-INF)
+     * @see ClassPathResource#getPath() root directory starts from app/WEB-INF/classes/..
+     */
+    static void applicationPath() {
+
+    }
+
+    /**
+     * @see ServletContext
+     * @see ServletContextAware
+     * @see ServletContextAwareProcessor an BeanPostProcessor
+     */
+    static void servletContextAware() {
 
     }
 
@@ -200,6 +287,20 @@ public class Application {
         for (String name : context.getBeanDefinitionNames()) {
             System.out.println("Bean: " + name);
             System.out.println("      " + context.getBean(name).getClass().getName());
+        }
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    }
+
+    public static void checkCookies(Cookie[] cookies) {
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        if (cookies == null)
+            System.out.println("checkCookies: NULL");
+        else if (cookies.length == 0)
+            System.out.println("checkCookies: EMPTY");
+        else {
+            for (Cookie cookie : cookies)
+                System.out.println("checkCookies: " + String.format("name: %s, value: %s, path: %s, domain: %s, maxAge: %s",
+                        cookie.getName(), cookie.getValue(), cookie.getPath(), cookie.getDomain(), cookie.getMaxAge()));
         }
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }

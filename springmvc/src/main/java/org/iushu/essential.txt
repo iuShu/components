@@ -3,3 +3,10 @@
 
 TODO excluding to filter static resource at DispatcherServlet.
 TODO what does HandlerAdapter do in SpringMVC.
+
+utils
+    - MethodIntrospector
+        - MethodFilter
+        - AnnotatedElementUtils
+    - ApplicationObjectSupport
+    - WebApplicationObjectSupport

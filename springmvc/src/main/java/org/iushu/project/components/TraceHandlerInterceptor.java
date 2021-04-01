@@ -14,10 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class TraceHandlerInterceptor implements HandlerInterceptor {
 
+    /**
+     * @param handler HandlerMethod
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("[locale] " + request.getLocale());
+        System.out.println("[preHandle] " + request.getLocale());
         System.out.println("[preHandle] " + handler.getClass().getName());
+        System.out.println("[preHandle] " + request.getClass().getName());
         return true;
     }
 
@@ -32,4 +36,5 @@ public class TraceHandlerInterceptor implements HandlerInterceptor {
         System.out.println("[afterCompletion] " + handler.getClass().getName());
         System.out.println("[afterCompletion] " + ex);
     }
+
 }
