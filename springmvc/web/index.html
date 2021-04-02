@@ -21,9 +21,13 @@
 
         <label for="preview">Preview: </label>
         <input type="checkbox" id="preview">
+        <label for="router">Router: </label>
+        <input type="checkbox" id="router">
 
         <input id="create_button" type="button" value="Create" onclick="create_object(this)">
         <input id="upload_button" type="button" value="Upload" onclick="upload_file(this)">
+        <input id="entity_button" type="button" value="Entity" onclick="post_entity(this)">
+        <input id="router_button" type="button" value="Router" onclick="router_actor(this)">
     </div>
 
     <hr>
@@ -42,9 +46,9 @@
     </div>
     <div>
         <form id="upload_form" method="post" enctype="multipart/form-data" action="/pro/trace/upload" hidden>
-            <input id="name" type="text" placeholder="file name" autofocus><br><br>
-            <input id="file" type="file" placeholder="select file"><br><br>
-            <input type="submit" value="Submit">
+            <input id="name" type="text" name="name" placeholder="file name" autofocus><br><br>
+            <input id="file" type="file" name="file" placeholder="select file"><br><br>
+            <input type="button" value="Submit" onclick="submit_upload()">
             <input type="button" value="Cancel" onclick="cancel_upload()">
         </form>
     </div>

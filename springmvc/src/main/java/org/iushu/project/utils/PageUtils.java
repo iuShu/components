@@ -18,8 +18,4 @@ public class PageUtils {
         return (pageNo - 1) * pageSize;
     }
 
-    public static void main(String[] args) {
-        System.getenv().forEach((k, v) -> System.out.println(k + "\t" + v));
-    }
-
 }

@@ -3,11 +3,18 @@ package org.iushu.project;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.iushu.project.components.ConnectionMetadata;
 import org.iushu.project.components.TraceHandlerInterceptor;
+import org.iushu.project.controller.ActorRouterHandler;
+import org.iushu.project.service.ActorService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.function.RequestPredicates;
+import org.springframework.web.servlet.function.RouterFunction;
+import org.springframework.web.servlet.function.RouterFunctions;
+import org.springframework.web.servlet.function.ServerResponse;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import org.springframework.web.util.UrlPathHelper;
 
@@ -38,6 +45,32 @@ public class ProjectConfiguration implements WebMvcConfigurer {
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
+    }
+
+    /**
+     * WebMvc.fn
+     * @see ActorRouterHandler
+     */
+    @Bean
+    public RouterFunction<ServerResponse> routerFunction(ActorService service) {
+        ActorRouterHandler handler = new ActorRouterHandler(service);
+        RouterFunction<ServerResponse> router = RouterFunctions.route()
+                .GET("/router/parameter", RequestPredicates.accept(MediaType.TEXT_HTML), handler::parameters)
+                .POST("/router/actor/body", RequestPredicates.accept(MediaType.APPLICATION_JSON), handler::bodyActor)
+                .GET("/router/actor/filter/{actor_id}", RequestPredicates.accept(MediaType.APPLICATION_JSON), handler::getActor)
+                .GET("/router/actor/list/{pageNo}", RequestPredicates.accept(MediaType.APPLICATION_JSON), handler::listActor)
+
+                /* routers */
+//                .add(otherRouter)
+
+                /* nested routers */
+//                .path("/trace", builder -> {
+//                    builder.GET("/model/transport", RequestPredicates.accept(MediaType.TEXT_HTML)), controller::modelFlow)
+//                    builder.GET("/model/global", RequestPredicates.accept(MediaType.TEXT_HTML)), controller::globalModel)
+//                })
+
+                .build();
+        return router;
     }
 
     /**

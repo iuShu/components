@@ -8,6 +8,11 @@ function find() {
     if (option === 'default' || !preview)
         return;
 
+    if ($('#router').is(':checked')) {
+        router_request();
+        return;
+    }
+
     $.ajax({
         type: 'get',
         url: host + option + '/list/1',
@@ -89,11 +94,10 @@ function create() {
             var array = [];
             array.push(data);
             showroom(array);
-            $('#create_form')[0].reset();
         },
         error: function (err) {
             console.warn(err);
-            $('#create_button').attr('disabled', false);
+            cancel_create();
         }
     });
 }
@@ -101,6 +105,7 @@ function create() {
 function cancel_create() {
     $('#create_form').hide();
     $('#create_button').attr('disabled', false);
+    $('#create_form')[0].reset();
 }
 
 function upload_file(button) {
@@ -111,4 +116,88 @@ function upload_file(button) {
 function cancel_upload() {
     $('#upload_button').attr('disabled', false);
     $('#upload_form').hide();
+    $('#upload_form')[0].reset();
+}
+
+function submit_upload() {
+    var form_data = new FormData($('#upload_form')[0]);
+    $.ajax({
+        type: 'post',
+        url: host + 'trace/upload',
+        data: form_data,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            console.log(data);
+            cancel_upload();
+        },
+        error: function (err) {
+            console.warn(err);
+        }
+    });
+}
+
+function post_entity() {
+    var actor = {
+        'actor_id': 888,
+        'first_name': 'Rod',
+        'last_name': 'Johnson',
+        'last_update': '2016-8-10 09:10:56'
+    };
+
+    $.ajax({
+        type: 'post',
+        url: host + 'trace/req/entity',
+        data: JSON.stringify(actor),
+        contentType: 'application/json',
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (err) {
+            console.warn(err);
+        }
+    });
+}
+
+function router_actor(button) {
+    $(button).attr('disabled', true);
+
+    var actor = {
+        'actor_id': 567,
+        'first_name': 'Karen',
+        'last_name': 'Miller',
+        'last_update': '2020-3-24 11:30:56'
+    };
+
+    $.ajax({
+        type: 'post',
+        url: host + 'router/actor/body',
+        data: JSON.stringify(actor),
+        contentType: 'application/json',
+        success: function (data) {
+            console.log(data);
+            $(button).attr('disabled', false);
+        },
+        error: function (err) {
+            console.warn(err);
+            $(button).attr('disabled', false);
+        }
+    });
+
+}
+
+function router_request() {
+    var option = $('#schema').val();
+    $.ajax({
+        type: 'post',
+        url: host + option + '/list/',
+        data: 1,
+        success: function (data) {
+            data = eval(data);
+            showroom(data);
+        },
+        error: function (err) {
+            console.warn(err)
+        }
+    });
 }
