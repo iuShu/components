@@ -24,6 +24,7 @@ import org.springframework.web.method.support.*;
 import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.function.support.HandlerFunctionAdapter;
 import org.springframework.web.servlet.handler.AbstractHandlerMapping;
 import org.springframework.web.servlet.handler.AbstractHandlerMethodMapping;
@@ -38,6 +39,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHan
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -240,6 +243,19 @@ public class Application {
      * @see org.iushu.project.controller.TraceController
      */
     static void parameterBinding() {
+
+    }
+
+    /**
+     * @see RequestMappingHandlerAdapter#getModelAndView
+     * @see org.springframework.web.servlet.DispatcherServlet#render
+     * @see org.springframework.web.servlet.DispatcherServlet#viewResolvers
+     * @see org.springframework.web.servlet.view.ViewResolverComposite
+     * @see org.springframework.web.servlet.view.InternalResourceViewResolver
+     * @see org.springframework.web.servlet.view.UrlBasedViewResolver#REDIRECT_URL_PREFIX
+     * @see javax.servlet.RequestDispatcher#forward(ServletRequest, ServletResponse) forward to new View
+     */
+    static void viewResolver() {
 
     }
 

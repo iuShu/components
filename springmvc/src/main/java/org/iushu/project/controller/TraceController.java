@@ -206,7 +206,7 @@ public class TraceController {
      * Servlet 3.0 needs to config the file temporary storing directory.
      * @see org.iushu.project.ProjectApplicationInitializer#onStartup(ServletContext)
      * @see ServletRegistration.Dynamic#setMultipartConfig(MultipartConfigElement)
-     * @see MultipartConfigElement
+     * @see javax.servlet.MultipartConfigElement
      */
     @PostMapping("/upload")
     public String multipleFile(String name, MultipartFile file) throws IOException {
@@ -222,7 +222,10 @@ public class TraceController {
         return entity.getBody().toString();
     }
 
-    // return data with status and headers
+    /**
+     * return data with status and headers
+     * @see org.springframework.http.ResponseEntity
+     */
     @RequestMapping("/resp/entity")
     public ResponseEntity<String> responseEntity() {
         return ResponseEntity.status(HttpStatus.OK)
