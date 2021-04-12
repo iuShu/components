@@ -1,7 +1,12 @@
 210406: A new start in SpringBoot.
-210407:
+210407: Take a glance on the structure.
+210408: Watching video and following the instructor.
+210409: How the auto-import mechanism run.
+210410: Watching video to know how using it at production.
+210412: Still diving into the auto-configuration mechanism.
 
 skill:
+    - JUC
     - Nginx SpringCloud
     - Netty
 

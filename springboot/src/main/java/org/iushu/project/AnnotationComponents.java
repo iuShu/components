@@ -36,4 +36,20 @@ public class AnnotationComponents {
 
     }
 
+    /**
+     * AutoConfiguration pair: *AutoConfiguration and *Properties, like listed below:
+     * @see org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration
+     * @see org.springframework.boot.context.properties.EnableConfigurationProperties
+     * @see org.springframework.boot.autoconfigure.info.ProjectInfoProperties
+     * @see org.springframework.boot.context.properties.ConfigurationProperties prefix
+     *
+     * Reading config entry from configuration file and inject into *Properties class.
+     * Each configuration of modules can refer to their *Properties class.
+     *
+     * Programatically config also available by using *Configurer and *Customizer class.
+     */
+    static void autoConfiguration() {
+
+    }
+
 }
