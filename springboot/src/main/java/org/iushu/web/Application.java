@@ -31,11 +31,11 @@ public class Application {
      * NOTE: Annotated with @EnableWebMvc at Configuration class means invalid the auto-configured components.
      * @see org.springframework.web.servlet.config.annotation.EnableWebMvc
      * @see org.springframework.web.servlet.config.annotation.DelegatingWebMvcConfiguration
-     * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport
+     * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport only contains basic configuration
      *
      * Spring boot auto-configuration had annotated with @ConditionalOnMissingBean(WebMvcConfigurationSupport.class)
      * That means it only valid at the context that not contain anyother WebMvcConfigurationSupport bean.
-     * @see WebMvcAutoConfiguration
+     * @see WebMvcAutoConfiguration adding Springboot requires components for SpringMVC
      *
      * SpringMvc auto configuration components:
      * @see WebMvcAutoConfiguration
