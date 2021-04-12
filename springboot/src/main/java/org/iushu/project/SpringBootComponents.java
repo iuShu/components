@@ -1,8 +1,16 @@
 package org.iushu.project;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.context.config.ConfigFileApplicationListener;
 import org.springframework.boot.diagnostics.FailureAnalysis;
+import org.springframework.boot.env.PropertySourceLoader;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.io.ResourceLoader;
 
 import java.util.Collection;
+import java.util.Set;
+
+import static org.springframework.boot.context.config.ConfigFileApplicationListener.*;
 
 /**
  * @author iuShu
@@ -36,7 +44,7 @@ public class SpringBootComponents {
      *
      * Default listeners during startup and also are configured in built-in configuration.
      * @see org.springframework.boot.cloud.CloudFoundryVcapEnvironmentPostProcessor
-     * @see org.springframework.boot.context.config.ConfigFileApplicationListener
+     * @see ConfigFileApplicationListener
      * @see org.springframework.boot.context.config.AnsiOutputApplicationListener
      * @see org.springframework.boot.context.logging.LoggingApplicationListener
      * @see org.springframework.boot.context.logging.ClasspathLoggingApplicationListener
@@ -68,6 +76,38 @@ public class SpringBootComponents {
      * @see org.springframework.boot.context.event.ApplicationFailedEvent
      */
     static void springApplicationRunListener() {
+
+    }
+
+    /**
+     * Loading default configuration: application.properties or application.yaml
+     * @see ConfigFileApplicationListener#postProcessEnvironment
+     * @see ConfigFileApplicationListener#addPropertySources(ConfigurableEnvironment, ResourceLoader)
+     * @see ConfigFileApplicationListener.Loader#load()
+     * @see ConfigFileApplicationListener.Loader#load(Profile, DocumentFilterFactory, DocumentConsumer)
+     * @see ConfigFileApplicationListener.Loader#getSearchLocations() locate configuration directory
+     * @see ConfigFileApplicationListener.Loader#getSearchNames() searching file name
+     * @see ConfigFileApplicationListener.Loader#load(String, String, Profile, DocumentFilterFactory, DocumentConsumer)
+     * @see ConfigFileApplicationListener.Loader#loadForFileExtension
+     * @see ConfigFileApplicationListener.Loader#load(PropertySourceLoader, String, Profile, DocumentFilter, DocumentConsumer)
+     *
+     * Configuration file loaders
+     * @see ConfigFileApplicationListener.Loader#propertySourceLoaders loading from spring.factories
+     * @see org.springframework.boot.env.PropertiesPropertySourceLoader supports xml and properties
+     * @see org.springframework.boot.env.YamlPropertySourceLoader
+     *
+     * Default configuration file directories and name
+     * @see ConfigFileApplicationListener#DEFAULT_SEARCH_LOCATIONS
+     * @see ConfigFileApplicationListener#DEFAULT_NAMES
+     *
+     * Profile loading components
+     * @see ConfigFileApplicationListener.Loader#loadForFileExtension
+     * @see ConfigFileApplicationListener.Loader#addActiveProfiles(Set)
+     * @see ConfigFileApplicationListener.Loader#addIncludedProfiles(Set)
+     * @see DocumentFilterFactory
+     * @see DocumentFilter
+     */
+    static void prepareEnvironment() {
 
     }
 
@@ -108,6 +148,30 @@ public class SpringBootComponents {
      * @see org.springframework.boot.autoconfigure.session.NonUniqueSessionRepositoryFailureAnalyzer
      */
     static void failureAnalyzers() {
+
+    }
+
+    /**
+     * Default 3 import filters loading from spring-boot/META-INF/spring.factories
+     *   OnBeanCondition OnClassCondition OnWebApplicationCondition
+     *
+     * @see org.springframework.boot.autoconfigure.condition.OnBeanCondition supports 3 conditional annotations
+     * @see org.springframework.boot.autoconfigure.condition.ConditionalOnBean
+     * @see org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+     * @see org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate
+     *
+     * @see org.springframework.boot.autoconfigure.condition.OnClassCondition supports 2 conditional annotations
+     * @see org.springframework.boot.autoconfigure.condition.ConditionalOnClass
+     * @see org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass
+     * @see org.springframework.boot.autoconfigure.condition.FilteringSpringBootCondition.ClassNameFilter#isPresent(String, ClassLoader)
+     * @see org.springframework.boot.autoconfigure.condition.FilteringSpringBootCondition#resolve(String, ClassLoader)
+     * @see java.lang.Class#forName(String) find conditional class
+     *
+     * @see org.springframework.boot.autoconfigure.condition.OnWebApplicationCondition supports 2 conditional annotations
+     * @see org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication
+     * @see org.springframework.boot.autoconfigure.condition.ConditionalOnNotWebApplication
+     */
+    static void autoConfigurationImportFilter() {
 
     }
 

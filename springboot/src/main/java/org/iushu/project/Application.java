@@ -1,9 +1,9 @@
 package org.iushu.project;
 
+import org.iushu.project.bean.ConnectionMetadata;
 import org.iushu.project.bean.Staff;
+import org.iushu.project.service.DepartmentService;
 import org.iushu.project.service.StaffService;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.AutoConfigurationImportSelector;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,8 +15,8 @@ import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.type.AnnotationMetadata;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * @author iuShu
@@ -60,6 +60,7 @@ public class Application {
      * 4. prepare Environment
      * @see SpringApplication#prepareEnvironment
      * @see SpringApplication#getOrCreateEnvironment()
+     * @see SpringBootComponents#prepareEnvironment() loading default configuration
      *
      * 5. prepare banner to be printed
      * @see SpringApplication#printBanner(ConfigurableEnvironment)
@@ -116,23 +117,80 @@ public class Application {
      * @see AutoConfigurationImportSelector#getCandidateConfigurations(AnnotationMetadata, AnnotationAttributes)
      * @see AutoConfigurationImportSelector#getSpringFactoriesLoaderFactoryClass()
      * @see org.springframework.core.io.support.SpringFactoriesLoader#loadFactoryNames(Class, ClassLoader)
+     *
+     * @see AutoConfigurationImportSelector#getConfigurationClassFilter()
+     * @see org.springframework.boot.autoconfigure.AutoConfigurationImportFilter default 3 filters from spring.factories
+     * @see SpringBootComponents#autoConfigurationImportFilter()
      */
     static void importSelector() {
 
     }
 
+    /**
+     * @see AnnotationComponents for more details
+     * @see org.springframework.beans.factory.annotation.Value
+     * @see org.springframework.context.annotation.PropertySource specified file properties
+     * @see org.springframework.boot.context.properties.ConfigurationProperties global properties
+     * @see org.springframework.context.annotation.ImportResource import spring xml configuration
+     */
+    static void springBootAnnotations() {
+
+    }
+
+    /**
+     * Active specified profile (default application.properties/yml)
+     *  1. configuring at application.properties: spring.profiles.active=dev
+     *  2. adding program arguments at startup: --spring.profiles.active=dev
+     *  3. adding VM arguments at startup: -Dspring.profiles.active=dev
+     *
+     * Loading *.properties configuration first, then *.yml
+     * More details in loading environment:
+     * @see SpringBootComponents#prepareEnvironment()
+     *
+     * @see org.springframework.context.annotation.Profile
+     */
+    static void profile() {
+        ConfigurableApplicationContext context = SpringApplication.run(Application.class);
+
+        ConfigurableEnvironment env = context.getEnvironment();
+        System.out.println(Arrays.toString(env.getActiveProfiles()));
+
+        ConnectionMetadata metadata = context.getBean(ConnectionMetadata.class);
+        System.out.println(metadata);
+
+        context.close();
+    }
+
     static void simpleDemonstrate() {
         ConfigurableApplicationContext context = SpringApplication.run(Application.class);
+
         StaffService service = context.getBean(StaffService.class);
         Staff staff = service.getStaff(40455);
         System.out.println(staff);
 
-        org.iushu.web.Application.checkComponents((AbstractApplicationContext) context);
+        ConnectionMetadata metadata = context.getBean(ConnectionMetadata.class);
+        System.out.println(metadata);
+
+//        org.iushu.web.Application.checkComponents((AbstractApplicationContext) context);
+        context.close();
+    }
+
+    static void conditionalBean() {
+        ConfigurableApplicationContext context = SpringApplication.run(Application.class);
+
+        StaffService staffService = context.getBean(StaffService.class);
+        System.out.println(staffService.getStaff(33));
+
+        DepartmentService departmentService = context.getBean(DepartmentService.class);
+        System.out.println(departmentService.getDepartment(88));
+
         context.close();
     }
 
     public static void main(String[] args) {
-        simpleDemonstrate();
+//        simpleDemonstrate();
+//        conditionalBean();
+        profile();
     }
 
 }

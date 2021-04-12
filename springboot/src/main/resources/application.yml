@@ -1,0 +1,26 @@
+jdbc:
+    driver: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sakila
+    user: iushu
+    password: mysql
+spring:
+    profiles:
+        active: dev
+---
+
+jdbc:
+    driver: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://20.129.6.94:3306/sakila
+    user: dev-iushu
+    password: dev
+spring:
+    profiles: dev
+---
+
+jdbc:
+    driver: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://116.52.99.302:3306/sakila
+    user: pro-iushu
+    password: pro
+spring:
+    profiles: pro

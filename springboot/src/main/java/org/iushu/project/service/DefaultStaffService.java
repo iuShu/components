@@ -10,7 +10,7 @@ import java.util.Date;
  * @since 4/6/21
  */
 @Component
-public class DeafultStaffService implements StaffService {
+public class DefaultStaffService implements StaffService {
 
     // simulate: fetching data from MySQL
     @Override

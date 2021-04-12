@@ -123,6 +123,8 @@
                 - AutowiredAnnotationBeanPostProcessor [beans]
                 - CommonAnnotationBeanPostProcessor [context]
                 - ImportAwareBeanPostProcessor [context]
+        - BeanFactoryPostProcessor (apply in context)
+            - BeanDefinitionRegistryPostProcessor (invoke first)
 
 > [aop]
     - (PowerBy)
