@@ -1,5 +1,6 @@
 package org.iushu.web;
 
+import org.apache.catalina.startup.Tomcat;
 import org.iushu.web.component.WebXmlConfiguration;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -7,8 +8,10 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -71,6 +74,8 @@ public class Application {
      *
      * Locating welcome page 'index.html' under classpath
      * @see org.springframework.boot.autoconfigure.web.servlet.WelcomePageHandlerMapping
+     *
+     * Static templates for template engines like Freemarker and Thymeleaf: resources/templates/*
      */
     static void resourceHandler() {
 
@@ -79,6 +84,7 @@ public class Application {
     /**
      * @see EmbeddedWebServerFactoryCustomizerAutoConfiguration
      * @see org.springframework.boot.web.server.WebServerFactoryCustomizerBeanPostProcessor
+     * @see WebXmlConfiguration#customizer(ServerProperties) for more details
      *
      * @see org.springframework.boot.web.server.WebServerFactoryCustomizer
      * @see org.springframework.boot.autoconfigure.web.embedded.TomcatWebServerFactoryCustomizer
@@ -89,8 +95,14 @@ public class Application {
      * @see org.springframework.boot.web.embedded.tomcat.ConfigurableTomcatWebServerFactory
      * @see org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory
      * @see org.springframework.boot.web.embedded.tomcat.TomcatReactiveWebServerFactory
+     *
+     * @see org.springframework.boot.web.server.WebServer
+     * @see org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory#getWebServer
+     * @see org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory#getTomcatWebServer(Tomcat)
+     * @see org.springframework.boot.web.embedded.tomcat.TomcatWebServer#initialize()
+     * @see org.apache.catalina.startup.Tomcat#start()
      */
-    static void embeddedWebServerConfiguration() {
+    static void webServer() {
 
     }
 

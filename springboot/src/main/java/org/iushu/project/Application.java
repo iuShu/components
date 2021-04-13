@@ -1,6 +1,7 @@
 package org.iushu.project;
 
 import org.iushu.project.bean.ConnectionMetadata;
+import org.iushu.project.bean.FakeDataSource;
 import org.iushu.project.bean.Staff;
 import org.iushu.project.service.DepartmentService;
 import org.iushu.project.service.StaffService;
@@ -161,6 +162,18 @@ public class Application {
         context.close();
     }
 
+    /**
+     * Run some specific code once the SpringApplication has started.
+     * (after application startup but before it starts accepting traffic)
+     *
+     * @see org.springframework.boot.ApplicationRunner
+     * @see org.springframework.boot.CommandLineRunner
+     * @see ProjectConfiguration#customRunner()
+     */
+    static void runner() {
+
+    }
+
     static void simpleDemonstrate() {
         ConfigurableApplicationContext context = SpringApplication.run(Application.class);
 
@@ -187,10 +200,44 @@ public class Application {
         context.close();
     }
 
+    /**
+     * To use @ConstructorBinding the class must be enabled using @EnableConfigurationProperties or configuration
+     * property scanning. @ConstructorBinding can not be used with beans that created by the regular Spring mechanisms,
+     * like beans annotated with @Bean, @Import and @Component, etc,.
+     * (annotated @ConstructorBinding at constructor method if multiple constructors)
+     * @see org.springframework.boot.context.properties.EnableConfigurationProperties
+     * @see org.springframework.boot.context.properties.ConfigurationPropertiesScan
+     * @see org.springframework.boot.context.properties.ConstructorBinding
+     * @see org.springframework.boot.context.properties.ConfigurationProperties
+     * @see org.springframework.boot.context.properties.bind.DefaultValue place default value if no configuration found
+     *
+     * @see org.springframework.boot.context.properties.ConfigurationPropertiesBinder
+     * @see org.springframework.boot.context.properties.ConfigurationPropertiesBinder#BEAN_NAME
+     * @see org.springframework.boot.context.properties.ConfigurationPropertiesBinder#FACTORY_BEAN_NAME
+     *
+     * @see org.iushu.project.bean.DataSourceProperties
+     * @see org.iushu.project.bean.DataSourceProperties.DataSourceInfo
+     * @see org.iushu.project.bean.FakeDataSource
+     *
+     * Validator on property class and fields.
+     * @see org.springframework.boot.context.properties.EnableConfigurationProperties#VALIDATOR_BEAN_NAME
+     * @see org.springframework.boot.context.properties.ConfigurationPropertiesBinder#VALIDATOR_BEAN_NAME
+     */
+    static void configurationProperties() {
+        ConfigurableApplicationContext context = SpringApplication.run(Application.class);
+
+        FakeDataSource dataSource = context.getBean(FakeDataSource.class);
+        System.out.println(dataSource.getProperties());
+
+//        org.iushu.web.Application.checkComponents((AbstractApplicationContext) context);
+        context.close();
+    }
+
     public static void main(String[] args) {
+//        profile();
 //        simpleDemonstrate();
 //        conditionalBean();
-        profile();
+        configurationProperties();
     }
 
 }
