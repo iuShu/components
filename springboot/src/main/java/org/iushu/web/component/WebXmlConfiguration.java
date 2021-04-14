@@ -28,7 +28,8 @@ public class WebXmlConfiguration {
      * @see TomcatServletWebServerFactoryCustomizer
      *
      * @see ServerProperties
-     * @param properties loading at ServletWebServerFactoryAutoConfiguration @EnableConfigurationProperties
+     * @see ServletWebServerFactoryAutoConfiguration
+     * @param properties import from ServletWebServerFactoryAutoConfiguration @EnableConfigurationProperties
      */
     @Bean
     public TomcatServletWebServerFactoryCustomizer customizer(ServerProperties properties) {

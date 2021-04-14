@@ -1,6 +1,7 @@
 package org.iushu.web.controller;
 
 import org.iushu.web.bean.Actor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
