@@ -1,5 +1,6 @@
 package org.iushu.web;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration;
@@ -8,6 +9,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.jdbc.support.JdbcUtils;
 
 import javax.sql.DataSource;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -53,9 +55,25 @@ public class JdbcApplication {
     }
 
     /**
+     * Components
      * @see org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
      * @see org.mybatis.spring.boot.autoconfigure.MybatisProperties
      * @see org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer
+     * @see org.mybatis.spring.mapper.MapperFactoryBean
+     *
+     * TODO How mybatis scanning mappers to BeanDefinition and register it into BeanFactory
+     *
+     * Working flow
+     * @see org.iushu.web.controller.TraceController#actorMapper resolve dependency and autowired
+     * @see org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration#sqlSessionFactory(DataSource) create
+     * @see org.mybatis.spring.mapper.MapperFactoryBean FactoryBean<ActorMapper>
+     *
+     * Mapper working flow
+     * @see org.apache.ibatis.binding.MapperProxy#invoke(Object, Method, Object[])
+     * @see org.apache.ibatis.binding.MapperProxy#cachedInvoker(Method)
+     * @see org.apache.ibatis.binding.MapperProxy.PlainMethodInvoker#invoke(Object, Method, Object[], SqlSession)
+     * @see org.apache.ibatis.binding.MapperMethod#execute(SqlSession, Object[])
+     * @see SqlSession#selectOne(String)
      */
     static void mybatisConfiguration() {
 
