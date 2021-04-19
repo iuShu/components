@@ -1,8 +1,11 @@
 package org.iushu.mybatis.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Actor {
+public class Actor implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private short actor_id;
     private String first_name;
