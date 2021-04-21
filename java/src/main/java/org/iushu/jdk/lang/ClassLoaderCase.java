@@ -152,6 +152,7 @@ class BreakingClassLoader extends CustomClassLoader {
         return loadClass(name, false);
     }
 
+    // present class loader loading first, then the parent loader
     @Override
     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
         Class clazz = findLoadedClass(name);    // avoid error due to duplicate defining class
