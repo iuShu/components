@@ -1,4 +1,4 @@
-package org.iushu.jdk.concurrency;
+package org.iushu.jdk.thread;
 
 /**
  * Be aware of the lock object holding by the synchronized method/block

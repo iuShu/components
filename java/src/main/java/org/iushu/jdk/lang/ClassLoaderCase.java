@@ -1,6 +1,5 @@
 package org.iushu.jdk.lang;
 
-import org.iushu.jdk.Utils;
 import sun.misc.IOUtils;
 
 import java.beans.ExceptionListener;
@@ -37,7 +36,7 @@ public class ClassLoaderCase {
     static void loadingStrategies() {
         try {
             ClassLoader classLoader = ClassLoaderCase.class.getClassLoader();
-            Class clazz = classLoader.loadClass("org.iushu.jdk.concurrency.SynchronizedCase");
+            Class clazz = classLoader.loadClass("org.iushu.jdk.thread.SynchronizedCase");
             System.out.println(clazz.getName());
         } catch (Exception e) {
             e.printStackTrace();
