@@ -1,5 +1,7 @@
 package org.iushu.jdk.thread;
 
+import org.iushu.jdk.Utils;
+
 import java.util.Random;
 
 import static org.iushu.jdk.Utils.sleep;
@@ -16,15 +18,15 @@ public class NotifyWaitCase {
         System.out.println(Thread.currentThread().getName() + " wait");
         synchronized (this) {
             try {
-                this.wait();    // Release all holding monitor locks
+                this.wait();    // Release holding monitor lock
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            // be notified here then try to reacquire required monitor locks
+            // be notified here then try to reacquire required monitor lock
 
             /*
              * threads are going to start lock contention if multiple being notified by notifyAll().
-             * only one thread reacquired its required locks and quit wait() to run continue.
+             * only one thread reacquired its required lock and quit wait() to run continue.
              */
         }
     }
@@ -58,6 +60,31 @@ public class NotifyWaitCase {
         synchronized (this) {
             signalled = true;
             this.notify();
+        }
+    }
+
+    private final Object monitor = new Object();
+
+    synchronized void waitSync() {      // held class monitor lock
+        try {
+            synchronized (monitor) {    // held object monitor lock
+                monitor.wait();         // release object monitor lock but still holding class monitor lock
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    synchronized void notifySync() {
+        notify();
+    }
+
+    // use the object's wait method requires the thread holding the identical object's monitor lock
+    synchronized void waitMonitor() {   // held class monitor lock
+        try {
+            monitor.wait();             // can not apply other object's wait method
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -139,15 +166,44 @@ public class NotifyWaitCase {
              * producer-B should not be notified to produce product -- fake notify issue
              * solve: change if to while
              *
-             * while condition run as spin lock and it will occupy CPU performance
+             * NOTE: while condition run as spin lock and it will occupy CPU performance
              */
         }
+    }
+
+    /**
+     * @see #waitSync()
+     * @see #notifySync()
+     */
+    static void nestedMonitorCase() {
+        NotifyWaitCase notifyWaitCase = new NotifyWaitCase();
+        // holding class monitor lock and released object monitor lock
+        new Thread(notifyWaitCase::waitSync, "wait-sync").start();
+
+        Utils.sleep(1000);
+        // available acquire the object monitor lock
+        synchronized (notifyWaitCase.monitor) {
+            System.out.println(Thread.currentThread().getName() + " got monitor");
+        }
+
+        // unable to acquire the class monitor lock due to it was held at wait-sync thread
+        new Thread(notifyWaitCase::notifySync, "notify-sync").start();
+    }
+
+    /**
+     * @see #waitMonitor()
+     */
+    static void crossMonitorCase() {
+        NotifyWaitCase notifyWaitCase = new NotifyWaitCase();
+        notifyWaitCase.waitMonitor();
     }
 
     public static void main(String[] args) {
 //        threadCommunication();
 //        missedSignal();
-        resolveMissedSignal();
+//        resolveMissedSignal();
+//        nestedMonitorCase();
+        crossMonitorCase();
     }
 
 }
