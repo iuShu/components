@@ -172,12 +172,14 @@ public class NotifyWaitCase {
     }
 
     /**
+     * NOTE: nested monitor may cause threads keep waiting forever like dead lock
+     *
      * @see #waitSync()
      * @see #notifySync()
      */
     static void nestedMonitorCase() {
         NotifyWaitCase notifyWaitCase = new NotifyWaitCase();
-        // holding class monitor lock and released object monitor lock
+        // holding class and object monitor lock, then released object monitor lock
         new Thread(notifyWaitCase::waitSync, "wait-sync").start();
 
         Utils.sleep(1000);

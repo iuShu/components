@@ -7,9 +7,14 @@ import org.iushu.jdk.Utils;
  * @see Thread.State#BLOCKED: holding resources and blocking
  * @see Thread.State#TIMED_WAITING: holding resources and sleeping
  *
+ * two key object monitor's queue/set
+ *  Entry-Sex: store BLOCKED threads, threads manage to contend monitor lock after lock was released.
+ *  Wait-Sex: store WAITING threads, a random thread would be waked up to content with blocking threads if got notify.
+ *            all waited threads would be waked up to content with blocking threads if got notifyAll.
+ *
  * This lock contains thread starve issue:
  * some thread can not catch the lock and might keep waiting forever
- * @see FairLockCase fair lock to solve thread starve issue
+ * use fair lock to solve the issue
  *
  * @author iuShu
  * @since 4/22/21

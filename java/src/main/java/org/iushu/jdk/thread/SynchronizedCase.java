@@ -1,86 +1,42 @@
 package org.iushu.jdk.thread;
 
+import org.iushu.jdk.Utils;
+import org.iushu.jdk.lock.SynchronizedLockCase;
+
 /**
- * Be aware of the lock object holding by the synchronized method/block
+ * Be aware of the monitor lock holding by the synchronized method/block
  *
  * @author iuShu
  * @since 4/20/21
  */
 public class SynchronizedCase {
 
-    // class lock: SynchronizedCase.class
-    static synchronized int add(int value) {
-        System.out.println(Thread.currentThread().getName() + ": " + value);
-        return ++value;
-    }
-
-    // class lock: SynchronizedCase.class
-    static int multiple(int value) {
-        synchronized (SynchronizedCase.class) {  // lock object: SynchronizedCase.class
-            return value * 2;
+    synchronized void wait0() {
+        try {
+            wait();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    // object lock
-    synchronized int deduct(int value) {
-        System.out.println(Thread.currentThread().getName() + ": " + value);
-        return --value;
-    }
-
-    // object lock like deduct() method
-    int devide(int value) {
-        synchronized (this) {   // lock object: this
-            return value / 2;
+    void notify0() {
+        synchronized (this) {
+            notify();
         }
     }
 
-    static void classLock() {
-        int scale = 5000000;
-        new Thread(() -> {
-            int val = 1;
-            while (true) {
-                val = add(val);
-                if (val >= scale)
-                    break;
-            }
-        }, "sync-thread-1").start();
-
-        new Thread(() -> {
-            int val = 1;
-            while (true) {
-                val = add(val);
-                if (val >= scale)
-                    break;
-            }
-        }, "sync-thread-2").start();
-    }
-
-    static void objectLock() {
-        int scale = 5000000;
+    static void classMonitor() {
         SynchronizedCase synchronizedCase = new SynchronizedCase();
-        new Thread(() -> {
-            int val = scale;
-            while (true) {
-                val = synchronizedCase.deduct(val);
-                if (val <= 1)
-                    break;
-            }
-        }, "sync-thread-1").start();
+        new Thread(synchronizedCase::wait0, "waiter").start();
+        new Thread(synchronizedCase::notify0, "notifier").start();
+    }
 
-        new Thread(() -> {
-            int val = scale;
-            while (true) {
-                val = synchronizedCase.deduct(val);
-                if (val <= 1)
-                    break;
-            }
-        }, "sync-thread-2").start();
+    static void objectMonitor() {
+
     }
 
     public static void main(String[] args) {
 
-//        classLock();
-        objectLock();
     }
 
 }
