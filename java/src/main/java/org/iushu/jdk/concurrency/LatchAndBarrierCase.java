@@ -16,6 +16,17 @@ import java.util.concurrent.CyclicBarrier;
  */
 public class LatchAndBarrierCase {
 
+    /**
+     * await
+     * @see java.util.concurrent.CountDownLatch.Sync#acquireSharedInterruptibly(int)
+     * @see java.util.concurrent.CountDownLatch.Sync#tryAcquireShared(int)
+     * @see java.util.concurrent.locks.AbstractQueuedSynchronizer#doAcquireSharedInterruptibly(int)
+     *
+     * count down
+     * @see java.util.concurrent.locks.AbstractQueuedSynchronizer#releaseShared(int)
+     * @see java.util.concurrent.CountDownLatch.Sync#tryReleaseShared(int)
+     * @see java.util.concurrent.locks.AbstractQueuedSynchronizer#doReleaseShared()
+     */
     static void countDownLatchCase() {
         CountDownLatch latch = new CountDownLatch(3);
         Runnable runnable = () -> {
@@ -38,6 +49,16 @@ public class LatchAndBarrierCase {
         new Thread(runnable, "CCC").start();
     }
 
+    /**
+     * @see CyclicBarrier#lock ReentrantLock
+     * @see CyclicBarrier#trip Condition
+     * @see CyclicBarrier#dowait(boolean, long)
+     * @see CyclicBarrier#nextGeneration()
+     * @see CyclicBarrier#breakBarrier()
+     *
+     * @see CyclicBarrier.Generation#broken
+     * @see java.util.concurrent.locks.AbstractQueuedSynchronizer.ConditionObject
+     */
     static void cyclicBarrierCase() {
         CyclicBarrier barrier = new CyclicBarrier(3);
         Runnable runnable = () -> {
