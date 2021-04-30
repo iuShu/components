@@ -16,6 +16,8 @@ import org.iushu.jdk.Utils;
  * some thread can not catch the lock and might keep waiting forever
  * use fair lock to solve the issue
  *
+ * The object monitor can invalid local CPU cache
+ *
  * @author iuShu
  * @since 4/22/21
  */
