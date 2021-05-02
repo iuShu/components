@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.*;
 import org.iushu.mybatis.bean.Actor;
 
 @Mapper
+@CacheNamespace
 public interface ActorMapper {
 
     @Select("select actor_id, first_name, last_name, last_update from actor where actor_id = #{actor_id}")

@@ -1,0 +1,746 @@
+
+2021-04-23 12:07:19
+Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.181-b13 mixed mode):
+
+"JMX server connection timeout 71" #71 daemon prio=9 os_prio=0 tid=0x00007f6a3c004800 nid=0x2c79 in Object.wait() [0x00007f6a958ac000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        at com.sun.jmx.remote.internal.ServerCommunicatorAdmin$Timeout.run(ServerCommunicatorAdmin.java:168)
+        - locked <0x000000076f3bce08> (a [I)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"RMI TCP Connection(5)-127.0.0.1" #70 daemon prio=9 os_prio=0 tid=0x00007f6a2c006000 nid=0x2a65 runnable [0x00007f6a954a9000]
+   java.lang.Thread.State: RUNNABLE
+        at java.net.SocketInputStream.socketRead0(Native Method)
+        at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+        at java.net.SocketInputStream.read(SocketInputStream.java:171)
+        at java.net.SocketInputStream.read(SocketInputStream.java:141)
+        at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
+        at java.io.BufferedInputStream.read(BufferedInputStream.java:265)
+        - locked <0x000000076f2c09a0> (a java.io.BufferedInputStream)
+        at java.io.FilterInputStream.read(FilterInputStream.java:83)
+        at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:555)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:834)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:688)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler$$Lambda$4/1207511144.run(Unknown Source)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:687)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - <0x0000000772e90ba0> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"RMI TCP Connection(4)-127.0.0.1" #69 daemon prio=9 os_prio=0 tid=0x00007f6a2c004800 nid=0x2a63 runnable [0x00007f6a957aa000]
+   java.lang.Thread.State: RUNNABLE
+        at java.net.SocketInputStream.socketRead0(Native Method)
+        at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+        at java.net.SocketInputStream.read(SocketInputStream.java:171)
+        at java.net.SocketInputStream.read(SocketInputStream.java:141)
+        at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
+        at java.io.BufferedInputStream.read(BufferedInputStream.java:265)
+        - locked <0x000000076f3b3390> (a java.io.BufferedInputStream)
+        at java.io.FilterInputStream.read(FilterInputStream.java:83)
+        at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:555)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:834)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:688)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler$$Lambda$4/1207511144.run(Unknown Source)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:687)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - <0x0000000772e90d10> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"RMI Scheduler(0)" #67 daemon prio=9 os_prio=0 tid=0x00007f6a3804d800 nid=0x2a5f waiting on condition [0x00007f6a959ad000]
+   java.lang.Thread.State: TIMED_WAITING (parking)
+        at sun.misc.Unsafe.park(Native Method)
+        - parking to wait for  <0x0000000772ea35d0> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+        at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+        at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+        at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"RMI TCP Accept-0" #65 daemon prio=9 os_prio=0 tid=0x00007f6a30146800 nid=0x2a5c runnable [0x00007f6a95baf000]
+   java.lang.Thread.State: RUNNABLE
+        at java.net.PlainSocketImpl.socketAccept(Native Method)
+        at java.net.AbstractPlainSocketImpl.accept(AbstractPlainSocketImpl.java:409)
+        at java.net.ServerSocket.implAccept(ServerSocket.java:545)
+        at java.net.ServerSocket.accept(ServerSocket.java:513)
+        at sun.management.jmxremote.LocalRMIServerSocketFactory$1.accept(LocalRMIServerSocketFactory.java:52)
+        at sun.rmi.transport.tcp.TCPTransport$AcceptLoop.executeAcceptLoop(TCPTransport.java:405)
+        at sun.rmi.transport.tcp.TCPTransport$AcceptLoop.run(TCPTransport.java:377)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"DestroyJavaVM" #63 prio=5 os_prio=0 tid=0x00007f6ab4010800 nid=0x2a00 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+        - None
+
+"Attach Listener" #62 daemon prio=9 os_prio=0 tid=0x00007f6a64001000 nid=0x2a58 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-0" #61 prio=5 os_prio=0 tid=0x00007f6ab435b000 nid=0x2a51 waiting for monitor entry [0x00007f6a963e2000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-1" #60 prio=5 os_prio=0 tid=0x00007f6ab4359000 nid=0x2a50 waiting for monitor entry [0x00007f6a964e3000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-2" #59 prio=5 os_prio=0 tid=0x00007f6ab4357000 nid=0x2a4f waiting for monitor entry [0x00007f6a965e4000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-3" #58 prio=5 os_prio=0 tid=0x00007f6ab4355000 nid=0x2a4e waiting for monitor entry [0x00007f6a966e5000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-4" #57 prio=5 os_prio=0 tid=0x00007f6ab4353000 nid=0x2a4d waiting for monitor entry [0x00007f6a967e6000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-5" #56 prio=5 os_prio=0 tid=0x00007f6ab4351000 nid=0x2a4c waiting for monitor entry [0x00007f6a968e7000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-6" #55 prio=5 os_prio=0 tid=0x00007f6ab434f000 nid=0x2a4b waiting for monitor entry [0x00007f6a969e8000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-7" #54 prio=5 os_prio=0 tid=0x00007f6ab434d000 nid=0x2a4a waiting for monitor entry [0x00007f6a96ae9000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-8" #53 prio=5 os_prio=0 tid=0x00007f6ab434b000 nid=0x2a49 waiting for monitor entry [0x00007f6a96bea000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-9" #52 prio=5 os_prio=0 tid=0x00007f6ab4349000 nid=0x2a48 waiting for monitor entry [0x00007f6a96ceb000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-10" #51 prio=5 os_prio=0 tid=0x00007f6ab4347000 nid=0x2a47 waiting for monitor entry [0x00007f6a96dec000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-11" #50 prio=5 os_prio=0 tid=0x00007f6ab4345000 nid=0x2a46 waiting for monitor entry [0x00007f6a96eed000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-12" #49 prio=5 os_prio=0 tid=0x00007f6ab4343000 nid=0x2a45 waiting for monitor entry [0x00007f6a96fee000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-13" #48 prio=5 os_prio=0 tid=0x00007f6ab4341000 nid=0x2a44 waiting for monitor entry [0x00007f6a970ef000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-14" #47 prio=5 os_prio=0 tid=0x00007f6ab433f800 nid=0x2a43 waiting for monitor entry [0x00007f6a971f0000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-15" #46 prio=5 os_prio=0 tid=0x00007f6ab433d800 nid=0x2a42 waiting for monitor entry [0x00007f6a972f1000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-16" #45 prio=5 os_prio=0 tid=0x00007f6ab433b800 nid=0x2a41 waiting for monitor entry [0x00007f6a973f2000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-17" #44 prio=5 os_prio=0 tid=0x00007f6ab4339800 nid=0x2a40 waiting for monitor entry [0x00007f6a974f3000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-18" #43 prio=5 os_prio=0 tid=0x00007f6ab4337800 nid=0x2a3f waiting for monitor entry [0x00007f6a975f4000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-19" #42 prio=5 os_prio=0 tid=0x00007f6ab4335800 nid=0x2a3e waiting for monitor entry [0x00007f6a976f5000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-20" #41 prio=5 os_prio=0 tid=0x00007f6ab4333800 nid=0x2a3d waiting for monitor entry [0x00007f6a977f6000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-21" #40 prio=5 os_prio=0 tid=0x00007f6ab4331800 nid=0x2a3c waiting for monitor entry [0x00007f6a978f7000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-22" #39 prio=5 os_prio=0 tid=0x00007f6ab432f800 nid=0x2a3b waiting for monitor entry [0x00007f6a979f8000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-23" #38 prio=5 os_prio=0 tid=0x00007f6ab432d800 nid=0x2a3a waiting for monitor entry [0x00007f6a97af9000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-24" #37 prio=5 os_prio=0 tid=0x00007f6ab432b800 nid=0x2a39 waiting for monitor entry [0x00007f6a97bfa000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-25" #36 prio=5 os_prio=0 tid=0x00007f6ab4329800 nid=0x2a38 waiting for monitor entry [0x00007f6a97cfb000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-26" #35 prio=5 os_prio=0 tid=0x00007f6ab4327800 nid=0x2a37 waiting for monitor entry [0x00007f6a97dfc000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-27" #34 prio=5 os_prio=0 tid=0x00007f6ab4325800 nid=0x2a36 waiting for monitor entry [0x00007f6a97efd000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-28" #33 prio=5 os_prio=0 tid=0x00007f6ab4324000 nid=0x2a35 waiting for monitor entry [0x00007f6a97ffe000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-29" #32 prio=5 os_prio=0 tid=0x00007f6ab4322000 nid=0x2a34 waiting for monitor entry [0x00007f6a9c1c6000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-30" #31 prio=5 os_prio=0 tid=0x00007f6ab4320000 nid=0x2a33 waiting for monitor entry [0x00007f6a9c2c7000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-31" #30 prio=5 os_prio=0 tid=0x00007f6ab431e000 nid=0x2a32 waiting for monitor entry [0x00007f6a9c3c8000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-32" #29 prio=5 os_prio=0 tid=0x00007f6ab431c000 nid=0x2a31 waiting for monitor entry [0x00007f6a9c4c9000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-33" #28 prio=5 os_prio=0 tid=0x00007f6ab431a000 nid=0x2a30 waiting for monitor entry [0x00007f6a9c5ca000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-34" #27 prio=5 os_prio=0 tid=0x00007f6ab4318000 nid=0x2a2f waiting for monitor entry [0x00007f6a9c6cb000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-35" #26 prio=5 os_prio=0 tid=0x00007f6ab4316000 nid=0x2a2e waiting for monitor entry [0x00007f6a9c7cc000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-36" #25 prio=5 os_prio=0 tid=0x00007f6ab4314000 nid=0x2a2d waiting for monitor entry [0x00007f6a9c8cd000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-37" #24 prio=5 os_prio=0 tid=0x00007f6ab4312000 nid=0x2a2c waiting for monitor entry [0x00007f6a9c9ce000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-38" #23 prio=5 os_prio=0 tid=0x00007f6ab4310000 nid=0x2a2b waiting for monitor entry [0x00007f6a9cacf000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-39" #22 prio=5 os_prio=0 tid=0x00007f6ab430e000 nid=0x2a2a waiting for monitor entry [0x00007f6a9cbd0000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-40" #21 prio=5 os_prio=0 tid=0x00007f6ab430c000 nid=0x2a29 waiting for monitor entry [0x00007f6a9ccd1000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-41" #20 prio=5 os_prio=0 tid=0x00007f6ab430a000 nid=0x2a28 waiting for monitor entry [0x00007f6a9cdd2000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-42" #19 prio=5 os_prio=0 tid=0x00007f6ab4308800 nid=0x2a27 waiting for monitor entry [0x00007f6a9ced3000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-43" #18 prio=5 os_prio=0 tid=0x00007f6ab4307000 nid=0x2a26 waiting for monitor entry [0x00007f6a9cfd4000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-44" #17 prio=5 os_prio=0 tid=0x00007f6ab4305000 nid=0x2a25 waiting for monitor entry [0x00007f6a9d0d5000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-45" #16 prio=5 os_prio=0 tid=0x00007f6ab4303800 nid=0x2a24 waiting for monitor entry [0x00007f6a9d1d6000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-46" #15 prio=5 os_prio=0 tid=0x00007f6ab4301800 nid=0x2a23 waiting for monitor entry [0x00007f6a9d2d7000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-47" #14 prio=5 os_prio=0 tid=0x00007f6ab4300000 nid=0x2a22 waiting for monitor entry [0x00007f6a9d3d8000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:26)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-48" #13 prio=5 os_prio=0 tid=0x00007f6ab42fe000 nid=0x2a21 in Object.wait() [0x00007f6a9d4d9000]
+   java.lang.Thread.State: WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        - waiting on <0x0000000772ea0e00> (a java.lang.Object)
+        at java.lang.Object.wait(Object.java:502)
+        at org.iushu.jdk.lock.FairLockCase.lock(FairLockCase.java:32)
+        - locked <0x0000000772ea0e00> (a java.lang.Object)
+        - locked <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:73)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"worker-49" #12 prio=5 os_prio=0 tid=0x00007f6ab42fc800 nid=0x2a20 waiting for monitor entry [0x00007f6a9d5da000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.iushu.jdk.lock.FairLockCase.unlock(FairLockCase.java:45)
+        - waiting to lock <0x0000000772ea0d80> (a org.iushu.jdk.lock.FairLockCase)
+        at org.iushu.jdk.lock.FairLockCase.lambda$fairLockCase$0(FairLockCase.java:77)
+        at org.iushu.jdk.lock.FairLockCase$$Lambda$1/1914572623.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:748)
+
+   Locked ownable synchronizers:
+        - None
+
+"Service Thread" #11 daemon prio=9 os_prio=0 tid=0x00007f6ab426c000 nid=0x2a1e runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+        - None
+
+"C1 CompilerThread2" #10 daemon prio=9 os_prio=0 tid=0x00007f6ab4268800 nid=0x2a1d waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+        - None
+
+"C2 CompilerThread1" #9 daemon prio=9 os_prio=0 tid=0x00007f6ab4267000 nid=0x2a1c waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+        - None
+
+"C2 CompilerThread0" #8 daemon prio=9 os_prio=0 tid=0x00007f6ab4260000 nid=0x2a1b waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+        - None
+
+"JDWP Command Reader" #7 daemon prio=10 os_prio=0 tid=0x00007f6a68001000 nid=0x2a19 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+        - None
+
+"JDWP Event Helper Thread" #6 daemon prio=10 os_prio=0 tid=0x00007f6ab41d7800 nid=0x2a15 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+        - None
+
+"JDWP Transport Listener: dt_socket" #5 daemon prio=10 os_prio=0 tid=0x00007f6ab41d4000 nid=0x2a13 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+        - None
+
+"Signal Dispatcher" #4 daemon prio=9 os_prio=0 tid=0x00007f6ab41c7800 nid=0x2a12 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+        - None
+
+"Finalizer" #3 daemon prio=8 os_prio=0 tid=0x00007f6ab4196000 nid=0x2a0e in Object.wait() [0x00007f6a9e1e8000]
+   java.lang.Thread.State: WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        - waiting on <0x0000000772ea4628> (a java.lang.ref.ReferenceQueue$Lock)
+        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:144)
+        - locked <0x0000000772ea4628> (a java.lang.ref.ReferenceQueue$Lock)
+        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:165)
+        at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:216)
+
+   Locked ownable synchronizers:
+        - None
+
+"Reference Handler" #2 daemon prio=10 os_prio=0 tid=0x00007f6ab4193800 nid=0x2a0d in Object.wait() [0x00007f6a9e2e9000]
+   java.lang.Thread.State: WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        - waiting on <0x0000000772eb05e0> (a java.lang.ref.Reference$Lock)
+        at java.lang.Object.wait(Object.java:502)
+        at java.lang.ref.Reference.tryHandlePending(Reference.java:191)
+        - locked <0x0000000772eb05e0> (a java.lang.ref.Reference$Lock)
+        at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)
+
+   Locked ownable synchronizers:
+        - None
+
+"VM Thread" os_prio=0 tid=0x00007f6ab4189800 nid=0x2a0c runnable
+
+"GC task thread#0 (ParallelGC)" os_prio=0 tid=0x00007f6ab4026000 nid=0x2a03 runnable
+
+"GC task thread#1 (ParallelGC)" os_prio=0 tid=0x00007f6ab4028000 nid=0x2a04 runnable
+
+"GC task thread#2 (ParallelGC)" os_prio=0 tid=0x00007f6ab4029800 nid=0x2a05 runnable
+
+"GC task thread#3 (ParallelGC)" os_prio=0 tid=0x00007f6ab402b800 nid=0x2a06 runnable
+
+"GC task thread#4 (ParallelGC)" os_prio=0 tid=0x00007f6ab402d000 nid=0x2a07 runnable
+
+"GC task thread#5 (ParallelGC)" os_prio=0 tid=0x00007f6ab402f000 nid=0x2a08 runnable
+
+"VM Periodic Task Thread" os_prio=0 tid=0x00007f6ab4271000 nid=0x2a1f waiting on condition
+
+JNI global references: 5498
+

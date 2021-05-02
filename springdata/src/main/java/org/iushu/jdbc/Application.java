@@ -81,6 +81,53 @@ public class Application {
         }
     }
 
+    /**
+     * ServiceLoader loaded by BootstrapClassLoader
+     * ServiceLoader#loader using ClassLoader.getSystemClassLoader() to load SPI module
+     *
+     * Skip SPI driver loading
+     * @see java.util.ServiceLoader.LazyIterator
+     * @see java.util.ServiceLoader.LazyIterator#nextService()
+     * @see Class#forName(String, boolean, ClassLoader)
+     * @see com.mysql.cj.jdbc.Driver static block
+     * @see java.sql.DriverManager#registerDriver(Driver)
+     *
+     * SPI driver loading see also
+     * @see #getConnection()
+     */
+    public static void traditionalSelect() {
+        String sql = "SELECT * FROM iushu.staff WHERE id = ?";
+        Connection connection = null;
+        try {
+            Driver driver = new com.mysql.cj.jdbc.Driver();  // skip SPI driver loading
+            Properties prop = new Properties();
+            prop.put("user", JDBC_USER);
+            prop.put("password", JDBC_PASSWORD);
+            connection = driver.connect(JDBC_URL, prop);
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setShort(1, (short) 2);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println(resultSet.getShort("id"));
+                System.out.println(resultSet.getString("name"));
+                System.out.println(resultSet.getInt("deptId"));
+                System.out.println(resultSet.getTimestamp("createTime"));
+                System.out.println(resultSet.getTimestamp("updateTime"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public static void logicalAndPhysicalConnection() {
         try {
             PooledConnection pooledConnection = pooledConnection();
@@ -166,7 +213,7 @@ public class Application {
             String sql = "SELECT * FROM iushu.staff WHERE id < 10;";
             Connection connection = dataSource.getConnection();
             ResultSet resultSet = connection.createStatement().executeQuery(sql);
-            System.out.println(resultSet.getConcurrency());
+            System.out.println("concurrency: " + resultSet.getConcurrency());
 
             while (resultSet.next()) {
                 System.out.print(resultSet.getInt(1) + "\t");
@@ -182,9 +229,10 @@ public class Application {
 
     public static void main(String[] args) {
 //        traditionalJDBC();
+        traditionalSelect();
 //        logicalAndPhysicalConnection();
 //        singlePooledConnection();
-        c3p0ConnectionPool();
+//        c3p0ConnectionPool();
     }
 
 }
