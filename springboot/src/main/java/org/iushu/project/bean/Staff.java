@@ -1,12 +1,15 @@
 package org.iushu.project.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author iuShu
  * @since 4/6/21
  */
-public class Staff {
+public class Staff implements Serializable {
+
+    private static final long serialVersionUID = 8091348339728321510L;
 
     private int id;
     private String name;
