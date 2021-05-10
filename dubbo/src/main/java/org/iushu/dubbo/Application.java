@@ -1,12 +1,12 @@
 package org.iushu.dubbo;
 
 import org.apache.dubbo.config.*;
+import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.iushu.dubbo.bean.Item;
 import org.iushu.dubbo.provider.CenterItemWarehouse;
 import org.iushu.dubbo.provider.ItemWarehouse;
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author iuShu
@@ -27,7 +27,7 @@ public class Application {
 
         ProtocolConfig protocolConfig = new ProtocolConfig();
         protocolConfig.setName("dubbo");    // see /META-INF/dubbo.internal/org.apache.dubbo.rpc.Protocol
-        protocolConfig.setPort(2088);
+        protocolConfig.setPort(20880);
         protocolConfig.setThreadpool("limited");    // see /META-INF/dubbo.internal/org.apache.dubbo.common.threadpool.ThreadPool
         protocolConfig.setThreadname("iushu-dubbo-thread");
         protocolConfig.setThreads(20);
@@ -42,6 +42,24 @@ public class Application {
         serviceConfig.setVersion("1.0.0");
 
         serviceConfig.export();  // export provider
+
+        // program end after exported
+    }
+
+    static void gettingStartedProviderBootstrap() {
+        ServiceConfig<ItemWarehouse> serviceConfig = new ServiceConfig<>();
+        serviceConfig.setInterface(ItemWarehouse.class);
+        serviceConfig.setRef(new CenterItemWarehouse());
+        serviceConfig.setGroup("ItemWareHouse");
+        serviceConfig.setVersion("1.0.0");
+
+        DubboBootstrap bootstrap = DubboBootstrap.getInstance();
+        bootstrap.application("ItemWareHouseAccessService");
+        bootstrap.registry(new RegistryConfig(NO_REGISTRY_ADDRESS));
+        bootstrap.service(serviceConfig);
+//        bootstrap.protocol(..);  // use 'dubbo' by default
+        bootstrap.start();
+        bootstrap.await();
     }
 
     static void gettingStartedConsumer() {
@@ -55,7 +73,7 @@ public class Application {
         referenceConfig.setApplication(applicationConfig);
         referenceConfig.setGroup("ItemWareHouse");
         referenceConfig.setRegistry(registryConfig);
-        referenceConfig.setUrl("dubbo://192.168.61.137:2088/org.iushu.dubbo.provider.ItemWarehouse");
+        referenceConfig.setUrl("dubbo://192.168.61.137:20880/");
         referenceConfig.setInterface(ItemWarehouse.class);
         referenceConfig.setVersion("1.0.0");
 
@@ -67,11 +85,16 @@ public class Application {
     static void gettingStartedCase() {
         new Thread(Application::gettingStartedProvider, "provider").start();
         new Thread(Application::gettingStartedConsumer, "consumer").start();
+    }
+
+    static void gettingStartedBootstrapCase() {
+        new Thread(Application::gettingStartedProviderBootstrap, "provider").start();
         new Thread(Application::gettingStartedConsumer, "consumer").start();
     }
 
     public static void main(String[] args) {
         gettingStartedCase();
+//        gettingStartedBootstrapCase();
     }
 
 }
