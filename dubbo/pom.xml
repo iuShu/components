@@ -16,6 +16,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <dubbo.version>2.7.10</dubbo.version>
+    <zookeeper.version>3.4.13</zookeeper.version>
   </properties>
 
   <dependencies>
@@ -27,12 +28,12 @@
       <version>${dubbo.version}</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.apache.dubbo/dubbo-common -->
-    <!--<dependency>-->
-      <!--<groupId>org.apache.dubbo</groupId>-->
-      <!--<artifactId>dubbo-common</artifactId>-->
-      <!--<version>2.7.10</version>-->
-    <!--</dependency>-->
+    <!-- https://mvnrepository.com/artifact/org.apache.dubbo/dubbo-registry-zookeeper -->
+    <dependency>
+      <groupId>org.apache.dubbo</groupId>
+      <artifactId>dubbo-registry-zookeeper</artifactId>
+      <version>${dubbo.version}</version>
+    </dependency>
 
   </dependencies>
 

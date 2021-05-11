@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <bean id="centralItemWareHouse" class="org.iushu.dubbo.provider.CenterItemWarehouse"/>
+
+    <dubbo:application name="ItemWareHouseAccessService"/>
+    <dubbo:registry group="distributor" address="zookeeper://localhost:2181"/>
+    <dubbo:protocol name="dubbo" port="20880"/>
+    <!--<dubbo:protocol name="hessian" port="8080"/>-->
+    <dubbo:service interface="org.iushu.dubbo.provider.ItemWarehouse" ref="centralItemWareHouse" version="1.0.0"
+        timeout="300" retries="2" loadbalance="random"/>
+
+    <!-- multi-protocol
+    <dubbo:service .. protocol="dubbo,hessian"/>
+    -->
+
+    <!-- multiple registry center
+    <dubbo:registry id="A" address=".."/>
+    <dubbo:registry id="B" address=".."/>
+    -->
+
+    <!-- service on multi-registry center
+    <dubbo:service .. registry="A,B"/>
+    -->
+
+    <!-- multi-service on multi-registry center
+    <dubbo:service .. registry="A"/>
+    <dubbo:service .. registry="B"/>
+    -->
+
+</beans>

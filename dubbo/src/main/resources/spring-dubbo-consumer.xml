@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <bean class="org.iushu.dubbo.spring.service.ItemService"/>
+
+    <dubbo:application name="Distributor"/>
+    <dubbo:registry group="distributor" address="zookeeper://localhost:2181"/>
+    <dubbo:reference id="itemWareHouse" interface="org.iushu.dubbo.provider.ItemWarehouse" version="1.0.0"/>
+
+    <!-- point to point
+    <dubbo:reference .. url="dubbo://localhost:20880"/>
+    -->
+
+    <!-- any group
+    <dubbo:reference .. group="*"/>
+    -->
+
+    <!-- any version
+    <dubbo:reference .. version="*"/>
+    -->
+
+    <!-- merge all groups' result
+    <dubbo:reference .. group="*" merger="true"/>
+    -->
+
+</beans>

@@ -1,14 +1,32 @@
-package org.iushu.dubbo;
+package org.iushu.dubbo.tutorial;
 
+import org.apache.dubbo.common.URL;
+import org.apache.dubbo.common.constants.CommonConstants;
+import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.config.*;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
+import org.apache.dubbo.config.context.ConfigManager;
+import org.apache.dubbo.remoting.Channel;
+import org.apache.dubbo.remoting.ChannelHandler;
+import org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeClient;
+import org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeHandler;
+import org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeServer;
+import org.apache.dubbo.remoting.transport.netty4.NettyServer;
+import org.apache.dubbo.remoting.transport.netty4.NettyServerHandler;
+import org.apache.dubbo.remoting.transport.netty4.NettyTransporter;
+import org.apache.dubbo.rpc.Invocation;
+import org.apache.dubbo.rpc.Invoker;
+import org.apache.dubbo.rpc.protocol.dubbo.DubboProtocol;
 import org.iushu.dubbo.bean.Item;
 import org.iushu.dubbo.provider.CenterItemWarehouse;
 import org.iushu.dubbo.provider.ItemWarehouse;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
+ * No registration center
+ *
  * @author iuShu
  * @since 5/10/21
  */
@@ -92,9 +110,43 @@ public class Application {
         new Thread(Application::gettingStartedConsumer, "consumer").start();
     }
 
+    /**
+     * @see ConfigManager
+     * @see ServiceConfig
+     * @see RegistryConfig
+     *
+     * @see NettyTransporter#bind(URL, ChannelHandler)
+     * @see NettyTransporter#connect(URL, ChannelHandler)
+     * @see NettyServer#doOpen()
+     * @see NettyServerHandler
+     *
+     * Provider
+     * @see HeaderExchangeHandler#sent(Channel, Object)
+     * @see HeaderExchangeHandler#received(Channel, Object)
+     *
+     * @see DubboProtocol#requestHandler
+     * @see HeaderExchangeServer
+     *
+     * Consumer
+     *
+     * @see ReferenceConfig#init()
+     * @see DubboProtocol#initClient(URL)
+     *
+     * ListenerInvokerWrapper -> Filter -> .. -> Filter -> ListenerInvokerWrapper
+     * @see org.apache.dubbo.rpc.listener.ListenerInvokerWrapper
+     * @see org.apache.dubbo.rpc.protocol.FilterNode#invoke(Invocation)
+     * @see org.apache.dubbo.rpc.Filter#invoke(Invoker, Invocation)
+     * @see org.apache.dubbo.rpc.protocol.AsyncToSyncInvoker#invoke(Invocation)
+     * @see org.apache.dubbo.rpc.protocol.dubbo.DubboInvoker#doInvoke(Invocation)
+     * @see org.apache.dubbo.rpc.AsyncRpcResult#get(long, TimeUnit)
+     */
+    static void components() {
+
+    }
+
     public static void main(String[] args) {
-        gettingStartedCase();
-//        gettingStartedBootstrapCase();
+//        gettingStartedCase();
+        gettingStartedBootstrapCase();
     }
 
 }
