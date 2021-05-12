@@ -1,27 +1,45 @@
 package org.iushu.dubbo.tutorial;
 
 import org.apache.dubbo.common.URL;
-import org.apache.dubbo.common.constants.CommonConstants;
-import org.apache.dubbo.common.extension.Activate;
+import org.apache.dubbo.common.URLBuilder;
+import org.apache.dubbo.common.config.Environment;
+import org.apache.dubbo.common.extension.ExtensionLoader;
 import org.apache.dubbo.config.*;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.apache.dubbo.config.context.ConfigManager;
+import org.apache.dubbo.qos.protocol.QosProtocolWrapper;
 import org.apache.dubbo.remoting.Channel;
 import org.apache.dubbo.remoting.ChannelHandler;
-import org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeClient;
+import org.apache.dubbo.remoting.exchange.ExchangeHandler;
+import org.apache.dubbo.remoting.exchange.ExchangeServer;
+import org.apache.dubbo.remoting.exchange.Exchangers;
 import org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeHandler;
 import org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeServer;
 import org.apache.dubbo.remoting.transport.netty4.NettyServer;
 import org.apache.dubbo.remoting.transport.netty4.NettyServerHandler;
 import org.apache.dubbo.remoting.transport.netty4.NettyTransporter;
-import org.apache.dubbo.rpc.Invocation;
-import org.apache.dubbo.rpc.Invoker;
+import org.apache.dubbo.rpc.*;
+import org.apache.dubbo.rpc.listener.ListenerInvokerWrapper;
+import org.apache.dubbo.rpc.model.ApplicationModel;
+import org.apache.dubbo.rpc.model.ServiceRepository;
+import org.apache.dubbo.rpc.protocol.AsyncToSyncInvoker;
+import org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper;
+import org.apache.dubbo.rpc.protocol.ProtocolListenerWrapper;
+import org.apache.dubbo.rpc.protocol.dubbo.DubboInvoker;
 import org.apache.dubbo.rpc.protocol.dubbo.DubboProtocol;
+import org.apache.dubbo.rpc.proxy.AbstractProxyFactory;
+import org.apache.dubbo.rpc.proxy.InvokerInvocationHandler;
+import org.apache.dubbo.rpc.proxy.javassist.JavassistProxyFactory;
+import org.apache.dubbo.rpc.proxy.wrapper.StubProxyFactoryWrapper;
+import org.apache.dubbo.rpc.service.Destroyable;
+import org.apache.dubbo.rpc.service.EchoService;
 import org.iushu.dubbo.bean.Item;
 import org.iushu.dubbo.provider.CenterItemWarehouse;
 import org.iushu.dubbo.provider.ItemWarehouse;
 
-import java.util.Random;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -111,42 +129,195 @@ public class Application {
     }
 
     /**
-     * @see ConfigManager
-     * @see ServiceConfig
-     * @see RegistryConfig
-     *
-     * @see NettyTransporter#bind(URL, ChannelHandler)
-     * @see NettyTransporter#connect(URL, ChannelHandler)
-     * @see NettyServer#doOpen()
-     * @see NettyServerHandler
-     *
      * Provider
-     * @see HeaderExchangeHandler#sent(Channel, Object)
-     * @see HeaderExchangeHandler#received(Channel, Object)
+     * @see #gettingStartedProviderBootstrap() demonstrating case
      *
-     * @see DubboProtocol#requestHandler
-     * @see HeaderExchangeServer
+     * Initialize part
+     * @see DubboBootstrap#DubboBootstrap()
+     * @see ApplicationModel#getConfigManager()
+     * @see ApplicationModel#getEnvironment()
+     * @see ConfigManager see also /META-INF/dubbo.internal/org.apache.dubbo.common.context.FrameworkExt
+     * @see Environment see also /META-INF/dubbo.internal/org.apache.dubbo.common.context.FrameworkExt
+     * @see DubboBootstrap#initialize() loading configs
+     * @see DubboBootstrap#exportServices()
+     * @see ServiceConfig#export()
+     * @see ServiceRepository see also /META-INF/dubbo.internal/org.apache.dubbo.common.context.FrameworkExt
+     * @see ServiceConfig#doExportUrlsFor1Protocol(ProtocolConfig, List)
+     * @see DubboProtocol#export(Invoker)
+     * @see DubboProtocol#openServer(URL)
+     * @see DubboProtocol#createServer(URL)
      *
-     * Consumer
-     *
-     * @see ReferenceConfig#init()
-     * @see DubboProtocol#initClient(URL)
-     *
-     * ListenerInvokerWrapper -> Filter -> .. -> Filter -> ListenerInvokerWrapper
-     * @see org.apache.dubbo.rpc.listener.ListenerInvokerWrapper
-     * @see org.apache.dubbo.rpc.protocol.FilterNode#invoke(Invocation)
-     * @see org.apache.dubbo.rpc.Filter#invoke(Invoker, Invocation)
-     * @see org.apache.dubbo.rpc.protocol.AsyncToSyncInvoker#invoke(Invocation)
-     * @see org.apache.dubbo.rpc.protocol.dubbo.DubboInvoker#doInvoke(Invocation)
-     * @see org.apache.dubbo.rpc.AsyncRpcResult#get(long, TimeUnit)
+     * TODO How Netty Server handle the client connection.
+     * @see HeaderExchangeHandler
      */
-    static void components() {
+    static void providerProcessing() {
+
+    }
+
+    /**
+     * Consumer
+     * @see #gettingStartedProviderBootstrap() demonstrating case
+     *
+     * Initialize protocol and proxy
+     * @see ReferenceConfig#init()
+     * @see Invoker invoker chain
+     * @see ReferenceConfig#REF_PROTOCOL
+     * @see Protocol#refer(Class, URL) protocol wrapper chain
+     * @see QosProtocolWrapper#refer(Class, URL)
+     * @see ProtocolFilterWrapper#refer(Class, URL) build invoker chain
+     *  @see org.apache.dubbo.rpc.Filter ConsumerContextFilter FutureFilter MonitorFilter
+     *  @see org.apache.dubbo.rpc.protocol.FilterNode filter chain
+     * @see ProtocolListenerWrapper#refer(Class, URL)
+     *  @see ListenerInvokerWrapper
+     *  @see InvokerListener
+     * @see DubboProtocol#refer(Class, URL)
+     *  @see AsyncToSyncInvoker
+     *  @see DubboInvoker connect to netty server of Provider
+     * @see ReferenceConfig#PROXY_FACTORY
+     * @see ProxyFactory#getProxy(Invoker, boolean)
+     * @see StubProxyFactoryWrapper#getProxy(Invoker, boolean)
+     * @see JavassistProxyFactory#getProxy(Invoker, boolean)
+     *
+     * Invocation processing
+     * @see Invocation invoke action
+     * @see Invoker invocation processing chain
+     * @see InvokerInvocationHandler#invoke the proxy invocation
+     * @see org.apache.dubbo.rpc.protocol.FilterNode invoker chain
+     * @see org.apache.dubbo.rpc.Filter#invoke(Invoker, Invocation)
+     * @see ListenerInvokerWrapper#invoke(Invocation)
+     * @see AsyncToSyncInvoker#invoke(Invocation)
+     * @see DubboInvoker#doInvoke(Invocation)
+     * @see org.apache.dubbo.rpc.Filter.Listener#onResponse(Result, Invoker, Invocation)
+     * @see org.apache.dubbo.rpc.Filter.Listener#onError(Throwable, Invoker, Invocation)
+     * @see AsyncRpcResult#recreate() throw exception if any or return invoked result
+     *
+     * @see #filterNodeChain() more details
+     */
+    static void consumerProcessing() {
+
+    }
+
+    /**
+     * A classic recursive invocation chain application case
+     * @see ProtocolFilterWrapper build filter chain
+     *
+     * FilterNode.invoke(invocation)
+     * Filter.invoke(next, invocation)
+     * Filter.Listener#onResponse/onError
+     * Filter.invoke(next, invocation)
+     * Filter.Listener#onResponse/onError
+     * ... ...
+     * Filter.invoke(next, invocation)
+     * Filter.Listener#onResponse/onError
+     *
+     * @see org.apache.dubbo.rpc.protocol.FilterNode also is an Invoker
+     * @see org.apache.dubbo.rpc.protocol.FilterNode#invoker
+     * @see org.apache.dubbo.rpc.protocol.FilterNode#filter
+     * @see org.apache.dubbo.rpc.protocol.FilterNode#next
+     * @see org.apache.dubbo.rpc.Filter
+     * @see org.apache.dubbo.rpc.Filter.Listener some Filter also is a Listener
+     */
+    static void filterNodeChain() {
+
+    }
+
+    /**
+     * Managing all the configs in dubbo
+     * @see ConfigManager#write(Callable) add config with lock
+     * @see ConfigManager#read(Callable) get config with lock
+     */
+    static void configManager() {
+
+    }
+
+    /**
+     * The proxy object have implemented three interfaces
+     * @see AbstractProxyFactory#getProxy(Invoker, boolean) add interfaces
+     * @see EchoService for ping-pong test
+     * @see Destroyable destroy the serive eventually
+     * @see ItemWarehouse customized service
+     */
+    static void serviceProxy() {
+        new Thread(Application::gettingStartedProviderBootstrap, "provider").start();
+
+        ApplicationConfig applicationConfig = new ApplicationConfig();
+        applicationConfig.setName("Distributor");
+
+        RegistryConfig registryConfig = new RegistryConfig();
+        registryConfig.setAddress(NO_REGISTRY_ADDRESS);
+
+        ReferenceConfig<ItemWarehouse> referenceConfig = new ReferenceConfig<>();
+        referenceConfig.setApplication(applicationConfig);
+        referenceConfig.setGroup("ItemWareHouse");
+        referenceConfig.setRegistry(registryConfig);
+        referenceConfig.setUrl("dubbo://192.168.61.137:20880/");
+        referenceConfig.setInterface(ItemWarehouse.class);
+        referenceConfig.setVersion("1.0.0");
+
+        ItemWarehouse itemWarehouse = referenceConfig.get();
+        for (Class<?> anInterface : itemWarehouse.getClass().getInterfaces())
+            System.out.println(anInterface.getName());
+
+        EchoService echoService = (EchoService) itemWarehouse;
+        Object pong = echoService.$echo("PING");  // return PING
+        System.out.println(pong);
+    }
+
+    /**
+     * Wrapped component instance
+     * @see ExtensionLoader#createExtension(String, boolean)
+     * @see ExtensionLoader#cachedWrapperClasses
+     * @see StubProxyFactoryWrapper wrapping ProxyFactory
+     * @see ProtocolFilterWrapper wrapping Protocol
+     * @see QosProtocolWrapper wrapping Protocol
+     * @see ProtocolListenerWrapper wrapping Protocol
+     *
+     * Protocol after wrapped
+     *    QosProtocolWrapper
+     *     ProtocolFilterWrapper
+     *      ProtocolListenerWrapped
+     *       InjvmProtocol
+     *
+     * ProxyFactory after wrapped
+     *    StubProxyFactoryWrapper
+     *     JavassistProxyFactory
+     *
+     * Exporter after wrapped
+     *    ListenerExporterWrapper
+     *     InjvmExporter
+     *
+     * @see #adaptiveExtensionMechanism() more details
+     */
+    static void componentExtensionWrappers() {
+
+    }
+
+    /**
+     * create the extension components' proxies
+     * @see ExtensionLoader#createAdaptiveExtension()
+     * @see ExtensionLoader#createAdaptiveExtensionClass()
+     * @see org.apache.dubbo.common.compiler.Compiler#compile(String, ClassLoader)
+     *
+     * @see GeneratedAdaptiveProtocolClass actual Protocol in dubbo
+     * @see GeneratedAdaptiveProtocolClass#export(Invoker) real entrance
+     * @see GeneratedAdaptiveProtocolClass#refer(Class, URL) real entrance
+     *
+     * @see GeneratedAdaptiveProxyFactoryClass actual ProxyFactory in dubbo
+     * @see GeneratedAdaptiveProxyFactoryClass#getInvoker(Object, Class, URL) real entrance
+     * @see GeneratedAdaptiveProxyFactoryClass#getProxy(Invoker) real entrance
+     * @see GeneratedAdaptiveProxyFactoryClass#getProxy(Invoker, boolean) real entrance
+     */
+    static void adaptiveExtensionMechanism() {
 
     }
 
     public static void main(String[] args) {
+//        proxyObject();
+        gettingStartedProviderBootstrap();
 //        gettingStartedCase();
-        gettingStartedBootstrapCase();
+//        gettingStartedBootstrapCase();
+//        proxyFactoryInvoker();
+
     }
 
 }
