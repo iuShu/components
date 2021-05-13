@@ -10,7 +10,11 @@ import org.apache.dubbo.config.spring.context.DubboBootstrapApplicationListener;
 import org.apache.dubbo.config.spring.context.DubboLifecycleComponentApplicationListener;
 import org.apache.dubbo.config.spring.schema.DubboNamespaceHandler;
 import org.apache.dubbo.config.spring.util.DubboBeanUtils;
+import org.iushu.dubbo.Utils;
 import org.iushu.dubbo.bean.Item;
+import org.iushu.dubbo.component.ApplicantNotify;
+import org.iushu.dubbo.component.DefaultApplicantNotify;
+import org.iushu.dubbo.provider.CenterItemWarehouse;
 import org.iushu.dubbo.provider.ItemWarehouse;
 import org.iushu.dubbo.spring.service.ItemService;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -27,6 +31,11 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ProtocolResolver;
 import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.iushu.dubbo.Utils.sleep;
 
 /**
  * @author iuShu
@@ -88,7 +97,7 @@ public class ProgrammaticApplication {
         String configPath = "spring-dubbo-consumer.xml";
         AbstractApplicationContext context = new ClassPathXmlApplicationContext(configPath);
 
-        ItemWarehouse itemWarehouse = context.getBean(ItemWarehouse.class);
+        ItemWarehouse itemWarehouse = (ItemWarehouse) context.getBean("itemWarehouse");
         Item item = itemWarehouse.getItem(291831);
         System.out.println(item);
 
@@ -113,8 +122,28 @@ public class ProgrammaticApplication {
         context.close();
     }
 
+    /**
+     * Callback service application case
+     *  configure callback argument at provider side
+     *  see spring-dubbo-provider.xml (argument.index start from 0)
+     *
+     * @see #provider() start provider first
+     */
+    static void callbackServiceCase() {
+        String configPath = "spring-dubbo-consumer.xml";
+        AbstractApplicationContext context = new ClassPathXmlApplicationContext(configPath);
+
+        ItemWarehouse itemWarehouse = (ItemWarehouse) context.getBean("applyItemWarehouse");
+        List<Item> items = new ArrayList<>();
+        items.add(CenterItemWarehouse.createItem(828132));
+        items.add(CenterItemWarehouse.createItem(207472));
+        ApplicantNotify notify = new DefaultApplicantNotify();  // callback service
+        itemWarehouse.applyItems(items, notify);
+    }
+
     static void dubboInSpringCase() {
         new Thread(ProgrammaticApplication::provider, "provider").start();
+        sleep(3000);
         new Thread(ProgrammaticApplication::consumer, "consumer").start();
     }
 
@@ -141,8 +170,9 @@ public class ProgrammaticApplication {
     public static void main(String[] args) {
 //        provider();
 //        consumer();
+//        autowiredCase();
+        callbackServiceCase();
 //        dubboInSpringCase();
-        autowiredCase();
     }
 
 }
