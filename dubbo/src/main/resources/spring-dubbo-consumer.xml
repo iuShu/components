@@ -12,7 +12,9 @@
     <dubbo:registry address="zookeeper://localhost:2181"/>
 
     <dubbo:reference id="itemWarehouse" interface="org.iushu.dubbo.provider.ItemWarehouse" version="1.0.0" group="distributor"/>
-    <dubbo:reference id="applyItemWarehouse" interface="org.iushu.dubbo.provider.ItemWarehouse" version="1.0.0" group="applicant"/>
+
+    <dubbo:reference id="applyItemWarehouse" interface="org.iushu.dubbo.provider.ItemWarehouse" version="1.0.0" group="applicant"
+        mock="org.iushu.dubbo.provider.FailToleranceItemWarehouse"/>
 
     <!-- point to point
     <dubbo:reference .. url="dubbo://localhost:20880"/>

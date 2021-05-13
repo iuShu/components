@@ -20,4 +20,9 @@ public class DefaultApplicantNotify implements ApplicantNotify {
         System.out.println("[NOTIFY] warehouse passed the application of " + item);
     }
 
+    @Override
+    public void onError(Item item) {
+        System.out.println("[NOTIFY] warehouse occurred error during applying " + item);
+    }
+
 }

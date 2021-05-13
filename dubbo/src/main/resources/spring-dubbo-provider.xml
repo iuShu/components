@@ -6,7 +6,7 @@
        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
 
     <bean id="centralItemWareHouse" class="org.iushu.dubbo.provider.CenterItemWarehouse"/>
-    <bean id="applyItemWareHouse" class="org.iushu.dubbo.provider.ApplyItemWareHouse"/>
+    <bean id="applyItemWareHouse" class="org.iushu.dubbo.provider.ApplyItemWarehouse"/>
 
     <dubbo:application name="ItemWareHouseAccessService"/>
 

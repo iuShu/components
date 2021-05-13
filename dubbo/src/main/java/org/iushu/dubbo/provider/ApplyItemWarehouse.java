@@ -3,6 +3,7 @@ package org.iushu.dubbo.provider;
 import org.iushu.dubbo.bean.Item;
 import org.iushu.dubbo.component.ApplicantNotify;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.iushu.dubbo.Utils.randomSleep;
@@ -11,7 +12,7 @@ import static org.iushu.dubbo.Utils.randomSleep;
  * @author iuShu
  * @since 5/13/21
  */
-public class ApplyItemWareHouse implements ItemWarehouse {
+public class ApplyItemWarehouse implements ItemWarehouse {
 
     @Override
     public Item getItem(int id) {
@@ -20,6 +21,8 @@ public class ApplyItemWareHouse implements ItemWarehouse {
 
     @Override
     public void applyItems(List<Item> items, ApplicantNotify notify) {
+        System.out.println(">> " + notify.getClass().getName());
+        System.out.println(">> " + Arrays.toString(notify.getClass().getInterfaces()));
         System.out.println("received the request to apply " + items.size() + " items");
         System.out.println("start apply " + items.size() + " item");
         for (Item item : items) {

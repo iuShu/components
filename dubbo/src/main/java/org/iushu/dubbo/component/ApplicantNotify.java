@@ -14,4 +14,6 @@ public interface ApplicantNotify extends Serializable {
 
     void onPassed(Item item);
 
+    void onError(Item item);
+
 }

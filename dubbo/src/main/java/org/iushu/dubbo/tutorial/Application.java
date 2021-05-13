@@ -148,7 +148,6 @@ public class Application {
      * @see DubboProtocol#createServer(URL)
      *
      * TODO How Netty Server handle the client connection.
-     * TODO Supplement interface for jobcnx-person
      * @see HeaderExchangeHandler
      */
     static void providerProcessing() {
