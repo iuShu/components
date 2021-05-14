@@ -58,6 +58,7 @@ import org.apache.dubbo.rpc.proxy.javassist.JavassistProxyFactory;
 import org.apache.dubbo.rpc.proxy.wrapper.StubProxyFactoryWrapper;
 import org.apache.dubbo.rpc.service.Destroyable;
 import org.apache.dubbo.rpc.service.EchoService;
+import org.iushu.dubbo.Utils;
 import org.iushu.dubbo.bean.Item;
 import org.iushu.dubbo.provider.CenterItemWarehouse;
 import org.iushu.dubbo.provider.ItemWarehouse;
@@ -68,6 +69,8 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+
+import static org.iushu.dubbo.Utils.sleep;
 
 /**
  * No registration center
@@ -155,6 +158,37 @@ public class Application {
         new Thread(Application::gettingStartedConsumer, "consumer").start();
     }
 
+    static void registryProviderCase() {
+        ApplicationConfig applicationConfig = new ApplicationConfig("ItemWareHouseAccessService");
+        applicationConfig.setQosEnable(false);
+
+        ServiceConfig<ItemWarehouse> serviceConfig = new ServiceConfig<>();
+        serviceConfig.setInterface(ItemWarehouse.class);
+        serviceConfig.setRef(new CenterItemWarehouse());
+        serviceConfig.setGroup("ItemWareHouse");
+        serviceConfig.setVersion("1.0.0");
+
+        DubboBootstrap bootstrap = DubboBootstrap.getInstance();
+        bootstrap.application(applicationConfig);
+        bootstrap.registry(new RegistryConfig("zookeeper://localhost:2181"));
+        bootstrap.service(serviceConfig);
+        bootstrap.protocol(new ProtocolConfig("dubbo", 20880));
+        bootstrap.start();
+        bootstrap.await();
+    }
+
+    static void registryConsumerCase() {
+        ReferenceConfig<ItemWarehouse> referenceConfig = new ReferenceConfig<>();
+        referenceConfig.setApplication(new ApplicationConfig("Distributor"));
+        referenceConfig.setGroup("ItemWareHouse");
+        referenceConfig.setRegistry(new RegistryConfig("zookeeper://localhost:2181"));
+        referenceConfig.setInterface(ItemWarehouse.class);
+        referenceConfig.setVersion("1.0.0");
+        ItemWarehouse itemWarehouse = referenceConfig.get();
+        Item item = itemWarehouse.getItem(new Random().nextInt(999999));
+        System.out.println(item);
+    }
+
     /**
      * Provider
      * @see #gettingStartedProviderBootstrap() demonstrating case
@@ -177,7 +211,6 @@ public class Application {
      * @see NettyServerHandler core ChannelHandler(Netty)
      * @see NettyServer#doOpen()
      * @see #nettyInDubbo()
-     *
      */
     static void providerProcessing() {
 
@@ -300,6 +333,13 @@ public class Application {
      * @see org.apache.dubbo.common.serialize.ObjectOutput
      */
     static void serializedMechaism() {
+
+    }
+
+    /**
+     * TODO fill this part
+     */
+    static void loadBalanceMechanism() {
 
     }
 
@@ -502,11 +542,12 @@ public class Application {
 
     public static void main(String[] args) {
 //        proxyObject();
-        gettingStartedProviderBootstrap();
+//        gettingStartedProviderBootstrap();
 //        gettingStartedCase();
 //        gettingStartedBootstrapCase();
 //        proxyFactoryInvoker();
-
+//        registryProviderCase();
+        registryConsumerCase();
     }
 
 }

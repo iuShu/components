@@ -14,6 +14,7 @@ public class CenterItemWarehouse implements ItemWarehouse {
 
     @Override
     public Item getItem(int id) {
+        System.out.println("get item");
         return createItem(id);
     }
 
