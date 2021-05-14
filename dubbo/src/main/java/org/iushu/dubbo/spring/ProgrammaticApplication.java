@@ -202,15 +202,6 @@ public class ProgrammaticApplication {
         System.out.println(item);
     }
 
-    /**
-     * There are something preparatory work to do before export, like loading redis cache.
-     * see <dubbo:service delay="5000"/> millisecond
-     * @see org.apache.dubbo.config.ServiceConfig#delay
-     */
-    static void delayExportServiceCase() {
-
-    }
-
     static void dubboInSpringCase() {
         new Thread(ProgrammaticApplication::provider, "provider").start();
         sleep(3000);
@@ -239,8 +230,8 @@ public class ProgrammaticApplication {
 
     public static void main(String[] args) {
 //        provider();
-//        consumer();
-        autowiredCase();
+        consumer();
+//        autowiredCase();
 //        callbackServiceCase();
 //        failToleranceLocalCase();
 //        dubboInSpringCase();
