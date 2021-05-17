@@ -21,6 +21,18 @@ import org.apache.dubbo.config.utils.ReferenceConfigCache;
 import org.apache.dubbo.qos.protocol.QosProtocolWrapper;
 import org.apache.dubbo.qos.server.Server;
 import org.apache.dubbo.qos.server.handler.QosProcessHandler;
+import org.apache.dubbo.registry.ListenerRegistryWrapper;
+import org.apache.dubbo.registry.NotifyListener;
+import org.apache.dubbo.registry.Registry;
+import org.apache.dubbo.registry.client.migration.MigrationInvoker;
+import org.apache.dubbo.registry.client.migration.MigrationRuleHandler;
+import org.apache.dubbo.registry.client.migration.MigrationRuleListener;
+import org.apache.dubbo.registry.integration.DynamicDirectory;
+import org.apache.dubbo.registry.integration.InterfaceCompatibleRegistryProtocol;
+import org.apache.dubbo.registry.integration.RegistryDirectory;
+import org.apache.dubbo.registry.integration.RegistryProtocol;
+import org.apache.dubbo.registry.support.FailbackRegistry;
+import org.apache.dubbo.registry.zookeeper.ZookeeperRegistry;
 import org.apache.dubbo.remoting.Channel;
 import org.apache.dubbo.remoting.ChannelHandler;
 import org.apache.dubbo.remoting.Codec2;
@@ -29,6 +41,7 @@ import org.apache.dubbo.remoting.exchange.ExchangeChannel;
 import org.apache.dubbo.remoting.exchange.ExchangeHandler;
 import org.apache.dubbo.remoting.exchange.ExchangeServer;
 import org.apache.dubbo.remoting.exchange.Exchangers;
+import org.apache.dubbo.remoting.exchange.support.ExchangeHandlerAdapter;
 import org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeHandler;
 import org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeServer;
 import org.apache.dubbo.remoting.exchange.support.header.HeartbeatHandler;
@@ -41,10 +54,28 @@ import org.apache.dubbo.remoting.transport.netty4.NettyCodecAdapter;
 import org.apache.dubbo.remoting.transport.netty4.NettyServer;
 import org.apache.dubbo.remoting.transport.netty4.NettyServerHandler;
 import org.apache.dubbo.remoting.transport.netty4.NettyTransporter;
+import org.apache.dubbo.remoting.zookeeper.ChildListener;
+import org.apache.dubbo.remoting.zookeeper.ZookeeperClient;
 import org.apache.dubbo.rpc.*;
+import org.apache.dubbo.rpc.cluster.Cluster;
+import org.apache.dubbo.rpc.cluster.ClusterInvoker;
+import org.apache.dubbo.rpc.cluster.Directory;
+import org.apache.dubbo.rpc.cluster.LoadBalance;
+import org.apache.dubbo.rpc.cluster.loadbalance.RandomLoadBalance;
+import org.apache.dubbo.rpc.cluster.support.AbstractClusterInvoker;
+import org.apache.dubbo.rpc.cluster.support.AvailableClusterInvoker;
+import org.apache.dubbo.rpc.cluster.support.BroadcastClusterInvoker;
+import org.apache.dubbo.rpc.cluster.support.FailbackClusterInvoker;
+import org.apache.dubbo.rpc.cluster.support.FailfastClusterInvoker;
+import org.apache.dubbo.rpc.cluster.support.FailoverCluster;
+import org.apache.dubbo.rpc.cluster.support.FailoverClusterInvoker;
+import org.apache.dubbo.rpc.cluster.support.FailsafeClusterInvoker;
+import org.apache.dubbo.rpc.cluster.support.wrapper.AbstractCluster;
+import org.apache.dubbo.rpc.cluster.support.wrapper.MockClusterInvoker;
 import org.apache.dubbo.rpc.listener.ListenerInvokerWrapper;
 import org.apache.dubbo.rpc.model.ApplicationModel;
 import org.apache.dubbo.rpc.model.ServiceRepository;
+import org.apache.dubbo.rpc.protocol.AbstractProtocol;
 import org.apache.dubbo.rpc.protocol.AsyncToSyncInvoker;
 import org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper;
 import org.apache.dubbo.rpc.protocol.ProtocolListenerWrapper;
@@ -172,7 +203,7 @@ public class Application {
         bootstrap.application(applicationConfig);
         bootstrap.registry(new RegistryConfig("zookeeper://localhost:2181"));
         bootstrap.service(serviceConfig);
-        bootstrap.protocol(new ProtocolConfig("dubbo", 20880));
+        bootstrap.protocol(new ProtocolConfig("dubbo", 20881));
         bootstrap.start();
         bootstrap.await();
     }
@@ -284,6 +315,28 @@ public class Application {
     }
 
     /**
+     * @see Protocol#export(Invoker)
+     * @see Protocol#refer(Class, URL)
+     * @see Exporter
+     * @see Invoker
+     *
+     * Providing (Provider side)
+     * @see Protocol#export(Invoker)
+     * @see AbstractProtocol#serviceKey(URL)
+     * @see AbstractProtocol#exporterMap storing Exporter and Invoker
+     *
+     * Consuming (Provider side)
+     * @see DubboProtocol#requestHandler
+     * @see ExchangeHandlerAdapter#reply(ExchangeChannel, Object)
+     * @see AbstractProtocol#serviceKey(int, String, String, String)
+     * @see AbstractProtocol#exporterMap get target Invoker
+     * @see Invoker#invoke(Invocation) start invocation chain
+     */
+    static void exportAndRefer() {
+
+    }
+
+    /**
      * Netty ChannelHandler for send/receive message in Channel
      * @see NettyServer#doOpen()
      * @see NettyServerHandler core ChannelHandler in Netty server
@@ -337,9 +390,54 @@ public class Application {
     }
 
     /**
-     * TODO fill this part
+     * ClusterInvoker initializing with LoadBalance
+     * @see ProtocolListenerWrapper#refer(Class, URL)
+     * @see RegistryProtocol#refer(Class, URL) determine Cluster from url
+     * @see MigrationRuleListener#onRefer(RegistryProtocol, ClusterInvoker, URL)
+     * @see MigrationRuleHandler#doMigrate(String)
+     * @see MigrationInvoker#migrateToServiceDiscoveryInvoker(boolean)
+     * @see MigrationInvoker#refreshServiceDiscoveryInvoker()
+     * @see MigrationInvoker#refreshInterfaceInvoker()
+     * @see InterfaceCompatibleRegistryProtocol#getInvoker(Cluster, Registry, Class, URL)
+     * @see RegistryProtocol#doCreateInvoker(DynamicDirectory, Cluster, Registry, Class)
+     * @see Cluster#join(Directory)
+     * @see FailoverCluster#doJoin(Directory) default strategy failover
+     *
+     * ClusterInvoker working flow
+     * @see InvokerInvocationHandler#invoke(Object, Method, Object[])
+     * @see MigrationInvoker#invoke(Invocation)
+     * @see MockClusterInvoker#invoke(Invocation)
+     * @see AbstractCluster.InterceptorInvokerNode apply interceptor on ClusterInvoker
+     * @see AbstractClusterInvoker#initLoadBalance(List, Invocation) initialize LoadBalance strategy
+     * @see FailoverClusterInvoker#doInvoke(Invocation, List, LoadBalance) invoke with LoadBalance
+     *
+     * LoadBalance strategy
+     * see also /META-INF/dubbo.internals/org.apache.dubbo.rpc.cluster.LoadBalance
+     * @see LoadBalance
+     * @see RandomLoadBalance default strategy
+     * @see FailoverClusterInvoker#doInvoke(Invocation, List, LoadBalance) invoke with LoadBalance
+     * @see AbstractClusterInvoker#doSelect(LoadBalance, Invocation, List, List)
+     * @see LoadBalance#select(List, URL, Invocation) select one Invoker for consuming
+     *
+     * Organizing multiple providers
+     *  available providers at zookeeper: /dubbo/org.iushu.dubbo.provider.ItemWarehouse/providers
+     * @see MigrationInvoker#refreshInterfaceInvoker()
+     * @see RegistryDirectory#subscribe(URL)
+     * @see ListenerRegistryWrapper#subscribe(URL, NotifyListener)
+     * @see FailbackRegistry#subscribe(URL, NotifyListener)
+     * @see ZookeeperRegistry#doSubscribe(URL, NotifyListener)
+     * @see ZookeeperClient#addChildListener(String, ChildListener) get provider's urls from registry
+     * @see ZookeeperRegistry#notify(URL, NotifyListener, List)
+     * @see RegistryDirectory#notify(List)
+     *
+     * @see AvailableClusterInvoker find available one
+     * @see BroadcastClusterInvoker throw if too much fail
+     * @see FailsafeClusterInvoker only log if fail
+     * @see FailoverClusterInvoker retry with LoadBalance if fail
+     * @see FailfastClusterInvoker throw if fail
+     * @see FailbackClusterInvoker timer retry if fail
      */
-    static void loadBalanceMechanism() {
+    static void failToleranceAndLoadBalanceMechanism() {
 
     }
 

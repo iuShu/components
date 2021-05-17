@@ -148,10 +148,10 @@ public class ProgrammaticApplication {
     }
 
     /**
-     * TODO how Spring autowired the ReferenceBean
-     *
      * @see ItemService#itemWarehouse
      * @see #provider() start provider first
+     *
+     * @see #startup() How Spring autowired the Dubbo ReferenceBean
      */
     static void autowiredCase() {
         String configPath = "spring-dubbo-consumer.xml";
