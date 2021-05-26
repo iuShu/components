@@ -79,20 +79,34 @@ public class ThreadPoolExecutorCase {
      *
      * @see ThreadPoolExecutor#runWorker(ThreadPoolExecutor.Worker)
      * @see ThreadPoolExecutor#getTask() worker get task from the workQueue
+     *
+     * Core threads are waiting task by workQueue.take()
+     * @see ThreadPoolExecutor#getTask()
+     * @see BlockingQueue#take() core threads would keep waiting for task until pool shutdown
+     *
+     * Non core threads waiting task in a given time by workQueue.poll(time)
+     * @see ThreadPoolExecutor#getTask()
+     * @see BlockingQueue#poll(long, TimeUnit) use keepAliveTime
+     * @see ThreadPoolExecutor#processWorkerExit(ThreadPoolExecutor.Worker, boolean) after keepAliveTime
      */
     static void workerAndWorkQueueCase() {
         Runnable task = () -> {
-            while (true) {
+//            while (true) {
                 Utils.sleep(1500);
                 System.out.println(Thread.currentThread().getName() + ": Hello");
-            }
+//            }
         };
-        ExecutorService executorService = Executors.newFixedThreadPool(5);
-//        ExecutorService executorService = new ThreadPoolExecutor(5, 10,
-//                5, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(2));
-        for (int i = 0; i < 10; i++) {
-            executorService.execute(task);
-        }
+//        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        ExecutorService executorService = new ThreadPoolExecutor(5, 10,
+                5, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(2));
+//        for (int i = 0; i < 10; i++)
+//            executorService.execute(task);
+
+//        Utils.sleep(5000);
+//        executorService.execute(task);
+
+//        Utils.sleep(3000);
+        executorService.execute(task);
     }
 
     public static void main(String[] args) {

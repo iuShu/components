@@ -36,6 +36,8 @@ public class BlockingQueueCase {
      * @see java.util.concurrent.LinkedBlockingQueue linklist implementation
      *
      * @see java.util.concurrent.SynchronousQueue like Exchanger (no capacity)
+     * @see java.util.concurrent.SynchronousQueue#take() consume
+     * @see java.util.concurrent.SynchronousQueue#poll() produce
      *
      * @see java.util.concurrent.LinkedTransferQueue
      *
