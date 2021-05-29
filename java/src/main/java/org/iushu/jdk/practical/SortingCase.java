@@ -37,14 +37,10 @@ public class SortingCase {
         if (array == null || array.length <= 1)
             return;
 
-        int len = array.length, temp, p;
-        for (int i = 1; i < len; i++) {
+        for (int i = 1, p; i < array.length; i++) {
             p = i;
-            temp = array[i];
-            while (p >= 1 && temp < array[p-1])   // find insert place (backward)
-                array[p] = array[--p];
-            array[p] = temp;
-            System.out.println(Arrays.toString(array));
+            while (p > 0 && array[p] < array[p - 1])
+                swap(array, p, --p);
         }
     }
 
@@ -73,7 +69,8 @@ public class SortingCase {
     }
 
     /**
-     * 6 4 1 8 2 5      binary divide array
+     * binary divide and merge
+     * 6 4 1 8 2 5
      *
      * [6 4 1 8 2 5]
      * [[6 4 1] [8 2 5]]                      divide
@@ -117,52 +114,60 @@ public class SortingCase {
     /**
      * partitioned by pivot
      * left for big, right for small
-     *
-     * 6 4 1 8 2 5
-     * pivot = 6
-     * 6 4 1 8 2 5
-     * l         r
-     * 6 4 1 8 2 5
-     *   l       r
-     * 6 4 1 8 2 5
-     *     l     r
-     * 6 4 1 8 2 5
-     *       l   r
-     * 6 4 1 5 2 8
-     *       l   r
-     * 6 4 1 5 2 8
-     *       l r
-     * 6 4 1 5 2 8
-     *         lr
-     * 2 4 1 5 6 8
-     *
-     * 2 4 1 5
-     * pivot = 2
-     * 2 4 1 5
-     * l     r
-     * 2 4 1 5
-     * l   r
-     * 2 4 1 5
-     *   l r
-     * 2 1 4 5
-     *   l r
-     * 2 1 4 5
-     *   lr
-     * 1 2 4 5
-     *
      */
     static void quickSort(int[] array) {
         if (array == null || array.length <= 1)
             return;
 
         int left = 0, right = array.length - 1;
-
-        int partition = partition(array, left, right);
+        System.arraycopy(partition(array, left, right), 0, array, 0, array.length);
     }
 
-    static int partition(int[] array, int left, int right) {
-        // TODO complete it
-        return 0;
+    static int[] partition(int[] array, int left, int right) {
+        if (left >= right)
+            return array;
+
+        int start = left, end = right, pivot = array[start];
+        while (left != right) {
+            if (pivot <= array[right])
+                right--;
+            else if (pivot >= array[left])
+                left++;
+            else
+                swap(array, left, right);
+        }
+        array[start] = array[left];
+        array[left] = pivot;
+        System.out.println(Arrays.toString(array));
+
+        partition(array, start, left - 1);
+        partition(array, left + 1, end);
+        return array;
+    }
+
+    /**
+     * Diminishing increment sort
+     * an improved algorithm based on insert sort
+     *
+     * 6 5 1 7 2 8 4
+     * step = 7/2 = 3
+     * [6 7 4] [5 2] [1 8]      partitioned by step
+     * [4 6 7] [2 5] [1 8]      insert sort for each
+     *
+     * 4 2 1 6 5 8 7            sorted
+     * step = 3/2 = 1           step >= 1
+     * 1 2 4 5 6 7 8            insert sort
+     */
+    static void shellSort(int[] array) {
+        int step = array.length >> 1;
+        for (; step > 0; step >>= 1) {
+            for (int i = step, p; i < array.length; i++) {  // insert sort
+                p = i;
+                while (p - step >= 0 && array[p - step] > array[p])
+                    swap(array, p, p -= step);
+            }
+            System.out.println(Arrays.toString(array));
+        }
     }
 
     static void swap(int[] array, int i, int j) {
@@ -173,11 +178,14 @@ public class SortingCase {
 
     public static void main(String[] args) {
         int[] array = new int[]{8,9,16,4,2,1,9,7, 5,12,6,8,10,8,3,2,4};
+        System.out.println(Arrays.toString(array));
 
 //        bubbleSort(array);
 //        insertSort(array);
 //        selectionSort(array);
 //        mergeSort(array);
+//        quickSort(array);
+        shellSort(array);
 
         System.out.println(Arrays.toString(array));
     }
