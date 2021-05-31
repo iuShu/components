@@ -88,6 +88,10 @@ public class ThreadPoolExecutorCase {
      * @see ThreadPoolExecutor#getTask()
      * @see BlockingQueue#poll(long, TimeUnit) use keepAliveTime
      * @see ThreadPoolExecutor#processWorkerExit(ThreadPoolExecutor.Worker, boolean) after keepAliveTime
+     *
+     * whether allow core worker thread terminated
+     * @see ThreadPoolExecutor#allowCoreThreadTimeOut
+     * @see ThreadPoolExecutor#allowCoreThreadTimeOut(boolean)
      */
     static void workerAndWorkQueueCase() {
         Runnable task = () -> {

@@ -89,6 +89,47 @@ public class SortingCase {
         System.arraycopy(divide(array, 0, array.length), 0, array, 0, array.length);
     }
 
+    /**
+     * partitioned by pivot
+     * left for big, right for small
+     *
+     * @see #partition(int[], int, int)
+     */
+    static void quickSort(int[] array) {
+        if (array == null || array.length <= 1)
+            return;
+
+        int left = 0, right = array.length - 1;
+        System.arraycopy(partition(array, left, right), 0, array, 0, array.length);
+    }
+
+    /**
+     * Diminishing increment sort
+     * an improved algorithm based on insert sort
+     *
+     * 6 5 1 7 2 8 4
+     * step = 7/2 = 3
+     * [6 7 4] [5 2] [1 8]      partitioned by step
+     * [4 6 7] [2 5] [1 8]      insert sort for each
+     *
+     * 4 2 1 6 5 8 7            sorted
+     * step = 3/2 = 1           step >= 1
+     * 1 2 4 5 6 7 8            insert sort
+     *
+     * @see #insertSort(int[])
+     */
+    static void shellSort(int[] array) {
+        int step = array.length >> 1;
+        for (; step > 0; step >>= 1) {
+            for (int i = step, p; i < array.length; i++) {  // insert sort
+                p = i;
+                while (p - step >= 0 && array[p - step] > array[p])
+                    swap(array, p, p -= step);
+            }
+            System.out.println(Arrays.toString(array));
+        }
+    }
+
     static int[] divide(int[] array, int left, int right) {
         int mid = (left + right) >> 1;
         if (right - left == 1)
@@ -111,18 +152,6 @@ public class SortingCase {
         return merge;
     }
 
-    /**
-     * partitioned by pivot
-     * left for big, right for small
-     */
-    static void quickSort(int[] array) {
-        if (array == null || array.length <= 1)
-            return;
-
-        int left = 0, right = array.length - 1;
-        System.arraycopy(partition(array, left, right), 0, array, 0, array.length);
-    }
-
     static int[] partition(int[] array, int left, int right) {
         if (left >= right)
             return array;
@@ -143,31 +172,6 @@ public class SortingCase {
         partition(array, start, left - 1);
         partition(array, left + 1, end);
         return array;
-    }
-
-    /**
-     * Diminishing increment sort
-     * an improved algorithm based on insert sort
-     *
-     * 6 5 1 7 2 8 4
-     * step = 7/2 = 3
-     * [6 7 4] [5 2] [1 8]      partitioned by step
-     * [4 6 7] [2 5] [1 8]      insert sort for each
-     *
-     * 4 2 1 6 5 8 7            sorted
-     * step = 3/2 = 1           step >= 1
-     * 1 2 4 5 6 7 8            insert sort
-     */
-    static void shellSort(int[] array) {
-        int step = array.length >> 1;
-        for (; step > 0; step >>= 1) {
-            for (int i = step, p; i < array.length; i++) {  // insert sort
-                p = i;
-                while (p - step >= 0 && array[p - step] > array[p])
-                    swap(array, p, p -= step);
-            }
-            System.out.println(Arrays.toString(array));
-        }
     }
 
     static void swap(int[] array, int i, int j) {
