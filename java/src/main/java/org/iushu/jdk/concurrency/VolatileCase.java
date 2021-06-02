@@ -16,12 +16,44 @@ public class VolatileCase {
 
     private volatile int temperature;
 
+    private volatile int amount;
+    private volatile int quantity;
+
     public void set(int value) {
         temperature = value;
     }
 
     public int get() {
         return temperature;
+    }
+
+    /**
+     * memory barriers/fences for prevent code reordering
+     *
+     * volatile write
+     *  add StoreStore before volatile write
+     *  add StoreLoad after volatile write
+     *
+     * volatile read
+     *  add LoadLoad after volatile read
+     *  add LoadStore after volatile read
+     */
+    void memoryBarriers() {
+        int a = amount;         // volatile read
+        // LoadLoad
+        // LoadStore
+        int q = quantity;       // volatile read
+        // LoadLoad
+        // LoadStore
+
+        int sum = a + q;        // normal write
+
+        // StoreStore
+        amount = sum + 1;       // volatile write
+        // StoreLoad
+        // StoreStore
+        quantity = sum + 2;     // volatile write
+        // StoreLoad
     }
 
     static void readWriteCase() {
