@@ -37,30 +37,7 @@ public class LangCase {
 
     public static void main(String[] args) {
 //        equivalent();
-//        collection();
-
-        java.util.Hashtable<String, String> env = new java.util.Hashtable<String, String>();
-        env.put("java.naming.factory.initial", "com.sun.jndi.dns.DnsContextFactory");
-
-        try {
-            javax.naming.directory.DirContext dirContext
-                    = new javax.naming.directory.InitialDirContext(env);
-            javax.naming.directory.Attributes attrs
-                    = dirContext.getAttributes("m.jobcn.com", new String[] { "TXT" });
-            javax.naming.directory.Attribute attr
-                    = attrs.get("TXT");
-
-            NamingEnumeration e = attr.getAll();
-            while (e.hasMore()) {
-                String val = e.next().toString();
-                System.out.println(val);
-                System.out.println(val.equals("eyJzIjowLCJ1cmwiOiJodHRwczovL3d3dy5qb2Jjbi5jb20vaW5kZXhfdXBncmFkZS5odG0ifQ=="));
-            }
-        } catch (javax.naming.NamingException e) {
-
-            e.printStackTrace();
-        }
-
+        collection();
     }
 
     static class Ward {
