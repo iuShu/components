@@ -18,9 +18,13 @@ import static org.iushu.jdk.Utils.sleep;
 public class ClassLoaderCase {
 
     /**
-     * BootstrapClassLoader (unaccessible)
-     * sun.misc.Launcher.ExtClassLoader
-     * sun.misc.Launcher.AppClassLoader
+     * BootstrapClassLoader (unaccessible)  loading java core jars like rt.jar charsets.jar resources.jar
+     * sun.misc.Launcher.ExtClassLoader     loading jar under {JAVA_HOME}/jre/lib/ext/
+     * sun.misc.Launcher.AppClassLoader     loading application's jars and classes
+     *
+     * @see java.net.URLClassLoader
+     * @see sun.misc.Launcher.ExtClassLoader
+     * @see sun.misc.Launcher.AppClassLoader
      */
     static void hierarchyStructure() {
         ClassLoader classLoader = ClassLoaderCase.class.getClassLoader();
