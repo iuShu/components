@@ -52,6 +52,24 @@ public class ConcurrentHashMapCase {
         System.out.println(Integer.MAX_VALUE + " > 0" + Integer.toBinaryString(Integer.MAX_VALUE));
     }
 
+    static int tableSize() {
+        int initCapacity = 4;
+        int preCapacity = initCapacity + (initCapacity >>> 1) + 1;
+        System.out.println(preCapacity + " > " + Integer.toBinaryString(preCapacity));
+
+        // power of two
+        int maximum = 1 << 30;
+        int n = preCapacity - 1;
+        n |= n >>> 1;
+        n |= n >>> 2;
+        n |= n >>> 4;
+        n |= n >>> 8;
+        n |= n >>> 16;
+        n = (n < 0) ? 1 : (n >= maximum) ? maximum : n + 1;
+        System.out.println(n + " > " + Integer.toBinaryString(n));
+        return n;
+    }
+
     /**
      * @see ConcurrentHashMap#spread(int)
      * @see ConcurrentHashMap#HASH_BITS Integer.MAX_VALUE for calculating hashcode
@@ -90,7 +108,7 @@ public class ConcurrentHashMapCase {
     }
 
     /**
-     * transfer element nodes to new table then set to table (reselect bulk)
+     * transfer element nodes to new table (reselect bin)
      * @see ConcurrentHashMap#table
      * @see ConcurrentHashMap#nextTable
      *
@@ -154,9 +172,10 @@ public class ConcurrentHashMapCase {
 
     public static void main(String[] args) {
 //        powerOfTwo();
+        tableSize();
 //        hashCodeOfKey();
 //        tabAt();
-        expandCapacity();
+//        expandCapacity();
     }
 
 }
