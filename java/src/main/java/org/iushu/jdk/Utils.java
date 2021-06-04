@@ -16,4 +16,12 @@ public class Utils {
         }
     }
 
+    public static void join(Thread thread) {
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
