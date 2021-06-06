@@ -1,7 +1,10 @@
 package org.iushu.mybatis.mapper;
 
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
 import org.iushu.mybatis.bean.Actor;
+
+import java.util.List;
 
 @Mapper
 @CacheNamespace
@@ -18,5 +21,11 @@ public interface ActorMapper {
 
     @Delete("delete from actor where actor_id = #{actor_id}")
     boolean deleteActor(short actor_id);
+
+    @Select("select actor_id, first_name, last_name, last_update from actor")
+    List<Actor> getActors(RowBounds rowBounds);
+
+    @Select("select actor_id, first_name, last_name, last_update from actor")
+    List<Actor> getPageActors();
 
 }
