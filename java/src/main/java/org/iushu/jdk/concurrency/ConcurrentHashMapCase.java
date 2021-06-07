@@ -144,7 +144,7 @@ public class ConcurrentHashMapCase {
      * CAS set element to position
      * @see ConcurrentHashMap#casTabAt(ConcurrentHashMap.Node[], int, ConcurrentHashMap.Node, ConcurrentHashMap.Node)
      *
-     * help transfer if table is expanding capacity
+     * help transfer if a resize is in progress
      * @see ConcurrentHashMap#helpTransfer(ConcurrentHashMap.Node[], ConcurrentHashMap.Node)
      *
      * position already contained element A, then synchronized(A) and transform the node to linklist or tree node
