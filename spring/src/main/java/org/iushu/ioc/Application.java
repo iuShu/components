@@ -288,7 +288,7 @@ public class Application {
      * @see org.springframework.beans.factory.support.DefaultSingletonBeanRegistry#destroySingletons()
      * @see org.springframework.beans.factory.support.DisposableBeanAdapter#destroy()
      */
-    public static void beanLifecycle() {
+    public static void initAndDestroy() {
         MutablePropertyValues values = new MutablePropertyValues();
         values.addPropertyValue("name", "Boris Johnson");
 
@@ -309,6 +309,13 @@ public class Application {
         beanFactory.removeBeanDefinition("staff");     // remove bean completely
         System.out.println(beanFactory.containsBean("staff"));
         System.out.println(beanFactory.containsBeanDefinition("staff"));
+    }
+
+    /**
+     * @see org.iushu.context.Application#beanLifecycle()
+     */
+    static void beanLifecycle() {
+
     }
 
     /**
@@ -395,7 +402,7 @@ public class Application {
 //        populateBean();
 //        cascadePopulate();
 //        autowireProperty();
-        autowireFactoryBean();
+//        autowireFactoryBean();
 //        jsr330();
 //        interfaces();
 //        factoryBean();
@@ -403,7 +410,8 @@ public class Application {
 //        lazyInitBean();
 //        abstractMethodInjection();
 //        arbitraryMethodReplacer();
-//        beanLifecycle();
+//        initAndDestroy();
+        beanLifecycle();
 //        beanWrapper();
 //        propertyEditorConfigurer();
 //        propertyEditorRegistrar();
