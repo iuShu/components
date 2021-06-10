@@ -15,6 +15,8 @@ public class JavaVirtualMachine {
      * -XX:-Xms128m -Xmx2048m
      *  Xms = initial heap size
      *  Xmx = maximum heap size
+     *  Xmn = young gen size
+     *  Xss = thread's size
      */
     static void heapSize() {
 
@@ -50,7 +52,7 @@ public class JavaVirtualMachine {
     }
 
     /**
-     * -XX:+PrintFlagInitial    print initial argument about JVM
+     * -XX:+PrintFlagsInitial    print initial argument about JVM
      */
     static void arguments() {
 
