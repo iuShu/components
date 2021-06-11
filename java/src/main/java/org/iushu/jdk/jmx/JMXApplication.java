@@ -20,6 +20,8 @@ import java.util.Queue;
 public class JMXApplication {
 
     /**
+     * MBean (Managed Bean)
+     *
      * @see ManagementFactory#GARBAGE_COLLECTOR_MXBEAN_DOMAIN_TYPE  GarbageCollector
      * @see ManagementFactory#RUNTIME_MXBEAN_NAME                   Runtime
      * @see ManagementFactory#THREAD_MXBEAN_NAME                    Threading

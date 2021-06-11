@@ -1,7 +1,5 @@
 package org.iushu.jdk.lang;
 
-import org.iushu.jdk.Utils;
-
 /**
  * @author iuShu
  * @since 6/9/21
@@ -58,7 +56,7 @@ public class GarbageCollector {
      * Mark-Copy Algorithm
      *  split memory to areas, mark survivors and copy to an area then reclaim other areas
      *  defect: memory shrink
-     *  example: [ Eden Space | Sur1 | Sur2 ]   copy survivor to Sur2 then reclaim other areas
+     *  example: [ Eden Space | Sur0 | Sur1 ]   copy survivor to Sur1 then reclaim other areas
      *
      * Mark-Compact Algorithm
      *  mark and moving survivors together
@@ -101,7 +99,7 @@ public class GarbageCollector {
      *  -XX:MaxGCPauseMillis        try to assure gc time not less than value millis
      *  -XX:UseAdaptiveSizePolicy   delegate collector to control dynamically on generations' size and reclaim ratio
      *
-     * Serial Old
+     * Serial Old (Parallel Scavenge Mark-Sweep)
      *  a single thread Mark-Compact garbage collector
      *  stop all client threads for reclaim, like Serial
      *  work with Parallel Scavenge before 1.5
@@ -120,8 +118,8 @@ public class GarbageCollector {
      *      4. concurrent sweep     reclaim marked object
      *  defect:
      *      sensitive about the CPU core's quantity (i-CMS deprecated)
-     *      reserve extra space for floating garbage that generated between mark and sweep
-     *      memory fragmentation caused by mark-sweep algorithm
+     *      requires extra space reserved for floating garbage that generated between mark and sweep
+     *      memory fragmentation caused by Mark-Sweep algorithm
      *
      * G1 (Garbage First)
      *  the fully-featured garbage collector, designed to replace CMS
@@ -161,18 +159,35 @@ public class GarbageCollector {
      *  -Xms20M -Xmx20M -Xmn10M
      *  -XX:Survivor-Ratio=8
      *  -XX:+PrintGCDetails
+     *
+     * Young Gen Space = Eden size + survivor-0 size
+     * big object would be allocated at Tenured(Old) Gen directly if their size larger than -XX:PretenureSizeThreshold
+     *
+     * Upgrade to Tenure(Old) Generation
+     *  object would be moved to survivor-0 and set age to 1 if survive from the first Minor GC
+     *  every time the object survive from a Minor GC, the age increase one
+     *  upgrade generation and move object into Tenure Gen if age exceed the threshold(default 15)
+     *  the threshold can set by -XX:MaxTenuringThreshold=..
+     *
+     *  object also would be upgraded generation if the space size used by certain objects which has the same age
+     *  exceed the half of total size in survivor space
+     *
+     *  object in Eden Gen would be moved to Tenure Gen directly if Survivor space insufficient
+     *
+     *  Tenure Gen will perform a Minor GC if space large than Eden total space or historical upgrade required space
+     *  otherwise perform a Full GC
      */
     static void generationSpaceAllocate() {
-        System.out.println("total: " + Runtime.getRuntime().totalMemory());
-        System.out.println("  max: " + Runtime.getRuntime().maxMemory());
-        System.out.println(" free: " + Runtime.getRuntime().freeMemory());
-
         int _1MB = 1024 * 1024;
         byte[] all1, all2, all3, all4;
         all1 = new byte[2 * _1MB];
         all2 = new byte[2 * _1MB];
         all3 = new byte[2 * _1MB];
         all4 = new byte[4 * _1MB];
+
+        System.out.println("total: " + Runtime.getRuntime().totalMemory());
+        System.out.println("  max: " + Runtime.getRuntime().maxMemory());
+        System.out.println(" free: " + Runtime.getRuntime().freeMemory());
     }
 
     public static void main(String[] args) {
