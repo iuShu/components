@@ -24,6 +24,23 @@ public class LangCase {
         System.out.println(ward1.hashCode() == ward2.hashCode());   // true
     }
 
+    static void packagingAndUnpackaging() {
+        Integer a = 1;
+        Integer b = 2;
+        Integer c = 3;
+        Integer d = 3;
+        Integer e = 321;
+        Integer f = 321;
+        Long g = 3L;
+
+        System.out.println(c == d);             // true     Integer.IntegerCache (-128 ~ 127)
+        System.out.println(e == f);             // false    compare object
+        System.out.println(c == (a+b));         // true     operator cause unpackaging
+        System.out.println(c.equals(a+b));      // true     operator cause unpackaging
+        System.out.println(g == (a+b));         // true     operator cause unpackaging
+        System.out.println(g.equals(a+b));      // false    require instance of Long
+    }
+
     /**
      * String a = "123";
      *  put "123" into constants pool
@@ -69,8 +86,9 @@ public class LangCase {
 
     public static void main(String[] args) {
 //        equivalent();
+        packagingAndUnpackaging();
 //        collection();
-        stringIntern();
+//        stringIntern();
     }
 
     static class Ward {
