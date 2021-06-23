@@ -106,13 +106,13 @@ public class LoadBalanceStrategy {
         }
     }
 
-    // TODO bits calculate secret
-    static long dubboHash(byte[] digest, int number) {
-        return (((long) (digest[3 + number * 4] & 0xFF) << 24)      // 0xFF = 2^8-1
-                | ((long) (digest[2 + number * 4] & 0xFF) << 16)
-                | ((long) (digest[1 + number * 4] & 0xFF) << 8)
-                | (digest[number * 4] & 0xFF))
-                & 0xFFFFFFFFL;  // 2^32-1
+    // make sure every bits are included in hashing                 // for example
+    static long dubboHash(byte[] digest, int number) {              // digest[0 1 2 3] = -39 -76 45 -26
+        return (((long) (digest[3 + number * 4] & 0xFF) << 24)      // 1110 0110 0000 0000 0000 0000 0000 0000
+                | ((long) (digest[2 + number * 4] & 0xFF) << 16)    // 0000 0000 0010 1101 0000 0000 0000 0000
+                | ((long) (digest[1 + number * 4] & 0xFF) << 8)     // 0000 0000 0000 0000 1011 0100 0000 0000
+                | (digest[number * 4] & 0xFF))                      // 0000 0000 0000 0000 0000 0000 1101 1001
+                & 0xFFFFFFFFL;  // 2^32-1                           // 1110 0110 0010 1101 1011 0100 1101 1001
     }
 
     public static void main(String[] args) {
