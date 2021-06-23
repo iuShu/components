@@ -94,6 +94,9 @@ public class LoadBalanceStrategy {
         }
     }
 
+    /**
+     * @see #dubboHash(byte[], int)
+     */
     static void dubboConsistentHashCode() {
         int defaultVirtualScale = 160;
         String address = "192.168.24.42";
@@ -106,13 +109,13 @@ public class LoadBalanceStrategy {
         }
     }
 
-    // make sure every bits are included in hashing                 // for example
-    static long dubboHash(byte[] digest, int number) {              // digest[0 1 2 3] = -39 -76 45 -26
-        return (((long) (digest[3 + number * 4] & 0xFF) << 24)      // 1110 0110 0000 0000 0000 0000 0000 0000
-                | ((long) (digest[2 + number * 4] & 0xFF) << 16)    // 0000 0000 0010 1101 0000 0000 0000 0000
-                | ((long) (digest[1 + number * 4] & 0xFF) << 8)     // 0000 0000 0000 0000 1011 0100 0000 0000
-                | (digest[number * 4] & 0xFF))                      // 0000 0000 0000 0000 0000 0000 1101 1001
-                & 0xFFFFFFFFL;  // 2^32-1                           // 1110 0110 0010 1101 1011 0100 1101 1001
+    // make sure every bits are included in hashing                 // for example (negative number in complement)
+    static long dubboHash(byte[] digest, int number) {              // digest[0 1 2 3] = -39 76 45 26
+        return (((long) (digest[3 + number * 4] & 0xFF) << 24)      // 0001 1010 = 26
+                | ((long) (digest[2 + number * 4] & 0xFF) << 16)    //           0010 1101 = 45
+                | ((long) (digest[1 + number * 4] & 0xFF) << 8)     //                     0100 1100 = 76
+                | (digest[number * 4] & 0xFF))                      //                               1101 1001 = -39
+                & 0xFFFFFFFFL;  // 2^32-1                           // 0001 1010 0010 1101 0100 1100 1101 1001
     }
 
     public static void main(String[] args) {
