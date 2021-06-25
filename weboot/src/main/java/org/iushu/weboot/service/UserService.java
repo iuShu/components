@@ -6,6 +6,6 @@ public interface UserService {
 
     User getUser(short user_id);
 
-    User getUser(String username, String password);
+    User getUser(String username);
 
 }

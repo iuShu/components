@@ -10,6 +10,6 @@ public interface StaffService extends UserService {
 
     Staff getStaff(short staff_id);
 
-    Staff getStaff(String username, String password);
+    Staff getStaff(String username);
 
 }

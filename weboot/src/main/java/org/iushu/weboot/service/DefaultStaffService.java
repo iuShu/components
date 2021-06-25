@@ -23,13 +23,21 @@ public class DefaultStaffService implements StaffService {
     }
 
     @Override
-    public Staff getStaff(String username, String password) {
-        return staffMapper.getStaff(username, password);
+    public Staff getStaff(String username) {
+        return staffMapper.getStaff(username);
     }
 
     @Override
     public User getUser(short user_id) {
-        Staff staff = getStaff(user_id);
+        return createUser(getStaff(user_id));
+    }
+
+    @Override
+    public User getUser(String username) {
+        return createUser(getStaff(username));
+    }
+
+    private User createUser(Staff staff) {
         User user = new User();
         user.setUser_id(staff.getStaff_id());
         user.setFirst_name(staff.getFirst_name());
@@ -38,14 +46,4 @@ public class DefaultStaffService implements StaffService {
         return user;
     }
 
-    @Override
-    public User getUser(String username, String password) {
-        Staff staff = getStaff(username, password);
-        User user = new User();
-        user.setUser_id(staff.getStaff_id());
-        user.setFirst_name(staff.getFirst_name());
-        user.setLast_name(staff.getLast_name());
-        user.setRole(Role.STAFF.id());
-        return user;
-    }
 }
