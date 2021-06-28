@@ -4,9 +4,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.*;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
 import java.util.concurrent.*;
 
 /**
@@ -41,4 +43,8 @@ public class WebootConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor());
     }
 
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new UserArgumentResolver());
+    }
 }
