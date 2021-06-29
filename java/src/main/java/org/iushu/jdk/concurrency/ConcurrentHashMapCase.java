@@ -108,6 +108,11 @@ public class ConcurrentHashMapCase {
     }
 
     /**
+     * expand factor
+     * @see ConcurrentHashMap#DEFAULT_CAPACITY
+     * @see ConcurrentHashMap#initTable()
+     * @see ConcurrentHashMap#LOAD_FACTOR deprecated
+     *
      * transfer element nodes to new table (reselect bin)
      * @see ConcurrentHashMap#table
      * @see ConcurrentHashMap#nextTable
@@ -117,6 +122,10 @@ public class ConcurrentHashMapCase {
      * @see ConcurrentHashMap#helpTransfer(ConcurrentHashMap.Node[], ConcurrentHashMap.Node)
      */
     static void expandCapacity() {
+        int defaultCapacity = 16;
+        int expandFactor = defaultCapacity - (defaultCapacity >>> 2);   // equals to 16 * 0.75
+        System.out.println(expandFactor);   // 12
+
         ConcurrentHashMap<Integer, String> map = new ConcurrentHashMap<>(1);    // capacity = 2
         map.put(882911, "Rod Johnson");
         map.put(581021, "Doug Lea");    // expand capacity
@@ -172,10 +181,10 @@ public class ConcurrentHashMapCase {
 
     public static void main(String[] args) {
 //        powerOfTwo();
-        tableSize();
+//        tableSize();
 //        hashCodeOfKey();
 //        tabAt();
-//        expandCapacity();
+        expandCapacity();
     }
 
 }
