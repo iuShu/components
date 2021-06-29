@@ -36,7 +36,7 @@ public class Response<T> {
         return success(msg, null);
     }
 
-    public static <T> Response<T> success(T payload) {
+    public static <T> Response<T> payload(T payload) {
         return success("", payload);
     }
 

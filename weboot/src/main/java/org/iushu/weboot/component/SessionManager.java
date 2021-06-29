@@ -9,7 +9,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -21,6 +23,7 @@ public class SessionManager implements ApplicationContextAware {
 
     public static final User PASSWORD_WRONG = new User();
     private static final String KEY_USER = "wbu";
+    private static final String KEY_TKN = "wbtkn";
 
     private ApplicationContext applicationContext;
 
@@ -29,6 +32,9 @@ public class SessionManager implements ApplicationContextAware {
 
     public User getUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
+
+        // TODO to be done
+
         User user = (User) session.getAttribute(KEY_USER);
         if (user == null) {
             // search at redis for auto-login
@@ -36,14 +42,17 @@ public class SessionManager implements ApplicationContextAware {
         return user;
     }
 
-    public User login(HttpServletRequest request, String username, String password) {
+    public User login(HttpServletRequest request, HttpServletResponse response, String username, String password) {
         User user = staffService.getUser(username);
         if (user == null)
             return null;
-        else if (!password.equals(user.getPassword()))
+
+        if (!password.equals(user.getPassword()))
             return PASSWORD_WRONG;
 
-        // token manager
+        // TODO token manager
+
+        response.addCookie(new Cookie(KEY_TKN, ""));
 
         HttpSession session = request.getSession();
         session.setAttribute(KEY_USER, user);

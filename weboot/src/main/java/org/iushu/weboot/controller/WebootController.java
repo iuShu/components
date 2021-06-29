@@ -1,6 +1,7 @@
 package org.iushu.weboot.controller;
 
 import org.iushu.weboot.annotation.AccessLimit;
+import org.iushu.weboot.component.AuthenticationManager;
 import org.iushu.weboot.bean.User;
 import org.iushu.weboot.component.SessionManager;
 import org.iushu.weboot.exchange.Response;
@@ -22,6 +23,9 @@ import java.io.IOException;
 public class WebootController {
 
     @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
     private SessionManager sessionManager;
 
     @RequestMapping("/index")
@@ -29,10 +33,15 @@ public class WebootController {
         return "index";
     }
 
+    @RequestMapping("/encrypt_key")
+    public Response<String> getEncryptKey() {
+        return Response.payload(authenticationManager.getPublicKey());
+    }
+
     @RequestMapping("/login")
     @AccessLimit(login = false)
     public Response login(HttpServletRequest request, HttpServletResponse response, String username, String password) throws IOException {
-        User user = sessionManager.login(request, username, password);
+        User user = sessionManager.login(request, response, username, password);
         if (user == null)
             return Response.failure("No such user, please register first");
         else if (user == SessionManager.PASSWORD_WRONG)
@@ -40,7 +49,7 @@ public class WebootController {
 
         String referer = request.getHeader(HttpHeaders.REFERER);
         if (StringUtils.isEmpty(referer))
-            return Response.success(user);
+            return Response.payload(user);
 
         response.sendRedirect(referer);
         return Response.success();
