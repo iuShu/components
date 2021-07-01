@@ -1,9 +1,21 @@
 package org.iushu.weboot.component;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.*;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -16,7 +28,28 @@ import java.util.concurrent.*;
  * @since 6/24/21
  */
 @Configuration
-public class WebootConfiguration implements WebMvcConfigurer {
+public class WebootConfiguration implements WebMvcConfigurer, ApplicationContextAware {
+
+    private ApplicationContext applicationContext;
+
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        PolymorphicTypeValidator polymorphicTypeValidator = objectMapper.getPolymorphicTypeValidator();
+        objectMapper.activateDefaultTyping(polymorphicTypeValidator, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        serializer.setObjectMapper(objectMapper);
+
+        RedisTemplate redisTemplate = new RedisTemplate();
+        redisTemplate.setConnectionFactory(connectionFactory);
+        redisTemplate.setKeySerializer(StringRedisSerializer.UTF_8);
+        redisTemplate.setValueSerializer(serializer);
+        redisTemplate.setHashKeySerializer(StringRedisSerializer.UTF_8);
+        redisTemplate.setHashValueSerializer(serializer);
+        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
+    }
 
     /**
      * @see java.util.concurrent.ThreadPoolExecutor
@@ -40,11 +73,17 @@ public class WebootConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor());
+        SessionManager sessionManager = applicationContext.getBean(SessionManager.class);
+        registry.addInterceptor(new LoginInterceptor(sessionManager));
     }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new UserArgumentResolver());
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

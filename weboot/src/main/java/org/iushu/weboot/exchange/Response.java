@@ -2,8 +2,6 @@ package org.iushu.weboot.exchange;
 
 import org.springframework.http.HttpStatus;
 
-import static org.springframework.http.HttpStatus.*;
-
 /**
  * @see org.springframework.http.HttpStatus
  *
@@ -11,6 +9,9 @@ import static org.springframework.http.HttpStatus.*;
  * @since 6/24/21
  */
 public class Response<T> {
+
+    public static final int CODE_SUCCESS = 1;
+    public static final int CODE_FAILURE = -1;
 
     private int code;
     private String msg;
@@ -41,7 +42,7 @@ public class Response<T> {
     }
 
     public static <T> Response<T> success(String msg, T payload) {
-        return create(OK.value(), msg, payload);
+        return create(CODE_SUCCESS, msg, payload);
     }
 
     public static Response failure() {
@@ -49,7 +50,7 @@ public class Response<T> {
     }
 
     public static Response failure(String msg) {
-        return create(INTERNAL_SERVER_ERROR.value(), msg, null);
+        return create(CODE_FAILURE, msg, null);
     }
 
     public int getCode() {

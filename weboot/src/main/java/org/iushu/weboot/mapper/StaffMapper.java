@@ -16,7 +16,7 @@ public interface StaffMapper {
     Staff getStaff(short staff_id);
 
     @Select("SELECT staff_id, first_name, last_name, address_id, picture, email, store_id, active, username, password, last_update " +
-            "FROM sakila.staff WHERE username = '#{username}' ")
-    Staff getStaff(String username);
+            "FROM sakila.staff WHERE username = #{username} ")
+    Staff getStaffByUserName(String username);
 
 }

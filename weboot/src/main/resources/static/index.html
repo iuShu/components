@@ -2,9 +2,134 @@
 <head>
     <link rel="icon" href="https://iushu.github.io/favicon.ico">
     <title>Index - Weboot</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jsencrypt/3.2.0/jsencrypt.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.18.0/js/md5.js"></script>
 </head>
-<body>
-    <h2>Welcome to Weboot</h2>
-    <button>login</button>
+<style>
+    .header {
+        height: 10%;
+    }
+    .user_panel {
+        text-align: right;
+    }
+    .user_panel li {
+        display: inline;
+    }
+</style>
+<script type="text/javascript">
+    var error = '';
+    function init() {
+        document.cookie
+
+        $.ajax({
+            url: '/encrypt_key',
+            type: 'post',
+            success: function(data) {
+                if (data.code > 0) {
+                    $('#pbk').attr('value', data.payload);
+                }
+                else {
+                    alert(data.msg);
+                    error = data.msg;
+                }
+            }
+        })
+    }
+
+    function login() {
+        if (error.length > 0) {
+            alert(error);
+            return;
+        }
+
+        var pbk = $('#pbk').val();
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var usr_err = validate("username", username, 6, 20, false, false);
+        var pwd_err = validate("password", password, 6, 20, false, false);
+        if (usr_err.length > 0 || pwd_err.length > 0) {
+            alert(usr_err.length > 0 ? usr_err : pwd_err);
+            return;
+        }
+
+        $('#btn-login').attr('disabled', true);
+        password = md5(password);
+        var encryptor = new JSEncrypt();
+        encryptor.setPublicKey(pbk);
+        var cipher = encryptor.encrypt(password);
+        $.ajax({
+            url: '/login',
+            type: 'post',
+            data: {
+                'pbk': pbk,
+                'username': username,
+                'password': cipher
+            },
+            success: function(data) {
+                if (data.code < 0) {
+                    alert(data.msg);
+                    return;
+                }
+
+                var usr = data.payload;
+                localStorage['wbusr'] = usr;
+                $('#user').text(usr.firstName + '-' + usr.lastName);
+                $('#user_id').val(usr.userId);
+                $('#btn-logout').attr('disabled', false);
+            },
+            error: function(err) {
+                console.error(err);
+            }
+        })
+    }
+
+    function logout() {
+        $.ajax({
+            url: '/logout',
+            type: 'post',
+            success: function(data) {
+                if (data.code < 0)
+                    alert(data.msg);
+                else
+                    alert('logout success');
+            },
+            error: function(err) {
+                alert('system error');
+                console.error(err);
+            }
+        })
+    }
+
+    var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>《》/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
+    function validate(name, text, min, max, number, symbol) {
+        if (text.length < 0)
+            return "Please input " + name;
+        if (text.length < min || text.length > max)
+            return "Please input " + name + " between " + min + "~" + max + " length";
+        if (number && isNaN(text))
+            return name + " can only accept Number";
+        if (symbol && pattern.test(text))
+            return name + " can only accept Number and Alphabet";
+        return "";
+    }
+
+</script>
+<body onload="init()">
+    <div class="header">
+        <h2>Welcome to Weboot</h2>
+        <ul class="user_panel">
+            <li><span id="user"></span></li>
+            <li><button id="btn-logout" onclick="logout()" disabled>logout</button></li>
+        </ul>
+        <input type="hidden" id="user_id">
+    </div>
+    <hr>
+    <div class="login_panel">
+        <input type="text" id="username" placeholder="username">
+        <input type="password" id="password" placeholder="password">
+        <button type="button" id="btn-login" onclick="login()">login</button>
+        <input type="hidden" id="pbk">
+    </div>
 </body>
 </html>

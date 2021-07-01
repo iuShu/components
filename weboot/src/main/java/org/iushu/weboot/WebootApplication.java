@@ -5,13 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- * TODO
  *      session token
  *      auto-login by redis
+ *
+ * TODO
  *      parameter validation
  *      auto-reloadable properties
  *      preload access limit annotation
- *
  *      role and user service
  *      tuning thread pool arguments
  *
@@ -23,8 +23,8 @@ public class WebootApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(WebootApplication.class);
-        for (String beanDefinitionName : context.getBeanDefinitionNames())
-            System.out.println(beanDefinitionName + "\t" + context.getBean(beanDefinitionName).getClass().getName());
+//        for (String beanDefinitionName : context.getBeanDefinitionNames())
+//            System.out.println(beanDefinitionName + "\t" + context.getBean(beanDefinitionName).getClass().getName());
     }
 
 }
