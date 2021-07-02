@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.common.URLBuilder;
+import org.apache.dubbo.common.bytecode.Wrapper;
 import org.apache.dubbo.common.config.Environment;
 import org.apache.dubbo.common.extension.ExtensionLoader;
 import org.apache.dubbo.common.serialize.Serialization;
@@ -17,7 +18,9 @@ import org.apache.dubbo.common.serialize.kryo.optimized.KryoSerialization2;
 import org.apache.dubbo.config.*;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.apache.dubbo.config.context.ConfigManager;
+import org.apache.dubbo.config.invoker.DelegateProviderMetaDataInvoker;
 import org.apache.dubbo.config.utils.ReferenceConfigCache;
+import org.apache.dubbo.monitor.support.MonitorFilter;
 import org.apache.dubbo.qos.protocol.QosProtocolWrapper;
 import org.apache.dubbo.qos.server.Server;
 import org.apache.dubbo.qos.server.handler.QosProcessHandler;
@@ -37,10 +40,7 @@ import org.apache.dubbo.remoting.Channel;
 import org.apache.dubbo.remoting.ChannelHandler;
 import org.apache.dubbo.remoting.Codec2;
 import org.apache.dubbo.remoting.buffer.ChannelBuffer;
-import org.apache.dubbo.remoting.exchange.ExchangeChannel;
-import org.apache.dubbo.remoting.exchange.ExchangeHandler;
-import org.apache.dubbo.remoting.exchange.ExchangeServer;
-import org.apache.dubbo.remoting.exchange.Exchangers;
+import org.apache.dubbo.remoting.exchange.*;
 import org.apache.dubbo.remoting.exchange.support.ExchangeHandlerAdapter;
 import org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeHandler;
 import org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeServer;
@@ -72,6 +72,11 @@ import org.apache.dubbo.rpc.cluster.support.FailoverClusterInvoker;
 import org.apache.dubbo.rpc.cluster.support.FailsafeClusterInvoker;
 import org.apache.dubbo.rpc.cluster.support.wrapper.AbstractCluster;
 import org.apache.dubbo.rpc.cluster.support.wrapper.MockClusterInvoker;
+import org.apache.dubbo.rpc.filter.ClassLoaderFilter;
+import org.apache.dubbo.rpc.filter.ConsumerContextFilter;
+import org.apache.dubbo.rpc.filter.EchoFilter;
+import org.apache.dubbo.rpc.filter.ExceptionFilter;
+import org.apache.dubbo.rpc.filter.GenericFilter;
 import org.apache.dubbo.rpc.listener.ListenerInvokerWrapper;
 import org.apache.dubbo.rpc.model.ApplicationModel;
 import org.apache.dubbo.rpc.model.ServiceRepository;
@@ -83,7 +88,9 @@ import org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation;
 import org.apache.dubbo.rpc.protocol.dubbo.DubboCodec;
 import org.apache.dubbo.rpc.protocol.dubbo.DubboInvoker;
 import org.apache.dubbo.rpc.protocol.dubbo.DubboProtocol;
+import org.apache.dubbo.rpc.protocol.dubbo.filter.FutureFilter;
 import org.apache.dubbo.rpc.proxy.AbstractProxyFactory;
+import org.apache.dubbo.rpc.proxy.AbstractProxyInvoker;
 import org.apache.dubbo.rpc.proxy.InvokerInvocationHandler;
 import org.apache.dubbo.rpc.proxy.javassist.JavassistProxyFactory;
 import org.apache.dubbo.rpc.proxy.wrapper.StubProxyFactoryWrapper;
@@ -239,9 +246,29 @@ public class Application {
      * @see DubboProtocol#openServer(URL)
      * @see DubboProtocol#createServer(URL)
      * @see ChannelHandlers#wrapInternal(ChannelHandler, URL) wrap ChannelHandler for send/receive message
+     * @see DubboProtocol#requestHandler core ChannelHandler
      * @see NettyServerHandler core ChannelHandler(Netty)
      * @see NettyServer#doOpen()
      * @see #nettyInDubbo()
+     *
+     * Invocation processing (received)
+     * @see HeaderExchangeHandler#received(Channel, Object)
+     * @see DubboProtocol#requestHandler
+     * @see ExchangeHandlerAdapter#reply(ExchangeChannel, Object)
+     * @see org.apache.dubbo.rpc.protocol.FilterNode#invoke(Invocation)
+     * @see Filter#invoke(Invoker, Invocation)
+     * @see EchoFilter#invoke(Invoker, Invocation)
+     * @see ClassLoaderFilter#invoke(Invoker, Invocation)
+     * @see MonitorFilter#invoke(Invoker, Invocation)
+     * @see ExceptionFilter#invoke(Invoker, Invocation)
+     * @see DelegateProviderMetaDataInvoker#invoke(Invocation)
+     * @see AbstractProxyInvoker#invoke(Invocation)
+     * @see AbstractProxyInvoker#doInvoke(Object, String, Class[], Object[])
+     * @see JavassistProxyFactory#getInvoker(Object, Class, URL) anonymous proxied class
+     * @see Wrapper#invokeMethod(Object, String, Class[], Object[])
+     * @see ItemWarehouse#getItem(int) reached real invocation
+     *
+     * @see #filterNodeChain() more details about FilterNode chain
      */
     static void providerProcessing() {
 
@@ -271,20 +298,24 @@ public class Application {
      * @see StubProxyFactoryWrapper#getProxy(Invoker, boolean)
      * @see JavassistProxyFactory#getProxy(Invoker, boolean)
      *
-     * Invocation processing
+     * Invocation processing (send)
      * @see Invocation invoke action
      * @see Invoker invocation processing chain
      * @see InvokerInvocationHandler#invoke the proxy invocation
      * @see org.apache.dubbo.rpc.protocol.FilterNode invoker chain
      * @see org.apache.dubbo.rpc.Filter#invoke(Invoker, Invocation)
+     * @see ConsumerContextFilter#invoke(Invoker, Invocation)
+     * @see FutureFilter#invoke(Invoker, Invocation)
+     * @see MonitorFilter#invoke(Invoker, Invocation)
      * @see ListenerInvokerWrapper#invoke(Invocation)
      * @see AsyncToSyncInvoker#invoke(Invocation)
      * @see DubboInvoker#doInvoke(Invocation)
+     * @see ExchangeClient#send(Object, boolean) send an invocation to provider
      * @see org.apache.dubbo.rpc.Filter.Listener#onResponse(Result, Invoker, Invocation)
      * @see org.apache.dubbo.rpc.Filter.Listener#onError(Throwable, Invoker, Invocation)
      * @see AsyncRpcResult#recreate() throw exception if any or return invoked result
      *
-     * @see #filterNodeChain() more details
+     * @see #filterNodeChain() more details about FilterNode chain
      */
     static void consumerProcessing() {
 
@@ -292,7 +323,7 @@ public class Application {
 
     /**
      * A classic recursive invocation chain application case
-     * @see ProtocolFilterWrapper build filter chain
+     * @see ProtocolFilterWrapper build FilterNode chain
      *
      * FilterNode.invoke(invocation)
      * Filter.invoke(next, invocation)
@@ -641,11 +672,12 @@ public class Application {
     public static void main(String[] args) {
 //        proxyObject();
 //        gettingStartedProviderBootstrap();
+        gettingStartedConsumer();
 //        gettingStartedCase();
 //        gettingStartedBootstrapCase();
 //        proxyFactoryInvoker();
 //        registryProviderCase();
-        registryConsumerCase();
+//        registryConsumerCase();
     }
 
 }
