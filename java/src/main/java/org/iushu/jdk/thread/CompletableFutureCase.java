@@ -129,7 +129,7 @@ public class CompletableFutureCase {
     }
 
     /**
-     * aggregation AND
+     * aggregation AND (tasks start simultaneously)
      *
      * combine two task
      * @see CompletableFuture#thenCombine(CompletionStage, BiFunction)
@@ -175,31 +175,34 @@ public class CompletableFutureCase {
         });
 
         // combine two task
-//        CompletableFuture<Double> combinedFuture = weightFuture.thenCombine(heightFuture, (w, h) -> {
-//            System.out.println("calculating BMI(Body Mass Index)...");
-//            Utils.sleep(800);
-//            return w / ((h / 100) * (h / 100));
-//        });
+        CompletableFuture<Double> combinedFuture = weightFuture.thenCombine(heightFuture, (w, h) -> {
+            System.out.println("calculating BMI(Body Mass Index)...");
+            Utils.sleep(800);
+            return w / ((h / 100) * (h / 100));
+        });
 //        CompletableFuture<Void> acceptBothFuture = weightFuture.thenAcceptBoth(heightFuture, (w, h) -> {
 //            System.out.println("storing BMI(Body Mass Index)...");
 //            Utils.sleep(800);   // store to database
 //            System.out.println("BMI data stored");
 //        });
-        CompletableFuture<Void> allOfFuture = CompletableFuture.allOf(weightFuture, heightFuture, ageFuture, genderFuture);
+//        CompletableFuture<Void> allOfFuture = CompletableFuture.allOf(weightFuture, heightFuture, ageFuture, genderFuture);
 //        CompletableFuture<Object> anyOfFuture = CompletableFuture.anyOf(weightFuture, heightFuture, ageFuture, genderFuture);
 
+        long start = System.currentTimeMillis();
         try {
-//            Double bmi = combinedFuture.get();
-//            System.out.println("calculated result: " + bmi);
+            Double bmi = combinedFuture.get();
+            System.out.println("calculated result: " + bmi);
 
 //            acceptBothFuture.get();
-            allOfFuture.get();
+//            allOfFuture.get();
 
 //            Object anyoneResult = anyOfFuture.get();
 //            System.out.println("fetching over: " + anyoneResult);
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
+        } finally {
+            System.out.println(System.currentTimeMillis() - start);
         }
     }
 
@@ -221,24 +224,38 @@ public class CompletableFutureCase {
     static void aggregationOrTasks() {
         CompletableFuture<String> zookeeper = CompletableFuture.supplyAsync(() -> {
             System.out.println("connect to zookeeper");
-            Utils.sleep(810);
+            Utils.sleep(1000);
             System.out.println("get data: order-2181");
             return "order-2181";
         });
         CompletableFuture<String> redis = CompletableFuture.supplyAsync(() -> {
             System.out.println("connect to redis");
-            Utils.sleep(800);
+            Utils.sleep(500);
             System.out.println("get redis data: order-6379");
             return "order-6379";
         });
-        CompletableFuture<String> future = zookeeper.applyToEither(redis, obj -> {
-            System.out.println("future: " + obj);
+//        CompletableFuture runAfterEither = zookeeper.runAfterEither(redis, () -> {
+//            System.out.println("process after returning data");
+//        });
+//        CompletableFuture acceptEither = zookeeper.acceptEither(redis, obj -> {
+//            System.out.println("accept either: " + obj);
+//        });
+        CompletableFuture<String> applyToEither = zookeeper.applyToEither(redis, obj -> {
+            System.out.println("apply to either: " + obj);
             return obj + " apply to either";
         });
 
         try {
-            Object result = future.get();
+            long start = System.currentTimeMillis();
+
+//            runAfterEither.get();
+
+//            acceptEither.get();
+
+            Object result = applyToEither.get();
             System.out.println("result: " + result);
+
+            System.out.println(System.currentTimeMillis() - start);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -286,8 +303,8 @@ public class CompletableFutureCase {
 //        demonstration();
 //        serialTasks();
 //        aggregationAndTasks();
-//        aggregationOrTasks();
-        exceptionHandleCase();
+        aggregationOrTasks();
+//        exceptionHandleCase();
     }
 
 }
