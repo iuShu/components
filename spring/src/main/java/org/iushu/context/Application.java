@@ -1,19 +1,22 @@
 package org.iushu.context;
 
 import org.aopalliance.intercept.MethodInvocation;
+import org.iushu.context.annotation.FocusConfiguration;
+import org.iushu.context.annotation.beans.CompositeBean;
 import org.iushu.context.beans.*;
-import org.iushu.context.components.*;
+import org.iushu.context.components.FocusApplicationEventPublisherAware;
+import org.iushu.context.components.FocusApplicationListener;
+import org.iushu.context.components.FocusAsyncApplicationListener;
+import org.iushu.context.components.GracefulApplicationContext;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.*;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.ParserContext;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.event.DefaultEventListenerFactory;
 import org.springframework.context.event.EventListenerMethodProcessor;
 import org.springframework.context.support.*;
@@ -24,24 +27,17 @@ import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ProtocolResolver;
 import org.springframework.core.io.Resource;
-import org.springframework.core.metrics.ApplicationStartup;
-import org.springframework.core.metrics.jfr.FlightRecorderApplicationStartup;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.scheduling.annotation.AsyncAnnotationBeanPostProcessor;
 import org.w3c.dom.Element;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.Temporal;
-import java.util.*;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-
-import static org.springframework.context.support.AbstractApplicationContext.LIFECYCLE_PROCESSOR_BEAN_NAME;
 
 /**
  * @author iuShu
@@ -136,6 +132,12 @@ public class Application {
         try {
             TimeUnit.MILLISECONDS.sleep(1000);  // adjust time to verify Meeting start() or stop()
         } catch (InterruptedException e) {e.printStackTrace();}
+        context.close();
+    }
+
+    static void beanLifecycle() {
+        GenericApplicationContext context = new AnnotationConfigApplicationContext(FocusConfiguration.class);
+        context.getBean(CompositeBean.class);
         context.close();
     }
 
@@ -382,6 +384,7 @@ public class Application {
     public static void main(String[] args) {
 //        objectLifecycle();
 //        smartLifecycle();
+        beanLifecycle();
 //        shutdownGracefully();
 //        applicationEvent();
 //        propertySourceConfigurer();
@@ -390,7 +393,7 @@ public class Application {
 //        environment();
 //        messageSource();
 //        asyncHandleEvent();
-        applicationStartup();
+//        applicationStartup();
     }
 
 }

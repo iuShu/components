@@ -28,7 +28,7 @@ public class SemaphoreCase {
             while (true) {
                 System.out.println(String.format("\n%s: %s %s", warriors.getName(), warriors.getState(), warriors.isInterrupted()));
                 System.out.println(String.format("%s: %s %s\n", soldiers.getName(), soldiers.getState(), soldiers.isInterrupted()));
-                Utils.sleep(200);
+                Utils.sleep(1000);
                 if (!warriors.isAlive() && !soldiers.isAlive())
                     break;
             }

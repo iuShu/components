@@ -18,6 +18,7 @@ import org.iushu.jdk.Utils;
  *
  * The object monitor can invalid local CPU cache
  *
+ * @see SynchronizedLockUpgrade more details
  * @author iuShu
  * @since 4/22/21
  */
