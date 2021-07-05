@@ -1,19 +1,18 @@
 package org.iushu.weboot.controller;
 
 import org.iushu.weboot.annotation.AccessLimit;
-import org.iushu.weboot.component.AuthenticationManager;
+import org.iushu.weboot.component.AccessLimitProperties;
+import org.iushu.weboot.component.auth.AuthenticationManager;
 import org.iushu.weboot.bean.User;
-import org.iushu.weboot.component.SessionManager;
+import org.iushu.weboot.component.auth.SessionManager;
 import org.iushu.weboot.exchange.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,10 +37,13 @@ public class WebootController {
     @Autowired
     private SessionManager sessionManager;
 
+    @Autowired
+    private AccessLimitProperties properties;
+
     @RequestMapping("/")
     @AccessLimit(login = false)
     public ModelAndView welcome(HttpServletRequest request, HttpServletResponse response) {
-        sessionManager.getLoggedUser(request, response);
+        sessionManager.getLoggedUser(request, response);    // auto-login
         return new ModelAndView("forward:index.html");
     }
 
@@ -85,6 +87,12 @@ public class WebootController {
     public Response logout(HttpServletRequest request, HttpServletResponse response) {
         sessionManager.logout(request, response);
         return Response.success();
+    }
+
+    @RequestMapping("/prop")
+    @AccessLimit(login = false)
+    public Response<AccessLimitProperties> prop() {
+        return Response.payload(properties);
     }
 
 }
