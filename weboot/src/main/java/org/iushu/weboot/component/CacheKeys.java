@@ -6,12 +6,12 @@ package org.iushu.weboot.component;
  */
 public class CacheKeys {
 
-    public static final String H_STAFF = "h:stf";
-    public static final String H_CUSTOMER = "h:cst";
-    public static final String H_ACTOR = "h:act";
+    public static final String H_STAFF = "h:stf:";
+    public static final String H_CUSTOMER = "h:cst:";
+    public static final String H_ACTOR = "h:act:";
 
     public static final String TOKEN = "tkn";
-    public static final String USER = "usr";
+    public static final String TOKEN_EXP = "tkn:exp";
 
     public static final String ACCESS_LIMIT = "aclm:";
 

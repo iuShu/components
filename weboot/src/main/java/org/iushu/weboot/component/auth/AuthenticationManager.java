@@ -1,13 +1,24 @@
 package org.iushu.weboot.component.auth;
 
+import org.iushu.weboot.bean.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
 
 import static javax.crypto.Cipher.DECRYPT_MODE;
@@ -26,9 +37,26 @@ public class AuthenticationManager {
     private Map<Integer, KeyPair> keyPairs;
     private List<Integer> keys;
 
+    private static final String TKN_DELIMITER = "&";
+    private PublicKey tkPubKey;
+    private PrivateKey tkPrvKey;
+
+    @Value("${weboot.token.encrypt.private}")
+    private String prvDerPath;
+
+    @Value("${weboot.token.encrypt.public}")
+    private String pubDerPath;
+
     @PostConstruct
     public void init() {
         try {
+            byte[] prvBytes = Files.readAllBytes(Paths.get(prvDerPath));
+            byte[] pubBytes = Files.readAllBytes(Paths.get(pubDerPath));
+            KeySpec pubKeySpec = new X509EncodedKeySpec(pubBytes);
+            KeySpec prvKeySpec = new PKCS8EncodedKeySpec(prvBytes);
+            tkPubKey = KeyFactory.getInstance("RSA").generatePublic(pubKeySpec);
+            tkPrvKey = KeyFactory.getInstance("RSA").generatePrivate(prvKeySpec);
+
             Map<Integer, KeyPair> map = new HashMap<>(DEFAULT_KEY_COUNT);
             KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
 
@@ -43,6 +71,8 @@ public class AuthenticationManager {
             keyPairs = Collections.unmodifiableMap(map);
             keys = Collections.unmodifiableList(new ArrayList<>(keyPairs.keySet()));
         } catch (NoSuchAlgorithmException e) {
+            logger.error("init error", e);
+        } catch (InvalidKeySpecException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -58,46 +88,71 @@ public class AuthenticationManager {
         return Base64.getEncoder().encodeToString(encoded);
     }
 
-    public String decode(String text, String publicKey) {
-        try {
-            byte[] bytes = Base64.getDecoder().decode(publicKey);
-            KeyPair keyPair = keyPairs.get(publicKeyHashCode(bytes));
-            if (keyPair == null)
-                return "";
+    public String decrypt(String text, String publicKey) {
+        byte[] bytes = Base64.getDecoder().decode(publicKey);
+        KeyPair keyPair = keyPairs.get(publicKeyHashCode(bytes));
+        if (keyPair == null)
+            return "";
+        return decrypt(text, keyPair.getPrivate());
 
-            byte[] encoded = Base64.getDecoder().decode(text);
-            Cipher cipher = Cipher.getInstance("RSA");
-            cipher.init(DECRYPT_MODE, keyPair.getPrivate());
-            byte[] decoded = cipher.doFinal(encoded);
-            return new String(decoded, StandardCharsets.UTF_8);
+//            byte[] encoded = Base64.getDecoder().decode(text);
+//            Cipher cipher = Cipher.getInstance("RSA");
+//            cipher.init(DECRYPT_MODE, keyPair.getPrivate());
+//            byte[] decoded = cipher.doFinal(encoded);
+//            return new String(decoded, StandardCharsets.UTF_8);
+    }
+
+    public String encryptToken(User user) {
+        String raw = String.format("%s%s%s%s%s%s%s", user.getUserId(), TKN_DELIMITER,
+                user.getUsername(), TKN_DELIMITER, user.getPassword(), TKN_DELIMITER, System.currentTimeMillis());
+        return encrypt(raw, tkPubKey);
+    }
+
+    public User decryptToken(String token) {
+        try {
+            String text = decrypt(token, tkPrvKey);
+            String[] info = text.split(TKN_DELIMITER);
+            if (info.length != 4)
+                return null;
+
+            short userId = Short.valueOf(info[0]);
+            String username = info[1];
+            String password = info[2];
+            long timestamp = Long.valueOf(info[3]);
+
+            User user = new User();
+            user.setUserId(userId);
+            user.setUsername(username);
+            user.setPassword(password);
+            return user;
         } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private String encrypt(String content, PublicKey publicKey) {
+        try {
+            Cipher cipher = Cipher.getInstance("RSA");
+            cipher.init(ENCRYPT_MODE, publicKey);
+            byte[] encrypted = cipher.doFinal(content.getBytes());
+            return new BASE64Encoder().encode(encrypted).replaceAll("\n", "");
+        } catch (Exception e) {
+            logger.error("encrypt error", e);
             return "";
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-        KeyPair keyPair = generator.generateKeyPair();
-
-        PublicKey publicKey = keyPair.getPublic();
-        PrivateKey privateKey = keyPair.getPrivate();
-        byte[] pbk = Base64.getEncoder().encode(publicKey.getEncoded());
-        byte[] prk = Base64.getEncoder().encode(privateKey.getEncoded());
-        System.out.println(new String(pbk));
-        System.out.println(new String(prk));
-
-        String pwd = "921732md";
-        Cipher cipher0 = Cipher.getInstance("RSA");
-        cipher0.init(ENCRYPT_MODE, publicKey);
-        byte[] encrypted = cipher0.doFinal(pwd.getBytes());
-        byte[] encoded = Base64.getEncoder().encode(encrypted);
-        System.out.println(new String(encoded));
-
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(DECRYPT_MODE, privateKey);
-        byte[] decrypted = cipher.doFinal(encrypted);
-        System.out.println(new String(decrypted));
-
+    private String decrypt(String text, PrivateKey privateKey) {
+        try {
+            Cipher cipher = Cipher.getInstance("RSA");
+            cipher.init(DECRYPT_MODE, privateKey);
+            byte[] encrypted = new BASE64Decoder().decodeBuffer(text);
+            byte[] decrypted = cipher.doFinal(encrypted);
+            return new String(decrypted, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            logger.error("decrypt error", e);
+            return "";
+        }
     }
 
 }

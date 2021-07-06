@@ -73,7 +73,7 @@ public class WebootController {
         if (sessionPbk == null || !sessionPbk.equals(pbk))
             return Response.failure("Illegal Access");
 
-        password = authenticationManager.decode(password, pbk);
+        password = authenticationManager.decrypt(password, pbk);
         logger.debug(String.format("user: %s\tpwd: %s", username, password));
         User user = sessionManager.login(request, response, username, password);
         if (user == null)

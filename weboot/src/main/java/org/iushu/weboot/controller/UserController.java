@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
-    @PostMapping("/info")
+    @RequestMapping("/info")
     public Response<User> user(User user) {
         return Response.payload(user);
     }

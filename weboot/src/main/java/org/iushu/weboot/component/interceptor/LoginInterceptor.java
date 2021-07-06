@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import static org.iushu.weboot.exchange.Response.CODE_NOT_LOGIN;
+
 /**
  * @author iuShu
  * @since 6/24/21
@@ -42,7 +44,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         User user = sessionManager.getLoggedUser(request, response);
         if (user == null) {
-            render(response, Response.failure("please login first"));
+            render(response, Response.create(CODE_NOT_LOGIN, "please login first"));
+            return false;
+        }
+        else if (user == SessionManager.RE_LOGIN) {
+            render(response, Response.create(CODE_NOT_LOGIN, "current account has logged at other place"));
             return false;
         }
 
