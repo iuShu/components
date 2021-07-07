@@ -146,9 +146,12 @@ public class Application {
      * Populate
      * Initialize
      *  aware
+     * BeanPostProcessor before
      *  post construct
      *  after properties
      *  init-method
+     * BeanPostProcessor after
+     * ... ...
      * Destroy
      */
     static void beanLifecycle() {
