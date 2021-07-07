@@ -23,7 +23,7 @@ import java.lang.reflect.Constructor;
  * @author iuShu
  * @since 6/7/21
  */
-@Component
+//@Component
 public class CompositeBean implements BeanFactoryAware, ApplicationContextAware, InitializingBean,
         BeanPostProcessor, InstantiationAwareBeanPostProcessor, MergedBeanDefinitionPostProcessor,
         SmartInstantiationAwareBeanPostProcessor {

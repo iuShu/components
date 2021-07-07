@@ -3,6 +3,7 @@ package org.iushu.context;
 import org.aopalliance.intercept.MethodInvocation;
 import org.iushu.context.annotation.FocusConfiguration;
 import org.iushu.context.annotation.beans.CompositeBean;
+import org.iushu.context.annotation.beans.PhaseBean;
 import org.iushu.context.beans.*;
 import org.iushu.context.components.FocusApplicationEventPublisherAware;
 import org.iushu.context.components.FocusApplicationListener;
@@ -10,6 +11,7 @@ import org.iushu.context.components.FocusAsyncApplicationListener;
 import org.iushu.context.components.GracefulApplicationContext;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.*;
+import org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.RootBeanDefinition;
@@ -135,9 +137,23 @@ public class Application {
         context.close();
     }
 
+    /**
+     * @see AbstractAutowireCapableBeanFactory#doCreateBean
+     *
+     * Instantiation
+     *  static block
+     *  constructor
+     * Populate
+     * Initialize
+     *  aware
+     *  post construct
+     *  after properties
+     *  init-method
+     * Destroy
+     */
     static void beanLifecycle() {
         GenericApplicationContext context = new AnnotationConfigApplicationContext(FocusConfiguration.class);
-        context.getBean(CompositeBean.class);
+//        context.getBean(CompositeBean.class);
         context.close();
     }
 
