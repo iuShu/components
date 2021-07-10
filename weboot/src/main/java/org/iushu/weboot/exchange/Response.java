@@ -12,10 +12,15 @@ public class Response<T> {
 
     public static final int CODE_SUCCESS = 1;
     public static final int CODE_FAILURE = -1;
+    public static final int CODE_NOT_LOGIN = -20;
 
     private int code;
     private String msg;
     private T payload;
+
+    public static <T> Response<T> create(int code, String msg) {
+        return create(code, msg, null);
+    }
 
     public static <T> Response<T> create(int code, String msg, T payload) {
         Response<T> response = new Response<>();
@@ -26,7 +31,7 @@ public class Response<T> {
     }
 
     public static Response of(HttpStatus status) {
-        return create(status.value(), status.getReasonPhrase(), null);
+        return create(status.value(), status.getReasonPhrase());
     }
 
     public static Response success() {
@@ -50,7 +55,7 @@ public class Response<T> {
     }
 
     public static Response failure(String msg) {
-        return create(CODE_FAILURE, msg, null);
+        return create(CODE_FAILURE, msg);
     }
 
     public int getCode() {

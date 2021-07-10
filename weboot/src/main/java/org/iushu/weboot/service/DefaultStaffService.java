@@ -20,19 +20,12 @@ public class DefaultStaffService implements StaffService {
     @Autowired
     private StaffMapper staffMapper;
 
-    @Autowired
-    private StringRedisTemplate redisTemplate;
-
     @Override
     public Staff getStaff(short staff_id) {
-        Staff staff = (Staff) redisTemplate.opsForHash().get(H_STAFF, staff_id);
-        if (staff != null)
-            return staff;
 
-        // use distribute lock to avoid cache breakdown (to be done)
+        // TODO use redis cache
 
-        staff = staffMapper.getStaff(staff_id);
-        redisTemplate.opsForHash().put(H_STAFF, staff_id, staff);
+        Staff staff = staffMapper.getStaff(staff_id);
         return staff;
     }
 

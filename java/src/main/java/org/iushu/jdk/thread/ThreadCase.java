@@ -2,6 +2,8 @@ package org.iushu.jdk.thread;
 
 import org.iushu.jdk.Utils;
 
+import java.util.Random;
+
 /**
  * @see Thread.State#NEW new Thread()
  * @see Thread.State#TIMED_WAITING sleep()
@@ -45,6 +47,97 @@ public class ThreadCase {
         worker.start();
     }
 
+    /**
+     * thread in BLOCKED state make no reaction with interrupt()
+     * @see Thread.State#BLOCKED
+     */
+    static void blockInterruptCase() {
+        Object monitor = new Object();
+        Thread worker = new Thread(() -> {
+            synchronized (monitor) {
+                System.out.println("worker: got monitor");
+                Utils.sleep(1000);
+                System.out.println("worker: end");
+            }
+        });
+        Thread runner = new Thread(() -> {
+            synchronized (monitor) {            // make no reaction with interrupt
+                System.out.println("runner: got monitor");
+                Utils.sleep(1000);  // reacted to interruption (throw exception and clear flag)
+                System.out.println("runner: end");
+            }
+        });
+        worker.start();
+        runner.start();
+
+        Utils.sleep(200);
+        System.out.println("runner state: " + runner.getState());
+        if (runner.getState() == Thread.State.BLOCKED)
+            runner.interrupt();
+        System.out.println("main: end");
+    }
+
+    /**
+     * Dead-lock thread are BLOCKED so it make no reaction with interrupt()
+     * @see #blockInterruptCase()
+     */
+    static void dealLockInterruptCase() {
+        Object bread = new Object();
+        Object milk = new Object();
+        Thread worker = new Thread(() -> {
+            synchronized (bread) {
+                System.out.println("worker: got bread");
+                Utils.sleep(500);
+                synchronized (milk) {
+                    System.out.println("worker: got milk");
+                }
+            }
+        });
+        Thread runner = new Thread(() -> {
+            synchronized (milk) {
+                System.out.println("runner: got milk");
+                Utils.sleep(500);
+                synchronized (bread) {
+                    System.out.println("runner: got bread");
+                }
+            }
+        });
+        worker.start();
+        runner.start();
+
+        Utils.sleep(1000);
+        System.out.println(String.format("main: worker-%s runner-%s", worker.getState(), runner.getState()));
+        Thread t = new Random().nextInt(2) == 0 ? worker : runner;
+        t.interrupt();  // can not interrupt deadlock thread (deadlock threads are BLOCKED)
+        System.out.println("main: end");
+    }
+
+    static void sleepInterruptCase() {
+        Thread worker = new Thread(() -> {
+            while (true) {
+                if (Thread.currentThread().isInterrupted()) // interrupted flag are cleared by sleep()
+                    break;
+
+                System.out.println("sleep start");
+
+                try {
+                    Thread.sleep(1000);             // reacted to interruption and clear flag
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();     // remark the flag to stop while-loop
+                    e.printStackTrace();
+                }
+
+                System.out.println("sleep end");
+            }
+        });
+        worker.start();
+
+        Utils.sleep(300);
+        if (worker.getState() == Thread.State.TIMED_WAITING)
+            worker.interrupt();
+        System.out.println("main: end");
+    }
+
     @Deprecated
     static void suspendAndResumeCase() {
         Thread worker = new Thread(() -> {
@@ -73,7 +166,10 @@ public class ThreadCase {
 
     public static void main(String[] args) {
 //        interruptCase();
-        suspendAndResumeCase();
+//        suspendAndResumeCase();
+//        dealLockInterruptCase();
+//        blockInterruptCase();
+        sleepInterruptCase();
     }
 
 }

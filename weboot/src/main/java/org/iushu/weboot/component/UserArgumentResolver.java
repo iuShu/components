@@ -1,11 +1,10 @@
 package org.iushu.weboot.component;
 
-import org.apache.catalina.connector.RequestFacade;
 import org.iushu.weboot.bean.User;
+import org.iushu.weboot.component.auth.SessionManager;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 

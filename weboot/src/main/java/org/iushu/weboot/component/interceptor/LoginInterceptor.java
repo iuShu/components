@@ -1,8 +1,9 @@
-package org.iushu.weboot.component;
+package org.iushu.weboot.component.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.iushu.weboot.annotation.AccessLimit;
 import org.iushu.weboot.bean.User;
+import org.iushu.weboot.component.auth.SessionManager;
 import org.iushu.weboot.exchange.Response;
 import org.springframework.http.MediaType;
 import org.springframework.web.method.HandlerMethod;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import static org.iushu.weboot.exchange.Response.CODE_NOT_LOGIN;
 
 /**
  * @author iuShu
@@ -40,11 +43,16 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             return true;
 
         User user = sessionManager.getLoggedUser(request, response);
-        if (user != null)
-            return true;    // proceed
+        if (user == null) {
+            render(response, Response.create(CODE_NOT_LOGIN, "please login first"));
+            return false;
+        }
+        else if (user == SessionManager.RE_LOGIN) {
+            render(response, Response.create(CODE_NOT_LOGIN, "current account has logged at other place"));
+            return false;
+        }
 
-        render(response, Response.failure("please login first"));
-        return false;
+        return true;    // proceed
     }
 
     private void render(HttpServletResponse response, Response webootResponse) throws IOException {

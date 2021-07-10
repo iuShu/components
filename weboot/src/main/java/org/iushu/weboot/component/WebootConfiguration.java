@@ -5,12 +5,17 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
+import org.iushu.weboot.component.auth.SessionManager;
+import org.iushu.weboot.component.interceptor.LoginInterceptor;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.*;
+import org.springframework.context.event.ApplicationContextEvent;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -62,8 +67,8 @@ public class WebootConfiguration implements WebMvcConfigurer, ApplicationContext
     @EventListener(ContextRefreshedEvent.class)
     public void asyncEventMulticaster(ApplicationContextEvent event) {
         int coreWorker = Runtime.getRuntime().availableProcessors();
-        BlockingQueue blockingQueue = new ArrayBlockingQueue(120);
-        Executor executor = new ThreadPoolExecutor(coreWorker, coreWorker << 1,
+        BlockingQueue<Runnable> blockingQueue = new ArrayBlockingQueue<Runnable>(120);
+        Executor executor = new ThreadPoolExecutor(coreWorker, coreWorker + 1,
                 60, TimeUnit.SECONDS, blockingQueue);
 
         ApplicationContext context = event.getApplicationContext();
