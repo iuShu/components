@@ -1,0 +1,153 @@
+
+MySQL
+
+- overview
+    - engine    InnoDB MyISAM Memory Archive Blackhole CSV
+    - structure
+        - connection pool (semi-duplex)
+        - query cache
+        - parser (grammar tree)
+        - query optimizer (executive plan)
+        - storage engine
+    - file
+        - opt           schema encoding, collation
+        - frm           table structure
+        - myd           MyISAM table data
+        - myi           MyISAM table index
+        - ibd           InnoDB exclusive table data, index
+        - ibdata        undo log, share table data
+        - ib_logfile    redo log
+    - log
+        - general log
+        - error log
+        - slow query log
+        - redo log
+        - undo log
+        - binlog
+    - InnoDB
+        - supports transaction and foreign key
+        - supports table/row and optimistic lock (MVCC)
+        - supports isolation level
+        - supports B+ index
+        - storage by frm and ibd file
+    - MyISAM
+        - supports table lock
+        - supports full-text search
+        - storage by frm, myd and myi
+    - isolation
+        - read uncommitted      dirty read, unrepeatable read, phantom read
+        - read committed        unrepeatable read, phantom read
+        - repeatable read       phantom read
+        - serialize
+        > usage (rc)
+            - read committed    statement binlog can incur inconsistent (change to row binlog)
+            - repeatable read   raising probability of deadlock occurrence
+
+- Engine InnoDB
+    - Memory
+        - buffer pool
+            - adaptive hash index
+            - improved lru list (new-63% old-37%, add between new&old)
+            - page (free clean dirty)
+            - list (free flush lru)
+            - change buffer
+                - default 25% of buffer pool
+                - buffering to-be-updated record not in buffer pool
+                - periodically persisting to system tablespace
+        - log buffer
+            - redo/undo log
+            - flush log at trx commit (0 1 2)
+    - Disk
+        - system tablespace (ibdata1)
+            - InnoDB data dictionary
+            - doublewrite buffer
+            - change buffer
+            - undo logs
+        - undo tablespace (undo_001)
+        - redo log (ib_logfile0)
+        - exclusive tablespace (ibd)
+        - general tablespace (ibd)
+        - temporary tablespace (ibtmp1)
+
+- Tablespace (store data & index)
+    - segment
+        - leaf node segment (data)
+        - non-leaf node segment (index)
+        - rollback segment
+    - extent
+        - 64 pages, each 1M
+        - assign a extent if page deficient
+    - page
+        - store rows, each 16K
+        - data/undo/system/trx/blob page
+    - row
+        - trx id, roll pointer, field pointer, f1, f2 ..
+
+- Log
+    - undo log
+        - create before trx
+        - put in a waiting-delete list after trx (purge thread)
+        - work with MVCC (isolation level ..)
+    - redo log (InnoDB)
+        - record all trx modified data for crash-safe
+        - new log override old (no purge)
+        - sequential loop write (check point & write pos)
+        - flush log strategies (innodb_flush_log_at_trx_commit)
+            - 0     write to log buffer after trx, flush to disk every 1 sec by master
+            - 1     write to log buffer and os cache after trx, flush os cache to disk every trx committed
+            - 2     write to log buffer and os cache after trx, flush os cache to disk every 1 sec by master
+    - bin log (MySQL)
+        - recovery and replication
+        - statement / row / mixed
+        - append write log event (serial write trx)
+        - binlog managing by expire (binlog_expire_logs_seconds & expire_logs_days)
+        - mysqlbinlog tool for operating data recovery
+
+- Thread InnoDB
+    - master thread (owned highest priority to schedule other thread)
+        - every 1 sec
+            - flush log buffer to disk
+            - flush dirty pages to disk (innodb_max_dirty_pages_pct & innodb_io_capacity)
+            - merge change buffer
+            - flush os cache to disk
+        - every 10 sec
+            - flush log buffer to disk
+            - flush dirty pages to disk
+            - merge change buffer
+            - purge useless undo log
+    - IO thread
+        - read      read data page from disk to buffer pool
+        - write     write dirty page from buffer pool to disk
+        - log       write log data from log buffer to disk
+        - insert    write change buffer to disk
+    - purge thread
+        - purge undo log data page after trx committed
+    - page cleaner thread
+        - invoke write thread to flush dirty page
+        - clean redo log after data persistent
+
+- Command
+    - status                show engine innodb status
+    - connection            show <full> processlist
+    - buffer pool           show variables like 'innodb_buffer%'
+    - lru old part          show variables like 'innodb_old%'
+    - buffer pool page      show variables like 'innodb_page%'
+    - change buffer         show variables like 'innodb_change%'
+    - log buffer            show variables like 'innodb_log%'
+    - flush log buffer      show variables like 'innodb_flush%'
+    - thread                show variables like 'innodb_%_thread%'
+    - flush dirty pct       show variables like 'innodb_%dirty%'
+    - each flush pages      show variables like 'innodb_io%'
+    - undo log              show variables like 'innodb_undo%'
+    - binlog                show variables like '%binlog%' & '%log_bin%'
+    - binlog file           show binary/master logs
+    - binlog event          show binlog events
+    - binlog expire         show variables like '%expire%'
+
+- Explain
+    - select_type   simple primary union dependent-union union-result subquery dependent-subquery
+    - type          all index range ref eq_ref const null
+    - key           actual used key
+    - key_len       byte unit
+    - rows          scanned row count
+    - extra         using index, using where, using filesort, using temporary

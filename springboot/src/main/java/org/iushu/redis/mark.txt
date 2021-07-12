@@ -1,0 +1,33 @@
+
+Redis
+
+- Persistent
+    - RDB
+        -
+    - AOF
+
+- Master/Slave
+    - ping every second
+    - sync
+        - master
+            -
+        - slave
+
+- Sentinel
+    - at least three independent respectively sentinel instances
+    - quorum (number of replica to confirm a master failure)
+    - deployment (master slave client)
+        - 1 master and 1 slave (quorum = 1)
+            - sentinel in 1 master and 1 slave
+                - no quorum authorized to perform failover
+                - split brain issue
+            - sentinel in 3 client (quorum = 2)
+                - unavailable if connection between server and clients is disconnected
+                - unavailable if even one client is down
+            - sentinel in 1 master 1 slave 2 clients (quorum = 3)
+                - can perform failover if master down
+        > 1 master and 2 slave (quorum = 2, recommended)
+            - lost write during failover
+                - min-replica-to-write & min-replica-max-lag
+                - not guarantee replica accept write (just diminish)
+                - master will not accept write if replicas are down

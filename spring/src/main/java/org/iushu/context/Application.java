@@ -139,6 +139,7 @@ public class Application {
 
     /**
      * @see AbstractAutowireCapableBeanFactory#doCreateBean
+     * @see PhaseBean
      *
      * Instantiation
      *  static block
