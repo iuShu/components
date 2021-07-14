@@ -3,6 +3,12 @@ package org.iushu.jdk.practical;
 import java.util.Arrays;
 
 /**
+ * bubble sort
+ * insert sort
+ * select sort
+ * merge sort
+ * quick sort
+ *
  * @author iuShu
  * @since 5/27/21
  */

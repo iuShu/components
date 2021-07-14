@@ -110,7 +110,7 @@ public class GarbageCollector {
      *  work with Parallel Scavenge can be a good choice
      *
      * CMS (Concurrent Mark-Sweep)
-     *  designed to shorten stop time of reclaim
+     *  designed to shorten stop time of reclaim for Old generation
      *  running steps:
      *      1. initial mark         mark object linked with root (stop the world)
      *      2. concurrent mark      search from object linked to root
@@ -129,10 +129,11 @@ public class GarbageCollector {
      *  as a whole is Mark-Compact, but using Mark-Copy between regions
      *  default expected gc time 200 ms (garbage slowly piled up if time too short)
      *  running steps:
-     *      1. initial mark         mark object linked to root in Minor GC (stop the world)
-     *      2. concurrent mark      reachability analysis from root
-     *      3. final mark           handle change during concurrent mark (stop the world)
-     *      4. live data counting and evacuation    updating region statistics and sorting then reclaim (stop the world)
+     *      1. initial mark         scanning and analyze object for RSet/CSet, accompany a young gc (stop the world)
+     *      2. region scanning      scanning the object referenced the root
+     *      3. concurrent mark      scan throughout the heap (can be interrupted by young gc)
+     *      4. remark               rectify/complement mark, reclaim completely vacant region (stop the world)
+     *      5. cleanup              clean marked region (Young & Old)
      *
      * NOTE: All the garbage collectors are designed to keep up with the Allocating Rate of client application
      *
@@ -185,9 +186,9 @@ public class GarbageCollector {
         all3 = new byte[2 * _1MB];
         all4 = new byte[4 * _1MB];
 
-        System.out.println("total: " + Runtime.getRuntime().totalMemory());
-        System.out.println("  max: " + Runtime.getRuntime().maxMemory());
-        System.out.println(" free: " + Runtime.getRuntime().freeMemory());
+//        System.out.println("total: " + Runtime.getRuntime().totalMemory());
+//        System.out.println("  max: " + Runtime.getRuntime().maxMemory());
+//        System.out.println(" free: " + Runtime.getRuntime().freeMemory());
     }
 
     public static void main(String[] args) {

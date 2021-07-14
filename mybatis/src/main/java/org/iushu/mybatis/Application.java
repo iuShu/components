@@ -1,17 +1,21 @@
 package org.iushu.mybatis;
 
+import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.binding.MapperProxy;
 import org.apache.ibatis.builder.annotation.MapperAnnotationBuilder;
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
+import org.apache.ibatis.executor.Executor;
+import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.parsing.XNode;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.session.*;
 import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
+import org.apache.ibatis.transaction.Transaction;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.iushu.mybatis.bean.Actor;
@@ -20,6 +24,7 @@ import org.iushu.mybatis.mapper.ActorMapper;
 import javax.sql.DataSource;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.List;
 
 public class Application {
 
@@ -135,6 +140,10 @@ public class Application {
     }
 
     /**
+     * ActorMapper.getActors()
+     * @see MapperProxy#invoke(Object, Method, Object[])
+     * @see MapperMethod#execute(SqlSession, Object[])
+     *
      * @see SqlSession#getMapper(Class)
      * @see Configuration#getMapper(Class, SqlSession)
      * @see org.apache.ibatis.binding.MapperRegistry#getMapper(Class, SqlSession)
@@ -147,6 +156,27 @@ public class Application {
      * @see org.apache.ibatis.binding.MapperProxy.MapperMethodInvoker#invoke(Object, Method, Object[], SqlSession)
      */
     static void mapperProxy() {
+
+    }
+
+    /**
+     * @see org.apache.ibatis.plugin.Intercepts
+     * @see org.apache.ibatis.plugin.Interceptor
+     * @see org.apache.ibatis.plugin.InterceptorChain
+     * @see org.apache.ibatis.plugin.Plugin
+     * @see org.apache.ibatis.plugin.Invocation represents an invocation to a proxy
+     *
+     * @see org.apache.ibatis.plugin.InterceptorChain#pluginAll(Object) pluged all interceptors to following components
+     * @see org.apache.ibatis.plugin.Plugin#wrap(Object, Interceptor) jdk proxy wraping to an interceptor chain
+     * @see Configuration#newParameterHandler(MappedStatement, Object, BoundSql)
+     * @see Configuration#newStatementHandler(Executor, MappedStatement, Object, RowBounds, ResultHandler, BoundSql)
+     * @see Configuration#newResultSetHandler(Executor, MappedStatement, RowBounds, ParameterHandler, ResultHandler, BoundSql)
+     * @see Configuration#newExecutor(Transaction, ExecutorType)
+     *
+     * page interceptor
+     * @see PageApplication more details
+     */
+    static void pluginAndInterceptor() {
 
     }
 
