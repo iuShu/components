@@ -3,11 +3,13 @@ package org.iushu.jdk.practical;
 import java.util.Arrays;
 
 /**
- * bubble sort
- * insert sort
- * select sort
- * merge sort
- * quick sort
+ * bubble sort      stable          O(n^2)
+ * insert sort      stable          O(n^2)
+ * select sort      stable          O(n^2)
+ * merge sort       stable          O(n logn)
+ * quick sort       unstable        O(n logn)
+ * shell sort       unstable        O(n logn)
+ * heap sort        unstable
  *
  * @author iuShu
  * @since 5/27/21
@@ -136,6 +138,52 @@ public class SortingCase {
         }
     }
 
+    /**
+     * min heap
+     * max heap
+     * to be finished
+     */
+    static void heapSort(int[] array) {
+        if (array == null || array.length <= 1)
+            return;
+        maxHeap(array, array.length);
+    }
+
+    static void maxHeap(int[] array, int limit) {
+        if (limit == 1)
+            return;
+
+        int c = limit / 2 - 1, i = c, p, l, r, t = 0;
+        while (i >= 0) {
+            p = array[i];
+            l = array[2 * i + 1];
+            r = array[2 * i + 2];
+            if (p >= (l > r ? l : r)) {
+                i--;
+                continue;
+            }
+
+            if (p < l && p < r) {
+                t = 2 * i + (l > r ? 1 : 2);
+            }
+            else if (p < l) {    // p > r
+                t = 2 * i + 1;
+            }
+            else if (p < r) {    // p > l
+                t = 2 * i + 2;
+            }
+            if (t >= limit) {
+                i--;
+                continue;
+            }
+            swap(array, i, t);
+            i = t > c ? --i : t;
+        }
+
+        swap(array, 0, --limit);
+        maxHeap(array, limit);
+    }
+
     static int[] divide(int[] array, int left, int right) {
         int mid = (left + right) >> 1;
         if (right - left == 1)
@@ -195,7 +243,8 @@ public class SortingCase {
 //        selectionSort(array);
 //        mergeSort(array);
 //        quickSort(array);
-        shellSort(array);
+//        shellSort(array);
+        heapSort(array);
 
         System.out.println(Arrays.toString(array));
     }
