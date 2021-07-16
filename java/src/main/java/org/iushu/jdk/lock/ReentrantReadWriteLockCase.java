@@ -1,6 +1,9 @@
 package org.iushu.jdk.lock;
 
+import org.iushu.jdk.Utils;
+
 import java.util.Random;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -110,6 +113,53 @@ public class ReentrantReadWriteLockCase {
     }
 
     /**
+     * write thread starves problem
+     * read/write threads are added to list if failed to acquired lock
+     * threads can acquired lock orderly under fair mode (no starve problem at this case)
+     * read lock has the judgement to determine whether it should block under unfair mode
+     * read lock will get into spin if the next node of head was exclusive mode (avoid write starves)
+     * @see AbstractQueuedSynchronizer#apparentlyFirstQueuedIsExclusive()
+     */
+    static void writePriority() {
+        int scale = 1000;
+        CountDownLatch latch = new CountDownLatch(scale);
+        ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+        Runnable reader = () -> {
+            try {
+                latch.countDown();
+                latch.await();
+                lock.readLock().lock();
+                System.out.println(Thread.currentThread().getName() + " read on");
+                System.out.println(Thread.currentThread().getName() + " read off");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.readLock().unlock();
+            }
+        };
+        Runnable writer = () -> {
+            try {
+                latch.countDown();
+                latch.await();
+                lock.writeLock().lock();
+                System.out.println(Thread.currentThread().getName() + " write on");
+                System.out.println(Thread.currentThread().getName() + " write off");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.writeLock().unlock();
+            }
+        };
+
+        for (int i = 0; i < scale; i++) {
+            new Thread(reader, "r-" + i).start();
+            new Thread(reader, "r+" + i).start();
+            if (i == 500)
+                new Thread(writer, "w-1").start();
+        }
+    }
+
+    /**
      * write lock can downgrade to read lock
      * demonstrating with a cache data object that holding with specified type
      */
@@ -150,7 +200,8 @@ public class ReentrantReadWriteLockCase {
 //        readWriteLockCount();
 //        reentrantReadLock();
 //        reentrantWriteLock();
-        lockDowngrade();
+        writePriority();
+//        lockDowngrade();
     }
 
 }
