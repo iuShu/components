@@ -8,6 +8,7 @@ import java.util.Arrays;
  */
 public class LinkedList<T> {
 
+    private int size;
     private Node<T> head = new Node<>(null);
 
     public void add(T value) {
@@ -15,10 +16,25 @@ public class LinkedList<T> {
         while (n.next != null)
             n = n.next;
         n.next = new Node<>(value);
+        size++;
     }
 
     public void add(T... values) {
         Arrays.stream(values).forEach(this::add);
+    }
+
+    public T get(int i) {
+        if (head.next == null)
+            throw new IllegalStateException("list has no elements");
+        if (i < 0)
+            throw new IllegalArgumentException("index can not be negatived");
+        if (i >= size)
+            throw new IndexOutOfBoundsException("index out of bounds(" + (size - 1) + ")");
+
+        Node<T> n = head;
+        while (i-- >= 0)
+            n = n.next;
+        return n.value;
     }
 
     public boolean contains(T value) {
@@ -67,8 +83,7 @@ public class LinkedList<T> {
         LinkedList<Integer> list = new LinkedList<>();
         list.add(2,5,15,1,6,8,10,2,7,9);
         list.traversal();
-        list.reverse();
-        list.traversal();
+        System.out.println(list.get(10));
     }
 
 }
