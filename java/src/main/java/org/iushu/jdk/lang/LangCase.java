@@ -1,6 +1,7 @@
 package org.iushu.jdk.lang;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author iuShu
@@ -84,21 +85,53 @@ public class LangCase {
 
     }
 
+    static void stream() {
+        List<Ward> list = new ArrayList<>();
+        list.add(new Ward("42"));
+        list.add(new Ward("11"));
+        list.add(new Ward("9"));
+        list.add(new Ward("37"));
+        list.add(new Ward("20"));
+
+        List<Ward> collect = list.parallelStream().peek(w -> {
+            System.out.println("map " + w.str);
+            w.str += "-x";
+        }).sorted(Comparator.comparing(Ward::getStr)).collect(Collectors.toList());
+
+        System.out.println(collect);
+    }
+
     public static void main(String[] args) {
 //        equivalent();
-        packagingAndUnpackaging();
+//        packagingAndUnpackaging();
 //        collection();
 //        stringIntern();
+        stream();
     }
 
     static class Ward {
 
         String str;
 
+        public Ward() {}
+
+        public Ward(String str) {
+            this.str = str;
+        }
+
+        public String getStr() {
+            System.out.println("get " + str);
+            return str;
+        }
+
         @Override
         public int hashCode() {
             return str.hashCode();
         }
 
+        @Override
+        public String toString() {
+            return str;
+        }
     }
 }

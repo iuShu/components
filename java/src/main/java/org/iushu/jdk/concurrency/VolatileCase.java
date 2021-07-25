@@ -6,7 +6,7 @@ import org.iushu.jdk.Utils;
  * Concurrency feature: Atomicity Visibility Orderliness
  *
  * Volatile assurance: Visibility Orderliness
- * Synchronized assurance: Atomicity Orderliness
+ * Synchronized assurance: Atomicity Visibility Orderliness
  * Lock assurance: Atomicity Visibility Orderliness
  *
  * @author iuShu
