@@ -2,7 +2,9 @@ package org.iushu.jdk.thread;
 
 import org.iushu.jdk.Utils;
 
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @see Thread.State#NEW new Thread()
@@ -164,12 +166,82 @@ public class ThreadCase {
 //        worker.start();
     }
 
+    static void orderlyThread() {
+        Thread one = new Thread(() -> {
+            System.out.println("A");
+        });
+        Thread two = new Thread(() -> {
+            System.out.println("B");
+        });
+        Thread thr = new Thread(() -> {
+            System.out.println("C");
+        });
+        try {
+            one.start();
+            one.join();
+            two.start();
+            two.join();
+            thr.start();
+            thr.join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("----------------------------------------");
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(() -> {
+            System.out.println("A");
+        });
+        executor.submit(() -> {
+            System.out.println("B");
+        });
+        executor.submit(() -> {
+            System.out.println("C");
+        });
+        executor.shutdown();
+    }
+
+    static void repeatOrderlyThread() {
+        Queue<Runnable> queue = new ArrayDeque<>();
+        Runnable one = () -> {
+            System.out.println("A");
+        };
+        Runnable two = () -> {
+            System.out.println("B");
+        };
+        Runnable thr = () -> {
+            System.out.println("C");
+        };
+        queue.offer(one);
+        queue.offer(two);
+        queue.offer(thr);
+
+        try {
+            Thread worker = null;
+            Runnable runnable = null;
+            while ((runnable = queue.poll()) != null) {
+                worker = new Thread(runnable);
+                worker.start();
+                worker.join();
+                Utils.sleep(500);   // running rate controlling
+                queue.offer(runnable);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void repeatOrderlyThread2() {
+    }
+
     public static void main(String[] args) {
 //        interruptCase();
 //        suspendAndResumeCase();
 //        dealLockInterruptCase();
 //        blockInterruptCase();
-        sleepInterruptCase();
+//        sleepInterruptCase();
+        orderlyThread();
+//        repeatOrderlyThread();
     }
 
 }
