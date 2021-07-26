@@ -70,7 +70,7 @@ public class Application {
      * @see org.springframework.web.context.ContextLoader#configureAndRefreshWebApplicationContext
      * @see org.springframework.context.support.AbstractApplicationContext#refresh()
      *
-     * DispatcherServlet have added into ServletContext, the next step is the container loading the application.
+     * DispatcherServlet has added into ServletContext, the next step is the container loading the application.
      * At this time the container is going to initialize the Servlet at this application.
      * @see javax.servlet.GenericServlet#init()
      * @see org.springframework.web.servlet.HttpServletBean#init()
@@ -125,7 +125,7 @@ public class Application {
     }
 
     /**
-     * Default components are configured at org/springframework/web/server/DispatcherServlet.properties
+     * Default components are configured at org/springframework/web/servlet/DispatcherServlet.properties
      * @see org.springframework.web.servlet.HandlerMapping
      * @see org.springframework.web.servlet.HandlerAdapter
      * @see org.springframework.web.servlet.HandlerExceptionResolver
