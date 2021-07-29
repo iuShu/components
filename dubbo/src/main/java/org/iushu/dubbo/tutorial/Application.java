@@ -70,6 +70,7 @@ import org.apache.dubbo.rpc.cluster.support.FailfastClusterInvoker;
 import org.apache.dubbo.rpc.cluster.support.FailoverCluster;
 import org.apache.dubbo.rpc.cluster.support.FailoverClusterInvoker;
 import org.apache.dubbo.rpc.cluster.support.FailsafeClusterInvoker;
+import org.apache.dubbo.rpc.cluster.support.ForkingClusterInvoker;
 import org.apache.dubbo.rpc.cluster.support.wrapper.AbstractCluster;
 import org.apache.dubbo.rpc.cluster.support.wrapper.MockClusterInvoker;
 import org.apache.dubbo.rpc.filter.ClassLoaderFilter;
@@ -242,6 +243,7 @@ public class Application {
      * @see ServiceConfig#export()
      * @see ServiceRepository see also /META-INF/dubbo.internal/org.apache.dubbo.common.context.FrameworkExt
      * @see ServiceConfig#doExportUrlsFor1Protocol(ProtocolConfig, List)
+     * ... ...
      * @see DubboProtocol#export(Invoker)
      * @see DubboProtocol#openServer(URL)
      * @see DubboProtocol#createServer(URL)
@@ -368,6 +370,20 @@ public class Application {
     }
 
     /**
+     * @see DubboBootstrap#start()
+     * @see ServiceConfig#doExport()
+     * @see ServiceConfig#doExportUrls()
+     * @see ServiceConfig#doExportUrlsFor1Protocol(ProtocolConfig, List)
+     * @see Protocol#export(Invoker)
+     * @see RegistryProtocol#export(Invoker)
+     * @see ZookeeperRegistry#register(URL)
+     * @see ZookeeperRegistry#subscribe(URL, NotifyListener)
+     */
+    static void registryProtocol() {
+
+    }
+
+    /**
      * Netty ChannelHandler for send/receive message in Channel
      * @see NettyServer#doOpen()
      * @see NettyServerHandler core ChannelHandler in Netty server
@@ -467,6 +483,7 @@ public class Application {
      * @see FailoverClusterInvoker retry with LoadBalance if fail
      * @see FailfastClusterInvoker throw if fail
      * @see FailbackClusterInvoker timer retry if fail
+     * @see ForkingClusterInvoker as fork join task
      */
     static void failToleranceAndLoadBalanceMechanism() {
 
@@ -672,11 +689,11 @@ public class Application {
     public static void main(String[] args) {
 //        proxyObject();
 //        gettingStartedProviderBootstrap();
-        gettingStartedConsumer();
+//        gettingStartedConsumer();
 //        gettingStartedCase();
 //        gettingStartedBootstrapCase();
 //        proxyFactoryInvoker();
-//        registryProviderCase();
+        registryProviderCase();
 //        registryConsumerCase();
     }
 
