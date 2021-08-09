@@ -98,7 +98,7 @@ MySQL
             - 2     write to log buffer and os cache after trx, flush os cache to disk every 1 sec by master
     - bin log (MySQL)
         - recovery and replication
-        - statement / row / mixed
+        - mode: statement / row / mixed
         - append write log event (serial write trx)
         - binlog managing by expire (binlog_expire_logs_seconds & expire_logs_days)
         - mysqlbinlog tool for operating data recovery

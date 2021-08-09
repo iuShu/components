@@ -88,7 +88,7 @@ public class Application {
      * @see SpringApplication#lazyInitialization
      * @see org.springframework.boot.LazyInitializationBeanFactoryPostProcessor
      *
-     * 9. loading Bean ino BeanFactory
+     * 9. loading Bean into BeanFactory
      * @see SpringApplication#load(ApplicationContext, Object[])
      * @see org.springframework.boot.BeanDefinitionLoader#load()
      * @see org.springframework.boot.BeanDefinitionLoader#annotatedReader

@@ -5,45 +5,19 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.iushu</groupId>
-  <artifactId>springcloud-alibaba</artifactId>
+  <artifactId>springcloud-netflix</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>springcloud-alibaba</name>
+  <name>springcloud-netflix</name>
   <url>https://github.com/iuShu</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <springboot.version>2.4.2</springboot.version>
-    <springcloud.alibaba.version>2021.1</springcloud.alibaba.version>
-    <springcloud.netflix.version>2.2.9.RELEASE</springcloud.netflix.version>
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>com.alibaba.cloud</groupId>
-      <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-      <version>${springcloud.alibaba.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-      <version>${springboot.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <version>${springboot.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-      <version>2.2.9.RELEASE</version>
-    </dependency>
 
   </dependencies>
 
