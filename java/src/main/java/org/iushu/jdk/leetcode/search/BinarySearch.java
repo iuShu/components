@@ -1,65 +1,12 @@
-package org.iushu.jdk.practical;
-
-import java.util.*;
+package org.iushu.jdk.leetcode.search;
 
 /**
  * @author iuShu
- * @since 7/13/21
+ * @since 8/10/21
  */
-public class Leetcode {
+public class BinarySearch {
 
-    static void reverseNum(int x) {
-        int y = 0;
-        while (x != 0) {
-            if (y > 214748364 || y < -214748364) {
-                y = 0;
-                break;
-            }
-            y = y * 10 + x % 10;
-            x = x / 10;
-        }
-        System.out.println(y);
-    }
-
-    static Map<Character, Integer> bracketsMap = new HashMap<>(6);
-    static {
-        bracketsMap.put('(', 1);
-        bracketsMap.put(')', -1);
-        bracketsMap.put('{', 2);
-        bracketsMap.put('}', -2);
-        bracketsMap.put('[', 3);
-        bracketsMap.put(']', -3);
-    }
-    static boolean brackets(String raw) {
-        if (raw == null || raw.isEmpty())
-            return false;
-
-        char[] chars = raw.toCharArray();
-        if (chars.length % 2 != 0)
-            return false;
-
-        Stack<Character> queue = new Stack<>();
-        int p, q;
-        for (char c : chars) {
-            q = bracketsMap.get(c);
-            if (queue.size() == 0 && q < 0)
-                return false;
-
-            if (q > 0)
-                queue.push(c);
-            else {
-                p = bracketsMap.get(queue.pop());
-                if (p * -1 == q)
-                    continue;
-                else
-                    return false;
-            }
-        }
-
-        System.out.println(raw + " " + queue.isEmpty());
-        return queue.isEmpty();
-    }
-
+    // raw binary tree
     static int search(int[] nums, int target) {
         if (nums == null || nums.length < 1)
             return -1;
@@ -84,6 +31,7 @@ public class Leetcode {
         return search0(nums, mid + 1, r, t);
     }
 
+    // bad version search
     static int bad = 1702766719;
     static boolean isBad(int v) {
         return v >= bad;
@@ -103,6 +51,7 @@ public class Leetcode {
         return binSearch(mid, r);
     }
 
+    // find insert position
     static int insertPos(int[] nums, int target) {
         if (nums == null || nums.length < 1 || target < nums[0])
             return 0;
@@ -126,13 +75,6 @@ public class Leetcode {
         else if (nums[mid] > t)
             return insertPos0(nums, 0, mid, t);
         return insertPos0(nums, mid + 1, r, t);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(insertPos(new int[]{1,3,5,6}, 5));
-        System.out.println(insertPos(new int[]{1,3,5,6}, 2));
-        System.out.println(insertPos(new int[]{1,3,5,6}, 7));
-        System.out.println(insertPos(new int[]{1,3,5,6}, 0));
     }
 
 }
