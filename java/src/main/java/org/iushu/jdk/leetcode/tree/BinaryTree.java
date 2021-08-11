@@ -1,7 +1,5 @@
 package org.iushu.jdk.leetcode.tree;
 
-import org.iushu.jdk.leetcode.array.Array;
-
 import java.util.*;
 
 /**
@@ -89,9 +87,28 @@ public class BinaryTree {
             return false;
         else if (root.left == null && root.right == null)
             return true;
+        else if (root.left == null || root.right == null)
+            return false;
 
-        return true;
+        TreeNode<T> left = root.left;
+        TreeNode<T> right = root.right;
+        return compared(left, right);
     }
+    private static <T> boolean compared(TreeNode<T> node1, TreeNode<T> node2) {
+        if (node1 != null && node2 != null) {
+            if (!node1.val.equals(node2.val))
+                return false;
+            return compared(node1.left, node2.right) & compared(node1.right, node2.left);
+        }
+        return node1 == null && node2 == null;
+    }
+
+    static boolean hasPathSum(TreeNode<Integer> root, int targetSum) {
+        return false;
+    }
+//    private static Integer traversalPathSum(TreeNode<Integer> root, Integer sum, int target) {
+//
+//    }
 
     static class TreeNode<T> {
 
@@ -123,18 +140,25 @@ public class BinaryTree {
     }
 
     public static void main(String[] args) {
-        TreeNode<Integer> root = new TreeNode<>(10);
-        root.addLeft(7).addLeft(5);
-        root.left.addRight(9);
-        root.addRight(19).addLeft(14).addLeft(11);
-        root.right.addRight(23);
+        TreeNode<Integer> root = new TreeNode<>(1);
+//        root.addLeft(7).addLeft(5);
+//        root.left.addRight(9);
+//        root.addRight(19).addLeft(14).addLeft(11);
+//        root.right.addRight(23);
+        root.addLeft(2);
+
+//        root.addLeft(7).addLeft(3);
+//        root.left.addRight(9);
+//        root.addRight(7).addRight(3);
+//        root.right.addLeft(9);
 
         System.out.println(preorderTraversal(root));
         System.out.println(inorderTraversal(root));
         System.out.println(postorderTraversal(root));
         System.out.println(levelTraversal(root));
         System.out.println(maxDepth(root));
-
+        System.out.println(isSymmetric(root));
+        System.out.println(hasPathSum(root, 1));
 
     }
 
