@@ -77,4 +77,8 @@ public class BinarySearch {
         return insertPos0(nums, mid + 1, r, t);
     }
 
+    public static void main(String[] args) {
+
+    }
+
 }
