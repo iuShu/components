@@ -1,6 +1,6 @@
 package org.iushu.jdk.leetcode.array;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * @author iuShu
@@ -17,10 +17,10 @@ public class Array {
 
         int p = 0, q = 0;
         for (int i = 1; i < array.length; i++) {
-            if (array[i-1] == array[i])
+            if (array[i - 1] == array[i])
                 q++;
             else
-                array[i-q] = array[i];
+                array[i - q] = array[i];
         }
         return array.length - q;
     }
@@ -47,31 +47,159 @@ public class Array {
             return;
 
         int shift = k % nums.length;
-        boolean right = shift <= (nums.length/2);
+        boolean right = shift <= (nums.length / 2);
         shift = right ? shift : (nums.length - shift);
 
         int tmp;
         for (int i = 0; i < shift; i++) {
             if (right) {
-                tmp = nums[nums.length-1];
-                for (int j=nums.length-1; j>0; j--)
-                    nums[j] = nums[j-1];
+                tmp = nums[nums.length - 1];
+                for (int j = nums.length - 1; j > 0; j--)
+                    nums[j] = nums[j - 1];
                 nums[0] = tmp;
-            }
-            else {
+            } else {
                 tmp = nums[0];
-                for (int j=0; j<nums.length-1; j++)
-                    nums[j] = nums[j+1];
-                nums[nums.length-1] = tmp;
+                for (int j = 0; j < nums.length - 1; j++)
+                    nums[j] = nums[j + 1];
+                nums[nums.length - 1] = tmp;
             }
         }
     }
-    static void shiftElement2(int[] nums, int k) {
-        if (k <= 0)
-            return;
-        if (k % nums.length == 0 && k / nums.length != 0)
+
+    // contain duplicate element
+    static boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>(nums.length);
+        for (int num : nums) {
+            if (!set.add(num))
+                return true;
+        }
+        return false;
+    }
+
+    // find single element
+    static int singleNumber(int[] nums) {
+        if (nums.length == 1)
+            return nums[0];
+
+        Map<Integer, Integer> map = new HashMap<>(nums.length);
+        for (int num : nums) {
+            Integer count = map.get(num);
+            if (count == null)
+                map.put(num, 1);
+            else
+                map.remove(num);
+        }
+        return map.keySet().iterator().next();
+    }
+
+    static int singleNumber2(int[] nums) {
+        if (nums.length == 1)
+            return nums[0];
+        int r = 0;
+        for (int num : nums)
+            r = r ^ num;        // a^b^a = a^a^b = b^0 = b
+        return r;
+    }
+
+    // intersect
+    static int[] intersect(int[] nums1, int[] nums2) {
+        if (nums1 == null || nums2 == null)
+            return new int[0];
+
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int k = 0, min = nums1.length < nums2.length ? nums1.length : nums2.length;
+        int[] rs = new int[min];
+        for (int i = 0, j = 0; ; ) {
+            if (nums1[i] > nums2[j])
+                j++;
+            else if (nums1[i] < nums2[j])
+                i++;
+            else {
+                rs[k++] = nums1[i];
+                i++;
+                j++;
+            }
+
+            if (i == nums1.length || j == nums2.length)
+                break;
+        }
+
+        return Arrays.copyOfRange(rs, 0, k);
+    }
+
+    // add 1 on number array
+    static int[] plusOne(int[] nums) {
+        if (nums == null)
+            return new int[]{1};
+
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (nums[i] + 1 <= 9) {
+                nums[i] += 1;
+                return nums;
+            }
+
+            nums[i] = 0;
+        }
+
+        int[] rs = new int[nums.length + 1];
+        System.arraycopy(nums, 0, rs, 1, nums.length);
+        rs[0] = 1;
+        return rs;
+    }
+
+    // move zero elements till the right end
+    static void moveZeroes(int[] nums) {
+        if (nums == null || nums.length <= 1)
             return;
 
+        int hit = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+                hit++;
+            } else if (hit != 0) {
+                nums[i - hit] = nums[i];
+                nums[i] = 0;
+            }
+        }
+    }
+
+    // find sum of two elements equals target
+    static int[] twoSum(int[] nums, int target) {
+        if (nums == null || nums.length < 2)
+            return new int[0];
+
+        Map<Integer, Integer> map = new HashMap<>(nums.length);
+        for (int i = 0; i < nums.length; i++)
+            map.put(nums[i], i);
+
+        int[] rs = new int[2];
+        for (int i = 0; i < nums.length; i++) {
+            rs[0] = i;
+            Integer index = map.get(target - nums[i]);
+            if (index != null && index != i) {
+                rs[1] = index;
+                return rs;
+            }
+        }
+        return new int[0];
+    }
+
+    static boolean isValidSudoku(char[][] board) {
+        Set<Character> row = new HashSet<>(9);
+        Set<Character> col = new HashSet<>(9);
+        Set<Character>[] grids = new HashSet[9];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] != '.' && !row.add(board[i][j]))
+                    return false;
+                if (board[j][i] != '.' && !col.add(board[j][i]))
+                    return false;
+            }
+            row.clear();
+            col.clear();
+        }
+        return true;
     }
 
     public static void main(String[] args) {
@@ -91,9 +219,55 @@ public class Array {
 //        System.out.println("ROI: " + maximizeRevenue(stock));
 
 //        int[] nums = new int[]{1,2,3,4,5,6,7};
-       int[] nums = new int[]{-1,-100,3,99};
-        shiftElement(nums, 54944);
-        System.out.println("shift: " + Arrays.toString(nums));
+//        int[] nums = new int[]{-1,-100,3,99};
+//        shiftElement(nums, 2);
+//        System.out.println("shift: " + Arrays.toString(nums));
+
+//        int[] nums = new int[]{1,2,3,1};
+//        System.out.println("duplicate: " + containsDuplicate(nums));
+
+//        int[] nums = new int[]{2,2,1};
+//        int[] nums = new int[]{4,1,2,1,2};
+//        System.out.println("single: " + singleNumber(nums));
+//        System.out.println("single2: " + singleNumber2(nums));
+
+//        int[] nums1 = new int[]{4,9,5};
+//        int[] nums2 = new int[]{9,4,9,8,4};
+//        int[] nums1 = new int[]{1,2,2,1};
+//        int[] nums2 = new int[]{2,2};
+//        System.out.println("intersect: " + Arrays.toString(intersect(nums1, nums2)));
+
+//        int[] nums = new int[]{1};
+//        int[] nums = new int[]{9};
+//        int[] nums = new int[]{1,9};
+//        int[] nums = new int[]{9,9};
+//        int[] nums = new int[]{9,3,9,9};
+//        int[] nums = new int[]{4,3,2,1};
+//        System.out.println("plusOne: " + Arrays.toString(plusOne(nums)));
+
+//        int[] nums = new int[]{0,1,0};
+//        int[] nums = new int[]{0,1,0,3,12};
+//        moveZeroes(nums);
+//        System.out.println("move zero: " + Arrays.toString(nums));
+
+//        int[] nums = new int[]{3,3};            // 6
+//        int[] nums = new int[]{3,2,4};          // 6
+//        int[] nums = new int[]{0,4,3,0};          // 0
+//        int[] nums = new int[]{2,7,11,15};        // 9
+//        int[] nums = new int[]{20,32,40,70,150};  // 72
+//        System.out.println("twoSum: " + Arrays.toString(twoSum(nums, 72)));
+
+        char[][] board = new char[][]{
+                {'.', '.', '.', '.', '5', '.', '.', '1', '.'},
+                {'.', '4', '.', '3', '.', '.', '.', '.', '.'},
+                {'.', '9', '8', '.', '.', '3', '.', '.', '1'},
+                {'8', '.', '.', '.', '.', '.', '.', '2', '.'},
+                {'.', '.', '2', '.', '7', '.', '.', '.', '.'},
+                {'.', '1', '5', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '2', '.', '.', '.'},
+                {'.', '2', '.', '9', '.', '.', '.', '.', '.'},
+                {'.', '.', '4', '.', '.', '.', '.', '.', '.'}};
+        System.out.println("soduku: " + isValidSudoku(board));
     }
 
 }
