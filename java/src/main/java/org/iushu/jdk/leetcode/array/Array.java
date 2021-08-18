@@ -91,7 +91,6 @@ public class Array {
         }
         return map.keySet().iterator().next();
     }
-
     static int singleNumber2(int[] nums) {
         if (nums.length == 1)
             return nums[0];
@@ -185,21 +184,54 @@ public class Array {
         return new int[0];
     }
 
+    // validate sudoku
     static boolean isValidSudoku(char[][] board) {
         Set<Character> row = new HashSet<>(9);
         Set<Character> col = new HashSet<>(9);
         Set<Character>[] grids = new HashSet[9];
         for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
+            for (int j = 0, gi; j < 9; j++) {
                 if (board[i][j] != '.' && !row.add(board[i][j]))
                     return false;
                 if (board[j][i] != '.' && !col.add(board[j][i]))
+                    return false;
+
+                gi = j/3 + i/3*3;
+                grids[gi] = grids[gi] == null ? new HashSet<>() : grids[gi];
+                if (board[i][j] != '.' && !grids[gi].add(board[i][j]))
                     return false;
             }
             row.clear();
             col.clear();
         }
         return true;
+    }
+
+    static void rotateMatrix(int[][] matrix) {
+        int i = 0, j = 0, a, b, p, q, la, lb, ori, tmp, loop = 1;
+        while (i < matrix.length/2) {
+            int ic = matrix.length - loop;
+            while (i < ic) {
+                a = i;
+                b = j;
+                la = a;
+                lb = b;
+                tmp = matrix[i][j];
+                do {
+                    p = b;
+                    q = matrix.length - a - 1;
+                    ori = matrix[p][q];
+                    matrix[p][q] = tmp;
+                    tmp = ori;
+                    a = p;
+                    b = q;
+                } while (!(a == la && b == lb));
+                i++;
+            }
+            j++;
+            i = j;
+            loop++;
+        }
     }
 
     public static void main(String[] args) {
@@ -257,17 +289,24 @@ public class Array {
 //        int[] nums = new int[]{20,32,40,70,150};  // 72
 //        System.out.println("twoSum: " + Arrays.toString(twoSum(nums, 72)));
 
-        char[][] board = new char[][]{
-                {'.', '.', '.', '.', '5', '.', '.', '1', '.'},
-                {'.', '4', '.', '3', '.', '.', '.', '.', '.'},
-                {'.', '9', '8', '.', '.', '3', '.', '.', '1'},
-                {'8', '.', '.', '.', '.', '.', '.', '2', '.'},
-                {'.', '.', '2', '.', '7', '.', '.', '.', '.'},
-                {'.', '1', '5', '.', '.', '.', '.', '.', '.'},
-                {'.', '.', '.', '.', '.', '2', '.', '.', '.'},
-                {'.', '2', '.', '9', '.', '.', '.', '.', '.'},
-                {'.', '.', '4', '.', '.', '.', '.', '.', '.'}};
-        System.out.println("soduku: " + isValidSudoku(board));
+//        char[][] board = new char[][]{
+//                {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+//                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+//                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+//                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+//                {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+//                {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+//                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+//                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+//                {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
+//        System.out.println("soduku: " + isValidSudoku(board));
+
+//        int[][] matrix = new int[][] {{1,2,3},{4,5,6},{7,8,9}};
+//        int[][] matrix = new int[][] {{5,1,9,11},{2,4,8,10},{13,3,6,7},{15,14,12,16}};
+//        int[][] matrix = new int[][] {{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15},{16,17,18,19,20},{21,22,23,24,25}};
+        int[][] matrix = new int[][] {{2,29,20,26,16,28},{12,27,9,25,13,21},{32,33,32,2,28,14},{13,14,32,27,22,26},{33,1,20,7,21,7},{4,24,1,6,32,34}};
+        rotateMatrix(matrix);
+        System.out.println("matrix rotate:" + Arrays.deepToString(matrix));
     }
 
 }
