@@ -72,24 +72,6 @@ public class Strings {
         String s = "leetcode";
 //        firstUniqueString(s);
 
-        System.out.println((int) 'l');
-        int r = 0 ^ 'l';
-        System.out.println(r);
-        r ^= 'e';
-        System.out.println(r);
-        r ^= 'e';
-        System.out.println(r);
-        r ^= 't';
-        System.out.println(r);
-        r ^= 'c';
-        System.out.println(r);
-        r ^= 'o';
-        System.out.println(r);
-        r ^= 'd';
-        System.out.println(r);
-        r ^= 'e';
-        System.out.println(r);
-
     }
 
 }
