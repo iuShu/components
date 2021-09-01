@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="org.iushu.hibernate.mysql.entity.Staff" table="staff">
+        <id name="id" column="id" type="java.lang.Integer">
+            <generator class="native"/>
+        </id>
+        <property name="name" column="name" type="java.lang.String"/>
+        <property name="gender" column="gender" type="java.lang.Byte"/>
+        <property name="update_time" column="update_time"/>
+        <property name="create_time" column="create_time"/>
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://192.168.200.142:3306/iushu</property>
+        <property name="connection.username">iushu</property>
+        <property name="connection.password">mysqliushu</property>
+
+        <property name="connection.pool_size">1</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+        <property name="current_session_context_class">thread</property>
+        <property name="show_sql">true</property>
+
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+<!--        <property name="cache.use_query_cache">true</property>-->
+<!--        <property name="cache.use_second_level_cache">true</property>-->
+<!--        <property name="cache.provider_class"></property>-->
+        <property name="cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
+
+        <mapping resource="org/iushu/hibernate/mysql/entity/Staff.hbm.xml"/>
+        <mapping resource="org/iushu/hibernate/mysql/entity/Department.hbm.xml"/>
+
+    </session-factory>
+
+</hibernate-configuration>
