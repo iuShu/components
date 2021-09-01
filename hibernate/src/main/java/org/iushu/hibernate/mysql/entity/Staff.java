@@ -7,8 +7,8 @@ public class Staff {
     private int id;
     private String name;
     private byte gender;
-    private Date update_time;
-    private Date create_time;
+    private Date update_time = new Date();
+    private Date create_time = new Date();
 
     public Staff() {
 

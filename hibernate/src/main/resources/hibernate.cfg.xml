@@ -17,6 +17,7 @@
         <property name="show_sql">true</property>
 
         <property name="hibernate.hbm2ddl.auto">update</property>
+<!--        <property name="hibernate.hbm2ddl.import_files">schema-creation.sql</property>-->
 
 <!--        <property name="cache.use_query_cache">true</property>-->
 <!--        <property name="cache.use_second_level_cache">true</property>-->

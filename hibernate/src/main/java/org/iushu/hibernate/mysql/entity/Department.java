@@ -8,8 +8,8 @@ public class Department {
     private int id;
     private String name;
     private int manager;
-    private Date update_time;
-    private Date create_time;
+    private Date update_time = new Date();
+    private Date create_time = new Date();
 
     private Set<Staff> staffs;
 

@@ -15,7 +15,7 @@ import org.iushu.hibernate.mysql.Application;
 
 import java.util.Map;
 
-public class HibernateConfiguration {
+public class HibernateConcepts {
 
     /**
      */
@@ -45,6 +45,14 @@ public class HibernateConfiguration {
      * @see Application#autoDDL()
      */
     static void autoDDL() {
+
+    }
+
+    static void persistentState() {
+
+    }
+
+    static void proxyObject() {
 
     }
 
