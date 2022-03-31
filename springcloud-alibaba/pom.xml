@@ -15,7 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <springboot.version>2.4.2</springboot.version>
+    <springboot.version>2.5.12</springboot.version>
     <springcloud.alibaba.version>2021.1</springcloud.alibaba.version>
     <springcloud.netflix.version>2.2.9.RELEASE</springcloud.netflix.version>
   </properties>
