@@ -16,7 +16,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <springframework.version>5.3.0</springframework.version>
+    <springframework.version>5.3.18</springframework.version>
     <mysql.connector.version>8.0.23</mysql.connector.version>
     <servlet.version>3.1.0</servlet.version>
     <dbcp.version>2.7.0</dbcp.version>
