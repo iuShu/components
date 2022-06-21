@@ -22,7 +22,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <mysql.connector.version>8.0.23</mysql.connector.version>
+    <mysql.connector.version>8.0.28</mysql.connector.version>
   </properties>
 
   <dependencies>
